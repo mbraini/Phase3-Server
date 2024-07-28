@@ -5,11 +5,16 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import constants.PathConstants;
 import controller.SkippedByJson;
 import controller.client.Client;
 import utils.Helper;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class SingUpRequest extends TCPClientRequest{
@@ -57,6 +62,16 @@ public class SingUpRequest extends TCPClientRequest{
         clients.add(client);
         Helper.writeFile("src/controller/tcp/clients.json" ,gson.toJson(clients));
 
+        setUpFolder();
+
+    }
+
+    private void setUpFolder() {
+        try {
+            Files.createDirectory(Path.of(PathConstants.CLIENT_EARNINGS_FOLDER_PATH + client.getUsername()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void getClientInfo() {

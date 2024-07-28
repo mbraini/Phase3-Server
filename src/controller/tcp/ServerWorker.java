@@ -10,9 +10,7 @@ import java.util.ArrayList;
 public class ServerWorker extends Thread{
 
     public static final ServerWorker serverWorker = getInstance();
-    private static final ServerSocket serverSocket = getServerSocket();
-
-    private Socket clientSocket;
+    private static ServerSocket serverSocket = getServerSocket();
 
     public static final ArrayList<Client> clients = new ArrayList<>();
     private static ServerWorker getInstance() {
@@ -31,19 +29,22 @@ public class ServerWorker extends Thread{
     }
 
     public final void listen() throws IOException {
+        Socket socket;
         while (true) {
-            Socket socket = serverSocket.accept();
+            socket = serverSocket.accept();
             Client client = new Client(socket);
             synchronized (clients) {
                 clients.add(client);
-                clients.notify();
+                clients.notifyAll();
             }
+            System.out.println("A CLIENT!");
         }
     }
 
     @Override
     public void run() {
         while (true) {
+            Client client;
             synchronized (clients) {
                 while (clients.isEmpty()) {
                     try {
@@ -52,10 +53,10 @@ public class ServerWorker extends Thread{
                         throw new RuntimeException(e);
                     }
                 }
-                new TCPServiceListener(clients.getFirst()).listen();
-                clients.removeFirst();
+                client = clients.removeFirst();
                 clients.notify();
             }
+            new TCPServiceListener(client).listen();
         }
     }
 

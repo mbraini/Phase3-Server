@@ -3,11 +3,6 @@ package controller.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.client.Client;
-import utils.TCPMessager;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Scanner;
 
 public class TCPServiceListener {
 
@@ -33,7 +28,7 @@ public class TCPServiceListener {
     public void listen() {
         while (client.getTcpMessager().getSocket().isConnected()) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
