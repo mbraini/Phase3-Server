@@ -7,13 +7,22 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ServerWorker {
+public class ServerWorker extends Thread{
 
-    private static final ServerSocket serverSocket = getInstance();
+    public static final ServerWorker serverWorker = getInstance();
+    private static final ServerSocket serverSocket = getServerSocket();
+
     private Socket clientSocket;
-    private static final ArrayList<Client> clients = new ArrayList<>();
 
-    private static ServerSocket getInstance() {
+    public static final ArrayList<Client> clients = new ArrayList<>();
+    private static ServerWorker getInstance() {
+        if (serverWorker == null) {
+            return new ServerWorker();
+        }
+        return serverWorker;
+    }
+
+    private static ServerSocket getServerSocket() {
         try {
             return new ServerSocket(8090);
         } catch (IOException e) {
@@ -21,24 +30,37 @@ public class ServerWorker {
         }
     }
 
-    public void listen() throws IOException {
+    public final void listen() throws IOException {
         while (true) {
             Socket socket = serverSocket.accept();
             Client client = new Client(socket);
-            clients.add(client);
-            clients.notify();
+            synchronized (clients) {
+                clients.add(client);
+                clients.notify();
+            }
         }
     }
 
-    private void serve() {
+    @Override
+    public void run() {
         while (true) {
-            try {
-                clients.wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            synchronized (clients) {
+                while (clients.isEmpty()) {
+                    try {
+                        clients.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                new TCPServiceListener(clients.getFirst()).listen();
+                clients.removeFirst();
+                clients.notify();
             }
-            new TCPServiceListener(clients.getLast().getClientSocket()).listen();
         }
+    }
+
+    public static ArrayList<Client> getClients() {
+        return clients;
     }
 
 }

@@ -1,15 +1,19 @@
 package controller.client;
 
+import controller.SkippedByJson;
+import utils.TCPMessager;
 import java.net.Socket;
 
 public class Client {
-    private Socket clientSocket;
     private String username;
-    private String macAddress;
+    private String ip;
+    @SkippedByJson
     private volatile ClientState clientState;
+    @SkippedByJson
+    private final TCPMessager tcpMessager;
 
     public Client(Socket socket) {
-        this.clientSocket = socket;
+        tcpMessager = new TCPMessager(socket);
     }
 
     public String getUsername() {
@@ -20,12 +24,12 @@ public class Client {
         this.username = username;
     }
 
-    public String getMacAddress() {
-        return macAddress;
+    public String getIp() {
+        return ip;
     }
 
-    public void setMacAddress(String macAddress) {
-        this.macAddress = macAddress;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public ClientState getClientState() {
@@ -36,11 +40,8 @@ public class Client {
         this.clientState = clientState;
     }
 
-    public Socket getClientSocket() {
-        return clientSocket;
-    }
 
-    public void setClientSocket(Socket clientSocket) {
-        this.clientSocket = clientSocket;
+    public TCPMessager getTcpMessager() {
+        return tcpMessager;
     }
 }
