@@ -3,15 +3,15 @@ package controller.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.OnlineData;
-import controller.client.Client;
+import controller.client.TCPClient;
 
 public class TCPServiceListener {
     private static final Object signedUpClientsLock = new Object();
-    private final Client client;
+    private final TCPClient TCPClient;
     private Gson gson;
 
-    public TCPServiceListener(Client client) {
-        this.client = client;
+    public TCPServiceListener(TCPClient TCPClient) {
+        this.TCPClient = TCPClient;
         initGson();
     }
 
@@ -27,7 +27,7 @@ public class TCPServiceListener {
     }
 
     public void listen() {
-        OnlineData.addOnlineClient(client);
+        OnlineData.addClient(TCPClient);
         while (true) {
             if (isConnectionLost())
                 break;
@@ -37,31 +37,30 @@ public class TCPServiceListener {
                 throw new RuntimeException(e);
             }
             String clientRequest;
-            if (client.getTcpMessager().hasMessage())
-                clientRequest = client.getTcpMessager().readMessage();
+            if (TCPClient.getTcpMessager().hasMessage())
+                clientRequest = TCPClient.getTcpMessager().readMessage();
             else
                 continue;
             ClientRequestType requestType = gson.fromJson(clientRequest , ClientRequestType.class);
             switch (requestType) {
                 case signUp :
                     synchronized (signedUpClientsLock) {
-                        new ClientSignUpRequest(client).checkRequest();
+                        new ClientSignUpRequest(TCPClient).checkRequest();
                     }
-                    break;
+                    return;
                 case logIn:
                     synchronized (signedUpClientsLock) {
-                        new ClientLogInRequest(client).checkRequest();
+                        new ClientLogInRequest(TCPClient).checkRequest();
                     }
-                    break;
+                    return;
             }
         }
-        OnlineData.removeOnlineClient(client);
-        client.getTcpMessager().close();
+        TCPClient.getTcpMessager().close();
     }
 
     private boolean isConnectionLost() {
 //        try {
-//            client.getTcpMessager().sendMessage(ServerMessageType.connectionCheck);
+//            TCPClient.getTcpMessager().sendMessage(ServerMessageType.connectionCheck);
 //        }
 //        catch (Exception e) {
 //            return true;

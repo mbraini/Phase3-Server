@@ -1,6 +1,6 @@
 package controller.tcp;
 
-import controller.client.Client;
+import controller.client.TCPClient;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -12,7 +12,7 @@ public class ServerWorker extends Thread{
     public static final ServerWorker serverWorker = getInstance();
     private static ServerSocket serverSocket = getServerSocket();
 
-    public static final ArrayList<Client> clients = new ArrayList<>();
+    public static final ArrayList<TCPClient> TCP_CLIENTS = new ArrayList<>();
     private static ServerWorker getInstance() {
         if (serverWorker == null) {
             return new ServerWorker();
@@ -32,10 +32,10 @@ public class ServerWorker extends Thread{
         Socket socket;
         while (true) {
             socket = serverSocket.accept();
-            Client client = new Client(socket);
-            synchronized (clients) {
-                clients.add(client);
-                clients.notifyAll();
+            TCPClient TCPClient = new TCPClient(socket);
+            synchronized (TCP_CLIENTS) {
+                TCP_CLIENTS.add(TCPClient);
+                TCP_CLIENTS.notifyAll();
             }
             System.out.println("A CLIENT!");
         }
@@ -44,25 +44,25 @@ public class ServerWorker extends Thread{
     @Override
     public void run() {
         while (true) {
-            Client client;
-            synchronized (clients) {
-                while (clients.isEmpty()) {
+            TCPClient TCPClient;
+            synchronized (TCP_CLIENTS) {
+                while (TCP_CLIENTS.isEmpty()) {
                     try {
-                        clients.wait();
+                        TCP_CLIENTS.wait();
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
-                client = clients.removeFirst();
-                clients.notify();
+                TCPClient = TCP_CLIENTS.removeFirst();
+                TCP_CLIENTS.notify();
             }
-            new TCPServiceListener(client).listen();
+            new TCPServiceListener(TCPClient).listen();
             System.out.println("LEFT :(");
         }
     }
 
-    public static ArrayList<Client> getClients() {
-        return clients;
+    public static ArrayList<TCPClient> getClients() {
+        return TCP_CLIENTS;
     }
 
 }

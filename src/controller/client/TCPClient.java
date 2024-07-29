@@ -4,7 +4,7 @@ import controller.SkippedByJson;
 import utils.TCPMessager;
 import java.net.Socket;
 
-public class Client {
+public class TCPClient {
     private String username;
     private String ip;
     @SkippedByJson
@@ -12,7 +12,7 @@ public class Client {
     @SkippedByJson
     private final TCPMessager tcpMessager;
 
-    public Client(Socket socket) {
+    public TCPClient(Socket socket) {
         tcpMessager = new TCPMessager(socket);
     }
 
