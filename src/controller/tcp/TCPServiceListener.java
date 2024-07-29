@@ -2,6 +2,7 @@ package controller.tcp;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controller.OnlineData;
 import controller.client.Client;
 
 public class TCPServiceListener {
@@ -26,6 +27,7 @@ public class TCPServiceListener {
     }
 
     public void listen() {
+        OnlineData.addOnlineClient(client);
         while (true) {
             if (isConnectionLost())
                 break;
@@ -53,6 +55,7 @@ public class TCPServiceListener {
                     break;
             }
         }
+        OnlineData.removeOnlineClient(client);
         client.getTcpMessager().close();
     }
 
