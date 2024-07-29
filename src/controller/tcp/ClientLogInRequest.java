@@ -5,24 +5,23 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import constants.ControllerConstants;
 import constants.PathConstants;
 import controller.SkippedByJson;
 import controller.client.Client;
 import utils.Helper;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class SingUpRequest extends TCPClientRequest{
-
+public class ClientLogInRequest extends TCPClientRequest{
     private final Client client;
     private Gson gson;
 
-    public SingUpRequest(Client client) {
+    public ClientLogInRequest(Client client) {
         this.client = client;
         initGson();
     }
@@ -50,20 +49,16 @@ public class SingUpRequest extends TCPClientRequest{
     public void checkRequest() {
         getClientInfo();
 
-        StringBuilder JText = Helper.readFile("src/controller/tcp/clients.json");
+        StringBuilder JText = Helper.readFile(PathConstants.SIGNED_UP_CLIENTS_PATH);
         Type type = new TypeToken<ArrayList<Client>>(){}.getType();
         ArrayList<Client> clients = gson.fromJson(JText.toString() ,type);
         for (Client client : clients) {
             if (client.getUsername().equals(this.client.getUsername())) {
-                this.client.getTcpMessager().sendMessage(ServerMessageType.error);
+                this.client.getTcpMessager().sendMessage(ServerMessageType.done);
                 return;
             }
         }
-        clients.add(client);
-        Helper.writeFile("src/controller/tcp/clients.json" ,gson.toJson(clients));
-
-        setUpFolder();
-
+        this.client.getTcpMessager().sendMessage(ServerMessageType.error);
     }
 
     private void setUpFolder() {
