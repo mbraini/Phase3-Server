@@ -3,6 +3,9 @@ package controller.tcp;
 public enum ServerMessageType {
 
     done,
-    connectionCheck, error
+    connectionCheck,
+    error,
+    yes,
+    no
 
 }

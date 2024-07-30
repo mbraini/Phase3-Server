@@ -2,6 +2,7 @@ package controller;
 
 import controller.client.GameClient;
 import controller.client.TCPClient;
+import controller.squad.Squad;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +10,9 @@ import java.util.HashMap;
 public class OnlineData {
 
     private volatile static ArrayList<TCPClient> TCPClients = new ArrayList<>();
-    private volatile static HashMap<TCPClient , GameClient> clientMap = new HashMap<>();
+    private volatile static ArrayList<Squad> squads = new ArrayList<>();
+    private volatile static HashMap<TCPClient , GameClient> clientGameMap = new HashMap<>();
+    private volatile static HashMap<TCPClient ,Squad> clientSquadMap = new HashMap<>();
 
     public synchronized static ArrayList<TCPClient> getOnlineClients() {
         return TCPClients;
@@ -18,14 +21,17 @@ public class OnlineData {
     public synchronized static void addClient(TCPClient newTCPClient) {
         for (int i = 0 ;i < TCPClients.size() ;i++) {
             if (TCPClients.get(i).getUsername().equals(newTCPClient.getUsername())) {
-                GameClient gameClient = clientMap.remove(TCPClients.get(i));
+                GameClient gameClient = clientGameMap.remove(TCPClients.get(i));
+                Squad squad = clientSquadMap.remove(TCPClients.get(i));
                 TCPClients.set(i, newTCPClient);
-                clientMap.put(newTCPClient ,gameClient);
+                putClientGameMap(newTCPClient ,gameClient);
+                putClientSquadMap(newTCPClient ,squad);
                 return;
             }
         }
         TCPClients.add(newTCPClient);
-        clientMap.put(newTCPClient ,new GameClient(newTCPClient.getUsername()));
+        putClientGameMap(newTCPClient ,new GameClient(newTCPClient.getUsername()));
+        putClientSquadMap(newTCPClient ,null);
     }
 
     public synchronized static void removeClient(TCPClient TCPClient) {
@@ -37,12 +43,21 @@ public class OnlineData {
         }
     }
 
-    public synchronized static void putClientMap(TCPClient tcpClient ,GameClient gameClient) {
-        clientMap.put(tcpClient,gameClient);
+    public synchronized static void putClientGameMap(TCPClient tcpClient ,GameClient gameClient) {
+        clientGameMap.put(tcpClient,gameClient);
     }
 
     public synchronized static GameClient getGameClient(TCPClient tcpClient) {
-        return clientMap.get(tcpClient);
+        return clientGameMap.get(tcpClient);
     }
+
+    public synchronized static void putClientSquadMap(TCPClient tcpClient ,Squad squad) {
+        clientSquadMap.put(tcpClient ,squad);
+    }
+
+    public synchronized static Squad getSquadClient(TCPClient tcpClient) {
+        return clientSquadMap.get(tcpClient);
+    }
+
 
 }

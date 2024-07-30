@@ -1,12 +1,14 @@
 package controller.client;
 
 import controller.SkippedByJson;
+import controller.squad.Squad;
 import utils.TCPMessager;
 import java.net.Socket;
 
 public class TCPClient {
     private String username;
     private String ip;
+    private Squad squad;
     @SkippedByJson
     private volatile ClientState clientState;
     @SkippedByJson
@@ -43,5 +45,13 @@ public class TCPClient {
 
     public TCPMessager getTcpMessager() {
         return tcpMessager;
+    }
+
+    public Squad getSquad() {
+        return squad;
+    }
+
+    public void setSquad(Squad squad) {
+        this.squad = squad;
     }
 }

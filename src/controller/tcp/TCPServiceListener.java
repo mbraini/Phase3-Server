@@ -52,6 +52,8 @@ public class TCPServiceListener {
                         new ClientLogInRequest(TCPClient).checkRequest();
                     }
                     break;
+                case hasSquad:
+                    new ClientHasSquadRequest(TCPClient).checkRequest();
             }
         }
         TCPClient.getTcpMessager().close();
