@@ -60,4 +60,7 @@ public class OnlineData {
     }
 
 
+    public synchronized static ArrayList<Squad> getSquads() {
+        return squads;
+    }
 }
