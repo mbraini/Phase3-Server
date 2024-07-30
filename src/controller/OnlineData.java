@@ -12,7 +12,6 @@ public class OnlineData {
     private volatile static ArrayList<TCPClient> TCPClients = new ArrayList<>();
     private volatile static ArrayList<Squad> squads = new ArrayList<>();
     private volatile static HashMap<TCPClient , GameClient> clientGameMap = new HashMap<>();
-    private volatile static HashMap<TCPClient ,Squad> clientSquadMap = new HashMap<>();
 
     public synchronized static ArrayList<TCPClient> getOnlineClients() {
         return TCPClients;
@@ -22,16 +21,14 @@ public class OnlineData {
         for (int i = 0 ;i < TCPClients.size() ;i++) {
             if (TCPClients.get(i).getUsername().equals(newTCPClient.getUsername())) {
                 GameClient gameClient = clientGameMap.remove(TCPClients.get(i));
-                Squad squad = clientSquadMap.remove(TCPClients.get(i));
+                newTCPClient.setSquad(TCPClients.get(i).getSquad());
                 TCPClients.set(i, newTCPClient);
                 putClientGameMap(newTCPClient ,gameClient);
-                putClientSquadMap(newTCPClient ,squad);
                 return;
             }
         }
         TCPClients.add(newTCPClient);
         putClientGameMap(newTCPClient ,new GameClient(newTCPClient.getUsername()));
-        putClientSquadMap(newTCPClient ,null);
     }
 
     public synchronized static void removeClient(TCPClient TCPClient) {
@@ -51,16 +48,13 @@ public class OnlineData {
         return clientGameMap.get(tcpClient);
     }
 
-    public synchronized static void putClientSquadMap(TCPClient tcpClient ,Squad squad) {
-        clientSquadMap.put(tcpClient ,squad);
-    }
-
-    public synchronized static Squad getSquadClient(TCPClient tcpClient) {
-        return clientSquadMap.get(tcpClient);
-    }
 
 
     public synchronized static ArrayList<Squad> getSquads() {
         return squads;
+    }
+
+    public synchronized static void addSquad(Squad squad) {
+        squads.add(squad);
     }
 }

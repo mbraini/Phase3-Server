@@ -2,8 +2,8 @@ package controller.tcp;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import controller.OnlineData;
 import controller.client.TCPClient;
+import controller.tcp.getAllSquadRequest.ClientGetAllSquadsRequest;
 
 public class TCPServiceListener {
     private static final Object signedUpClientsLock = new Object();
@@ -57,6 +57,9 @@ public class TCPServiceListener {
                     break;
                 case getAllSquads:
                     new ClientGetAllSquadsRequest(TCPClient).checkRequest();
+                    break;
+                case createSquad:
+                    new ClientCreateSquadRequest(TCPClient).checkRequest();
                     break;
             }
         }

@@ -2,6 +2,7 @@ package controller.tcp;
 
 import controller.OnlineData;
 import controller.client.TCPClient;
+import controller.squad.Squad;
 
 public class ClientHasSquadRequest extends TCPClientRequest{
 
