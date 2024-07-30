@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 public class OnlineData {
 
-    private static final ArrayList<TCPClient> TCPClients = new ArrayList<>();
-    private static final HashMap<TCPClient , GameClient> clientMap = new HashMap<>();
+    private volatile static ArrayList<TCPClient> TCPClients = new ArrayList<>();
+    private volatile static HashMap<TCPClient , GameClient> clientMap = new HashMap<>();
 
     public synchronized static ArrayList<TCPClient> getOnlineClients() {
         return TCPClients;
@@ -18,12 +18,14 @@ public class OnlineData {
     public synchronized static void addClient(TCPClient newTCPClient) {
         for (int i = 0 ;i < TCPClients.size() ;i++) {
             if (TCPClients.get(i).getUsername().equals(newTCPClient.getUsername())) {
+                GameClient gameClient = clientMap.remove(TCPClients.get(i));
                 TCPClients.set(i, newTCPClient);
+                clientMap.put(newTCPClient ,gameClient);
                 return;
             }
         }
         TCPClients.add(newTCPClient);
-        clientMap.put(newTCPClient ,new GameClient());
+        clientMap.put(newTCPClient ,new GameClient(newTCPClient.getUsername()));
     }
 
     public synchronized static void removeClient(TCPClient TCPClient) {

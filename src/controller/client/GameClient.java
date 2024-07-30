@@ -6,6 +6,7 @@ import controller.client.gameClientUpdate.SkillTreeJsonHelper;
 import utils.TCPMessager;
 
 public class GameClient {
+    private String username;
     private int xp;
     private boolean ares;
     private boolean astrape;
@@ -19,7 +20,8 @@ public class GameClient {
     private boolean dolus;
     private Gson gson;
 
-    public GameClient() {
+    public GameClient(String username) {
+        this.username = username;
         initGson();
     }
 

@@ -27,7 +27,6 @@ public class TCPServiceListener {
     }
 
     public void listen() {
-        OnlineData.addClient(TCPClient);
         while (true) {
             if (isConnectionLost())
                 break;
@@ -47,12 +46,12 @@ public class TCPServiceListener {
                     synchronized (signedUpClientsLock) {
                         new ClientSignUpRequest(TCPClient).checkRequest();
                     }
-                    return;
+                    break;
                 case logIn:
                     synchronized (signedUpClientsLock) {
                         new ClientLogInRequest(TCPClient).checkRequest();
                     }
-                    return;
+                    break;
             }
         }
         TCPClient.getTcpMessager().close();

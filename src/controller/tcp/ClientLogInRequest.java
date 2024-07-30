@@ -55,6 +55,7 @@ public class ClientLogInRequest extends TCPClientRequest{
         for (TCPClient TCPClient : TCPClients) {
             if (TCPClient.getUsername().equals(this.TCPClient.getUsername())) {
                 this.TCPClient.getTcpMessager().sendMessage(ServerMessageType.done);
+                OnlineData.addClient(this.TCPClient);
                 OnlineData.getGameClient(this.TCPClient).update(this.TCPClient);
                 return;
             }

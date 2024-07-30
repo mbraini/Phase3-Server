@@ -57,7 +57,6 @@ public class ServerWorker extends Thread{
                 TCP_CLIENTS.notify();
             }
             new TCPServiceListener(TCPClient).listen();
-            System.out.println("LEFT :(");
         }
     }
 
