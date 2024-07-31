@@ -3,10 +3,14 @@ package controller.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.client.TCPClient;
-import controller.tcp.getAllSquadRequest.ClientGetAllSquadsRequest;
+import controller.tcp.requests.ClientCreateSquadRequest;
+import controller.tcp.requests.getAllSquadRequest.ClientGetAllSquadsRequest;
+import controller.tcp.requests.ClientHasSquadRequest;
+import controller.tcp.requests.ClientJoinSquadRequest;
+import controller.tcp.requests.ClientLogInRequest;
+import controller.tcp.requests.ClientSignUpRequest;
 
 public class TCPServiceListener {
-    private static final Object signedUpClientsLock = new Object();
     private final TCPClient TCPClient;
     private Gson gson;
 
@@ -43,14 +47,10 @@ public class TCPServiceListener {
             ClientRequestType requestType = gson.fromJson(clientRequest , ClientRequestType.class);
             switch (requestType) {
                 case signUp :
-                    synchronized (signedUpClientsLock) {
-                        new ClientSignUpRequest(TCPClient).checkRequest();
-                    }
+                    new ClientSignUpRequest(TCPClient).checkRequest();
                     break;
                 case logIn:
-                    synchronized (signedUpClientsLock) {
-                        new ClientLogInRequest(TCPClient).checkRequest();
-                    }
+                    new ClientLogInRequest(TCPClient).checkRequest();
                     break;
                 case hasSquad:
                     new ClientHasSquadRequest(TCPClient).checkRequest();
@@ -61,6 +61,9 @@ public class TCPServiceListener {
                 case createSquad:
                     new ClientCreateSquadRequest(TCPClient).checkRequest();
                     break;
+                case joinSquad:
+                    new ClientJoinSquadRequest(TCPClient).checkRequest();
+                    break;
             }
         }
         TCPClient.getTcpMessager().close();
@@ -68,7 +71,7 @@ public class TCPServiceListener {
 
     private boolean isConnectionLost() {
 //        try {
-//            TCPClient.getTcpMessager().sendMessage(ServerMessageType.connectionCheck);
+//            TCPClient.getTcpMessager().sendMessage(ServerRecponceType.connectionCheck);
 //        }
 //        catch (Exception e) {
 //            return true;

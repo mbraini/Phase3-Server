@@ -40,4 +40,12 @@ public class Squad {
         members.add(tcpClient);
         tcpClient.setSquad(this);
     }
+
+    public TCPClient getOwner() {
+        return owner;
+    }
+
+    public void setOwner(TCPClient owner) {
+        this.owner = owner;
+    }
 }

@@ -17,4 +17,5 @@ public class RefreshRateConstants {
     public static final int UPS = 10;
     public static final int ABILITY_SETUP_DELAY = 1000;
     public static final int ABILITY_UNSETUP_DELAY = 1000;
+    public static final int SERVER_THREAD_REFRESH_RATE = 1000;
 }

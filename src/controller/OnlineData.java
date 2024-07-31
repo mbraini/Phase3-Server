@@ -9,11 +9,12 @@ import java.util.HashMap;
 
 public class OnlineData {
 
+    private volatile static ArrayList<Integer> availablePorts = new ArrayList<>();
     private volatile static ArrayList<TCPClient> TCPClients = new ArrayList<>();
     private volatile static ArrayList<Squad> squads = new ArrayList<>();
     private volatile static HashMap<TCPClient , GameClient> clientGameMap = new HashMap<>();
 
-    public synchronized static ArrayList<TCPClient> getOnlineClients() {
+    public synchronized static ArrayList<TCPClient> getClients() {
         return TCPClients;
     }
 
@@ -56,5 +57,17 @@ public class OnlineData {
 
     public synchronized static void addSquad(Squad squad) {
         squads.add(squad);
+    }
+
+    public synchronized static int getAvailablePort() {
+        return availablePorts.removeFirst();
+    }
+
+    public static ArrayList<Integer> getAvailablePorts() {
+        return availablePorts;
+    }
+
+    public static void setAvailablePorts(ArrayList<Integer> availablePorts) {
+        OnlineData.availablePorts = availablePorts;
     }
 }

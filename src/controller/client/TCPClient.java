@@ -2,13 +2,16 @@ package controller.client;
 
 import controller.SkippedByJson;
 import controller.squad.Squad;
+import controller.tcp.messages.ClientMessage;
 import utils.TCPMessager;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class TCPClient {
     private String username;
     private String ip;
     private Squad squad;
+    private ArrayList<ClientMessage> messages;
     @SkippedByJson
     private volatile ClientState clientState;
     @SkippedByJson
@@ -16,6 +19,8 @@ public class TCPClient {
 
     public TCPClient(Socket socket) {
         tcpMessager = new TCPMessager(socket);
+        messages = new ArrayList<>();
+        clientState = ClientState.online;
     }
 
     public String getUsername() {
@@ -53,5 +58,17 @@ public class TCPClient {
 
     public void setSquad(Squad squad) {
         this.squad = squad;
+    }
+
+    public void addMessage(ClientMessage message) {
+        messages.add(message);
+    }
+
+    public ArrayList<ClientMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<ClientMessage> messages) {
+        this.messages = messages;
     }
 }

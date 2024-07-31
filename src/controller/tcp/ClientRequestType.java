@@ -6,6 +6,6 @@ public enum ClientRequestType {
     hasSquad,
     logIn,
     getAllSquads,
-    createSquad
+    joinSquad, createSquad
 
 }

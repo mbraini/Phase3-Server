@@ -1,4 +1,4 @@
-package controller.tcp.getAllSquadRequest;
+package controller.tcp.requests.getAllSquadRequest;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -8,6 +8,7 @@ import controller.OnlineData;
 import controller.annotations.SkippedForClient;
 import controller.client.TCPClient;
 import controller.squad.Squad;
+import controller.tcp.ServerMessageType;
 import controller.tcp.TCPClientRequest;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class ClientGetAllSquadsRequest extends TCPClientRequest {
         for (Squad squad : squads) {
             helpers.add(new GetAllSquadHelper(squad.getName() ,squad.getMembers().size()));
         }
+        tcpClient.getTcpMessager().sendMessage(ServerMessageType.getAllSquadsRecponce);
         tcpClient.getTcpMessager().sendMessage(gson.toJson(helpers));
     }
 }

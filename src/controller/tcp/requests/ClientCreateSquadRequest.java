@@ -1,14 +1,16 @@
-package controller.tcp;
+package controller.tcp.requests;
 
 import constants.CostConstants;
 import controller.OnlineData;
 import controller.client.TCPClient;
 import controller.squad.Squad;
-import utils.Helper;
+import controller.tcp.ServerMessageType;
+import controller.tcp.ServerRecponceType;
+import controller.tcp.TCPClientRequest;
 
 import java.util.ArrayList;
 
-public class ClientCreateSquadRequest extends TCPClientRequest{
+public class ClientCreateSquadRequest extends TCPClientRequest {
 
     private TCPClient tcpClient;
 
@@ -27,18 +29,21 @@ public class ClientCreateSquadRequest extends TCPClientRequest{
 
         for (Squad squad : squads) {
             if (squad.getName().equals(squadName)) {
-                tcpClient.getTcpMessager().sendMessage(ServerMessageType.error);
+                tcpClient.getTcpMessager().sendMessage(ServerMessageType.createSquadRecponce);
+                tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
                 return;
             }
         }
         Squad newSquad = new Squad(squadName);
         newSquad.addMember(tcpClient);
+        newSquad.setOwner(tcpClient);
         synchronized (OnlineData.getSquads()) {
             OnlineData.addSquad(newSquad);
         }
         OnlineData.getGameClient(tcpClient).setXp(
                 OnlineData.getGameClient(tcpClient).getXp() - CostConstants.SQUAD_XP_COST
         );
-        tcpClient.getTcpMessager().sendMessage(ServerMessageType.done);
+        tcpClient.getTcpMessager().sendMessage(ServerMessageType.createSquadRecponce);
+        tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
     }
 }

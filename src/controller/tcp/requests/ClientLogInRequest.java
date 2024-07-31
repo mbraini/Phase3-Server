@@ -1,4 +1,4 @@
-package controller.tcp;
+package controller.tcp.requests;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -9,6 +9,8 @@ import constants.PathConstants;
 import controller.OnlineData;
 import controller.SkippedByJson;
 import controller.client.TCPClient;
+import controller.tcp.ServerRecponceType;
+import controller.tcp.TCPClientRequest;
 import utils.Helper;
 
 import java.io.IOException;
@@ -17,12 +19,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class ClientSignUpRequest extends TCPClientRequest{
-
+public class ClientLogInRequest extends TCPClientRequest {
     private final TCPClient TCPClient;
     private Gson gson;
 
-    public ClientSignUpRequest(TCPClient TCPClient) {
+    public ClientLogInRequest(TCPClient TCPClient) {
         this.TCPClient = TCPClient;
         initGson();
     }
@@ -55,17 +56,13 @@ public class ClientSignUpRequest extends TCPClientRequest{
         ArrayList<TCPClient> TCPClients = gson.fromJson(JText.toString() ,type);
         for (TCPClient TCPClient : TCPClients) {
             if (TCPClient.getUsername().equals(this.TCPClient.getUsername())) {
-                this.TCPClient.getTcpMessager().sendMessage(ServerMessageType.error);
+                this.TCPClient.getTcpMessager().sendMessage(ServerRecponceType.done);
+                OnlineData.addClient(this.TCPClient);
+                OnlineData.getGameClient(this.TCPClient).update(this.TCPClient);
                 return;
             }
         }
-        TCPClients.add(TCPClient);
-        Helper.writeFile(PathConstants.SIGNED_UP_CLIENTS_PATH ,gson.toJson(TCPClients));
-
-        setUpFolder();
-        this.TCPClient.getTcpMessager().sendMessage(ServerMessageType.done);
-        OnlineData.addClient(TCPClient);
-        OnlineData.getGameClient(this.TCPClient).update(this.TCPClient);
+        this.TCPClient.getTcpMessager().sendMessage(ServerRecponceType.error);
     }
 
     private void setUpFolder() {
