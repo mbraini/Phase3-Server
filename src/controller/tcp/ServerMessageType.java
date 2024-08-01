@@ -8,7 +8,7 @@ public enum ServerMessageType {
     joinSquadRecponce,
     getSquadMembers,
     leaveSquad,
-    hasSquadRecponce
+    kickOut, hasSquadRecponce
 
 
 }

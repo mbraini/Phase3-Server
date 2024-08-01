@@ -66,6 +66,9 @@ public class TCPServiceListener {
                     break;
                 case leaveSquad:
                     new ClientLeaveSquadRequest(tcpClient).checkRequest();
+                    break;
+                case kickOut:
+                    new ClientKickOutSquadRequest(tcpClient).checkRequest();
             }
         }
         System.out.println("LOST CLIENT!");
