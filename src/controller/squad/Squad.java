@@ -46,4 +46,13 @@ public class Squad {
     public void setOwner(String owner) {
         this.owner = owner;
     }
+
+    public synchronized void removeMember(String username) {
+        members.remove(username);
+        if (owner.equals(username)) {
+            owner = "";
+            if (!members.isEmpty())
+                owner = members.getFirst();
+        }
+    }
 }

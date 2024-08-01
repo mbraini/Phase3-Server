@@ -18,19 +18,6 @@ public class OnlineData {
 
 
     public synchronized static void addClient(TCPClient tcpClient) {
-//        for (int i = 0 ;i < TCPClients.size() ;i++) {
-//            if (TCPClients.get(i).getUsername().equals(newTCPClient.getUsername())) {
-//                GameClient gameClient = clientGameMap.remove(TCPClients.get(i));
-//                newTCPClient.setSquad(TCPClients.get(i).getSquad());
-//                newTCPClient.setMessages(TCPClients.get(i).getMessages());
-//                TCPClients.set(i, newTCPClient);
-//                putClientGameMap(newTCPClient ,gameClient);
-//                return;
-//            }
-//        }
-//        TCPClients.add(newTCPClient);
-//        putClientGameMap(newTCPClient ,new GameClient(newTCPClient.getUsername()));
-
         for (int i = 0 ;i < clientUsernames.size() ;i++) {
             if (clientUsernames.get(i).equals(tcpClient.getUsername())) {
                 clientTCPMap.remove(tcpClient.getUsername());
@@ -77,6 +64,7 @@ public class OnlineData {
     }
 
     public static void putClientSquadMap(String username ,Squad squad) {
+        clientSquadMap.remove(username);
         clientSquadMap.put(username ,squad);
     }
 

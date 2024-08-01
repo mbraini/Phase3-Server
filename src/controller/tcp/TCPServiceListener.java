@@ -3,20 +3,16 @@ package controller.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.client.TCPClient;
-import controller.tcp.requests.ClientCreateSquadRequest;
+import controller.tcp.requests.*;
 import controller.tcp.requests.getAllSquadRequest.ClientGetAllSquadsRequest;
-import controller.tcp.requests.ClientHasSquadRequest;
-import controller.tcp.requests.ClientJoinSquadRequest;
-import controller.tcp.requests.ClientLogInRequest;
-import controller.tcp.requests.ClientSignUpRequest;
 import controller.tcp.requests.getSquadMembers.ClientGetSquadMembersRequest;
 
 public class TCPServiceListener {
-    private final TCPClient TCPClient;
+    private final TCPClient tcpClient;
     private Gson gson;
 
-    public TCPServiceListener(TCPClient TCPClient) {
-        this.TCPClient = TCPClient;
+    public TCPServiceListener(TCPClient tcpClient) {
+        this.tcpClient = tcpClient;
         initGson();
     }
 
@@ -41,37 +37,39 @@ public class TCPServiceListener {
                 throw new RuntimeException(e);
             }
             String clientRequest;
-            if (TCPClient.getTcpMessager().hasMessage())
-                clientRequest = TCPClient.getTcpMessager().readMessage();
+            if (tcpClient.getTcpMessager().hasMessage())
+                clientRequest = tcpClient.getTcpMessager().readMessage();
             else
                 continue;
             ClientRequestType requestType = gson.fromJson(clientRequest , ClientRequestType.class);
             switch (requestType) {
                 case signUp :
-                    new ClientSignUpRequest(TCPClient).checkRequest();
+                    new ClientSignUpRequest(tcpClient).checkRequest();
                     break;
                 case logIn:
-                    new ClientLogInRequest(TCPClient).checkRequest();
+                    new ClientLogInRequest(tcpClient).checkRequest();
                     break;
                 case hasSquad:
-                    new ClientHasSquadRequest(TCPClient).checkRequest();
+                    new ClientHasSquadRequest(tcpClient).checkRequest();
                     break;
                 case getAllSquads:
-                    new ClientGetAllSquadsRequest(TCPClient).checkRequest();
+                    new ClientGetAllSquadsRequest(tcpClient).checkRequest();
                     break;
                 case createSquad:
-                    new ClientCreateSquadRequest(TCPClient).checkRequest();
+                    new ClientCreateSquadRequest(tcpClient).checkRequest();
                     break;
                 case joinSquad:
-                    new ClientJoinSquadRequest(TCPClient).checkRequest();
+                    new ClientJoinSquadRequest(tcpClient).checkRequest();
                     break;
                 case getSquadMembers:
-                    new ClientGetSquadMembersRequest(TCPClient).checkRequest();
+                    new ClientGetSquadMembersRequest(tcpClient).checkRequest();
                     break;
+                case leaveSquad:
+                    new ClientLeaveSquadRequest(tcpClient).checkRequest();
             }
         }
         System.out.println("LOST CLIENT!");
-        TCPClient.getTcpMessager().close();
+        tcpClient.getTcpMessager().close();
     }
 
     private boolean isConnectionLost() {
