@@ -9,6 +9,7 @@ import controller.tcp.requests.ClientHasSquadRequest;
 import controller.tcp.requests.ClientJoinSquadRequest;
 import controller.tcp.requests.ClientLogInRequest;
 import controller.tcp.requests.ClientSignUpRequest;
+import controller.tcp.requests.getSquadMembers.ClientGetSquadMembersRequest;
 
 public class TCPServiceListener {
     private final TCPClient TCPClient;
@@ -64,8 +65,12 @@ public class TCPServiceListener {
                 case joinSquad:
                     new ClientJoinSquadRequest(TCPClient).checkRequest();
                     break;
+                case getSquadMembers:
+                    new ClientGetSquadMembersRequest(TCPClient).checkRequest();
+                    break;
             }
         }
+        System.out.println("LOST CLIENT!");
         TCPClient.getTcpMessager().close();
     }
 

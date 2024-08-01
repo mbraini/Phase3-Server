@@ -11,13 +11,14 @@ public class Squad {
 
     private String name;
     @SkippedForClient
-    private ArrayList<TCPClient> members;
+    private ArrayList<String> members;
     @SkippedForClient
-    private TCPClient owner;
+    private String owner;
 
     public Squad(String name) {
         this.name = name;
         members = new ArrayList<>();
+        owner = "";
     }
 
     public String getName() {
@@ -28,24 +29,21 @@ public class Squad {
         this.name = name;
     }
 
-    public ArrayList<TCPClient> getMembers() {
+    public ArrayList<String> getMembers() {
         return members;
     }
 
-    public void setMembers(ArrayList<TCPClient> members) {
-        this.members = members;
+
+    public synchronized void addMember(String username) {
+        members.add(username);
+        OnlineData.putClientSquadMap(username ,this);
     }
 
-    public synchronized void addMember(TCPClient tcpClient) {
-        members.add(tcpClient);
-        tcpClient.setSquad(this);
-    }
-
-    public TCPClient getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(TCPClient owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 }

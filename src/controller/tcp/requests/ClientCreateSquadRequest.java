@@ -35,13 +35,13 @@ public class ClientCreateSquadRequest extends TCPClientRequest {
             }
         }
         Squad newSquad = new Squad(squadName);
-        newSquad.addMember(tcpClient);
-        newSquad.setOwner(tcpClient);
+        newSquad.addMember(tcpClient.getUsername());
+        newSquad.setOwner(tcpClient.getUsername());
         synchronized (OnlineData.getSquads()) {
             OnlineData.addSquad(newSquad);
         }
-        OnlineData.getGameClient(tcpClient).setXp(
-                OnlineData.getGameClient(tcpClient).getXp() - CostConstants.SQUAD_XP_COST
+        OnlineData.getGameClient(tcpClient.getUsername()).setXp(
+                OnlineData.getGameClient(tcpClient.getUsername()).getXp() - CostConstants.SQUAD_XP_COST
         );
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.createSquadRecponce);
         tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class TCPClient {
     private String username;
     private String ip;
-    private Squad squad;
     private ArrayList<ClientMessage> messages;
     @SkippedByJson
     private volatile ClientState clientState;
@@ -21,6 +20,7 @@ public class TCPClient {
         tcpMessager = new TCPMessager(socket);
         messages = new ArrayList<>();
         clientState = ClientState.online;
+        username = "";
     }
 
     public String getUsername() {
@@ -50,14 +50,6 @@ public class TCPClient {
 
     public TCPMessager getTcpMessager() {
         return tcpMessager;
-    }
-
-    public Squad getSquad() {
-        return squad;
-    }
-
-    public void setSquad(Squad squad) {
-        this.squad = squad;
     }
 
     public void addMessage(ClientMessage message) {

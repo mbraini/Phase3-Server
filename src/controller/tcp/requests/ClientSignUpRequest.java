@@ -67,7 +67,7 @@ public class ClientSignUpRequest extends TCPClientRequest {
         setUpFolder();
         OnlineData.addClient(TCPClient);
         this.TCPClient.getTcpMessager().sendMessage(ServerRecponceType.done);
-        OnlineData.getGameClient(this.TCPClient).update(this.TCPClient);
+        OnlineData.getGameClient(this.TCPClient.getUsername()).update(this.TCPClient);
     }
 
     private void setUpFolder() {

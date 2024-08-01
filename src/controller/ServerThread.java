@@ -34,17 +34,18 @@ public class ServerThread extends Thread {
     }
 
     private void sendMessagesIf() {
-        ArrayList<TCPClient> clients;
-        synchronized (OnlineData.getClients()) {
-            clients = (ArrayList<TCPClient>) OnlineData.getClients().clone();
+        ArrayList<String> clientUsernames;
+        synchronized (OnlineData.getClientUsernames()) {
+            clientUsernames = (ArrayList<String>) OnlineData.getClientUsernames().clone();
         }
-        for (TCPClient client : clients) {
-            if (client.getClientState().equals(ClientState.online)) {
-                if (!client.getMessages().isEmpty()) {
-                    for (ClientMessage clientMessage : client.getMessages()) {
+        for (String username : clientUsernames) {
+            TCPClient tcpClient = OnlineData.getTCPClient(username);
+            if (tcpClient.getClientState().equals(ClientState.online)) {
+                if (!tcpClient.getMessages().isEmpty()) {
+                    for (ClientMessage clientMessage : tcpClient.getMessages()) {
                         clientMessage.deliverMessage();
                     }
-                    client.setMessages(new ArrayList<>());
+                    tcpClient.setMessages(new ArrayList<>());
                 }
             }
         }

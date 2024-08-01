@@ -1,6 +1,7 @@
 package controller.tcp.requests;
 
 import controller.OnlineData;
+import controller.OnlineDataHelper;
 import controller.client.TCPClient;
 import controller.squad.Squad;
 import controller.tcp.ServerMessageType;
@@ -22,14 +23,14 @@ public class ClientJoinSquadRequest extends TCPClientRequest {
     @Override
     public void checkRequest() {
         String squadName = tcpClient.getTcpMessager().readMessage();
-        Squad squad = findSquad(squadName);
+        Squad squad = OnlineDataHelper.findSquad(squadName);
         ArrayList<ClientMessage> messages;
         messages = (ArrayList<ClientMessage>) tcpClient.getMessages().clone();
         for (ClientMessage message : messages) {
             if (message instanceof ClientJoinSquadRequestMessage) {
                 ClientJoinSquadRequestMessage joinReq = ((ClientJoinSquadRequestMessage) message);
                 if (joinReq.getSquad().getName().equals(squad.getName())
-                        && joinReq.getRequester().getUsername().equals(tcpClient.getUsername())
+                        && joinReq.getRequester().equals(tcpClient.getUsername())
                 )
                 {
                     tcpClient.getTcpMessager().sendMessage(ServerMessageType.joinSquadRecponce);
@@ -38,27 +39,15 @@ public class ClientJoinSquadRequest extends TCPClientRequest {
                 }
             }
         }
-        squad.getOwner().addMessage(
+        String ownerUsername = squad.getOwner();
+        OnlineData.getTCPClient(ownerUsername).addMessage(
                 new ClientJoinSquadRequestMessage(
                         squad.getOwner(),
                         squad,
-                        tcpClient
+                        tcpClient.getUsername()
                 )
         );
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.joinSquadRecponce);
         tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
-    }
-
-    private Squad findSquad(String squadName) {
-        ArrayList<Squad> squads;
-        synchronized (OnlineData.getSquads()) {
-            squads = (ArrayList<Squad>) OnlineData.getSquads().clone();
-        }
-
-        for (Squad squad : squads) {
-            if (squad.getName().equals(squadName))
-                return squad;
-        }
-        return null;
     }
 }

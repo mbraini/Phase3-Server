@@ -6,6 +6,7 @@ public enum ServerMessageType {
     yes_no_message,
     ok_message,
     joinSquadRecponce,
+    getSquadMembers,
     hasSquadRecponce
 
 

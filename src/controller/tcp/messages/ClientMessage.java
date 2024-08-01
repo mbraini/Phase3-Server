@@ -1,19 +1,20 @@
 package controller.tcp.messages;
 
+import controller.OnlineData;
 import controller.client.TCPClient;
 import controller.tcp.ServerMessageType;
 
 public abstract class ClientMessage {
 
-    protected TCPClient receiver;
+    protected String receiver;
     protected ServerMessageType messageType;
 
-    public ClientMessage(TCPClient receiver) {
+    public ClientMessage(String receiver) {
         this.receiver = receiver;
     }
 
     public void deliverMessage() {
-        receiver.getTcpMessager().sendMessage(messageType);
+        OnlineData.getTCPClient(receiver).getTcpMessager().sendMessage(messageType);
     }
 
 }

@@ -10,43 +10,44 @@ import java.util.HashMap;
 public class OnlineData {
 
     private volatile static ArrayList<Integer> availablePorts = new ArrayList<>();
-    private volatile static ArrayList<TCPClient> TCPClients = new ArrayList<>();
+    private volatile static ArrayList<String> clientUsernames = new ArrayList<>();
     private volatile static ArrayList<Squad> squads = new ArrayList<>();
-    private volatile static HashMap<TCPClient , GameClient> clientGameMap = new HashMap<>();
+    private volatile static HashMap<String , TCPClient> clientTCPMap = new HashMap<>();
+    private volatile static HashMap<String ,Squad> clientSquadMap = new HashMap<>();
+    private volatile static HashMap<String , GameClient> clientGameMap = new HashMap<>();
 
-    public synchronized static ArrayList<TCPClient> getClients() {
-        return TCPClients;
-    }
 
-    public synchronized static void addClient(TCPClient newTCPClient) {
-        for (int i = 0 ;i < TCPClients.size() ;i++) {
-            if (TCPClients.get(i).getUsername().equals(newTCPClient.getUsername())) {
-                GameClient gameClient = clientGameMap.remove(TCPClients.get(i));
-                newTCPClient.setSquad(TCPClients.get(i).getSquad());
-                TCPClients.set(i, newTCPClient);
-                putClientGameMap(newTCPClient ,gameClient);
-                return;
+    public synchronized static void addClient(TCPClient tcpClient) {
+//        for (int i = 0 ;i < TCPClients.size() ;i++) {
+//            if (TCPClients.get(i).getUsername().equals(newTCPClient.getUsername())) {
+//                GameClient gameClient = clientGameMap.remove(TCPClients.get(i));
+//                newTCPClient.setSquad(TCPClients.get(i).getSquad());
+//                newTCPClient.setMessages(TCPClients.get(i).getMessages());
+//                TCPClients.set(i, newTCPClient);
+//                putClientGameMap(newTCPClient ,gameClient);
+//                return;
+//            }
+//        }
+//        TCPClients.add(newTCPClient);
+//        putClientGameMap(newTCPClient ,new GameClient(newTCPClient.getUsername()));
+
+        for (int i = 0 ;i < clientUsernames.size() ;i++) {
+            if (clientUsernames.get(i).equals(tcpClient.getUsername())) {
+                clientTCPMap.remove(tcpClient.getUsername());
+                clientTCPMap.put(tcpClient.getUsername() ,tcpClient);
             }
         }
-        TCPClients.add(newTCPClient);
-        putClientGameMap(newTCPClient ,new GameClient(newTCPClient.getUsername()));
+        clientTCPMap.put(tcpClient.getUsername() ,tcpClient);
+        clientUsernames.add(tcpClient.getUsername());
+        putClientGameMap(tcpClient.getUsername() ,new GameClient(tcpClient.getUsername()));
     }
 
-    public synchronized static void removeClient(TCPClient TCPClient) {
-        for (TCPClient onlineTCPClient : TCPClients) {
-            if (onlineTCPClient.getUsername().equals(TCPClient.getUsername())) {
-                TCPClients.remove(onlineTCPClient);
-                return;
-            }
-        }
+    public synchronized static void putClientGameMap(String username ,GameClient gameClient) {
+        clientGameMap.put(username,gameClient);
     }
 
-    public synchronized static void putClientGameMap(TCPClient tcpClient ,GameClient gameClient) {
-        clientGameMap.put(tcpClient,gameClient);
-    }
-
-    public synchronized static GameClient getGameClient(TCPClient tcpClient) {
-        return clientGameMap.get(tcpClient);
+    public synchronized static GameClient getGameClient(String username) {
+        return clientGameMap.get(username);
     }
 
 
@@ -69,5 +70,21 @@ public class OnlineData {
 
     public static void setAvailablePorts(ArrayList<Integer> availablePorts) {
         OnlineData.availablePorts = availablePorts;
+    }
+
+    public static TCPClient getTCPClient(String username) {
+        return clientTCPMap.get(username);
+    }
+
+    public static void putClientSquadMap(String username ,Squad squad) {
+        clientSquadMap.put(username ,squad);
+    }
+
+    public static Squad getSquad(String username) {
+        return clientSquadMap.get(username);
+    }
+
+    public static ArrayList<String> getClientUsernames() {
+        return clientUsernames;
     }
 }

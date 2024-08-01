@@ -13,13 +13,13 @@ import java.net.Socket;
 
 public class ClientJoinSquadRequestMessage extends YesNoMessage {
 
-    private TCPClient requester;
+    private String requester;
     private Squad squad;
     protected MessageThread messageThread;
     private int port;
     private Gson gson;
 
-    public ClientJoinSquadRequestMessage(TCPClient receiver, Squad squad , TCPClient requester) {
+    public ClientJoinSquadRequestMessage(String receiver, Squad squad , String requester) {
         super(receiver);
         this.squad = squad;
         this.requester = requester;
@@ -40,14 +40,15 @@ public class ClientJoinSquadRequestMessage extends YesNoMessage {
     public void deliverMessage() {
         super.deliverMessage();
         messageThread.start();
-        squad.getOwner().getTcpMessager().sendMessage(port);
+        String ownerUsername = squad.getOwner();
+        OnlineData.getTCPClient(ownerUsername).getTcpMessager().sendMessage(port);
     }
 
-    public TCPClient getRequester() {
+    public String getRequester() {
         return requester;
     }
 
-    public void setRequester(TCPClient requester) {
+    public void setRequester(String requester) {
         this.requester = requester;
     }
 
@@ -65,7 +66,7 @@ public class ClientJoinSquadRequestMessage extends YesNoMessage {
         public void run() {
             initMessager();
             receiverMessager.sendMessage(
-                    "player " + "'" + requester.getUsername() + "'" + " has requested to join your squad"
+                    "player " + "'" + requester + "'" + " has requested to join your squad"
                             + ". do you accept?"
             );
             String JRecponce = receiverMessager.readMessage();
@@ -73,8 +74,8 @@ public class ClientJoinSquadRequestMessage extends YesNoMessage {
             if (ownerRecponce.equals(ClientMessageRecponceType.yes)) {
                 squad.addMember(requester);
             }
-            requester.addMessage(
-                    new ClientJoinSquadRecponceMessage(requester , squad,ownerRecponce)
+            OnlineData.getTCPClient(requester).addMessage(
+                    new ClientJoinSquadRecponceMessage(requester , squad ,ownerRecponce)
             );
         }
 

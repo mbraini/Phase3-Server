@@ -1,5 +1,6 @@
 package controller.tcp.requests;
 
+import controller.OnlineData;
 import controller.client.TCPClient;
 import controller.tcp.ServerMessageType;
 import controller.tcp.ServerRecponceType;
@@ -17,7 +18,7 @@ public class ClientHasSquadRequest extends TCPClientRequest {
 
     @Override
     public void checkRequest() {
-        if (tcpClient.getSquad() == null) {
+        if (OnlineData.getSquad(tcpClient.getUsername()) == null) {
             tcpClient.getTcpMessager().sendMessage(ServerMessageType.hasSquadRecponce);
             tcpClient.getTcpMessager().sendMessage(ServerRecponceType.no);
         }
