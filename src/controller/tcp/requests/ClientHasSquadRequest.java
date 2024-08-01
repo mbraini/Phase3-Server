@@ -18,7 +18,7 @@ public class ClientHasSquadRequest extends TCPClientRequest {
 
     @Override
     public void checkRequest() {
-        if (OnlineData.getSquad(tcpClient.getUsername()) == null) {
+        if (OnlineData.getClientSquad(tcpClient.getUsername()) == null) {
             tcpClient.getTcpMessager().sendMessage(ServerMessageType.hasSquadRecponce);
             tcpClient.getTcpMessager().sendMessage(ServerRecponceType.no);
         }

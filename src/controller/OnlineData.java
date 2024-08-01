@@ -51,28 +51,45 @@ public class OnlineData {
         return availablePorts.removeFirst();
     }
 
-    public static ArrayList<Integer> getAvailablePorts() {
+    public synchronized static ArrayList<Integer> getAvailablePorts() {
         return availablePorts;
     }
 
-    public static void setAvailablePorts(ArrayList<Integer> availablePorts) {
+    public synchronized static void setAvailablePorts(ArrayList<Integer> availablePorts) {
         OnlineData.availablePorts = availablePorts;
     }
 
-    public static TCPClient getTCPClient(String username) {
+    public synchronized static TCPClient getTCPClient(String username) {
         return clientTCPMap.get(username);
     }
 
-    public static void putClientSquadMap(String username ,Squad squad) {
+    public synchronized static void putClientSquadMap(String username ,Squad squad) {
         clientSquadMap.remove(username);
         clientSquadMap.put(username ,squad);
     }
 
-    public static Squad getSquad(String username) {
+    public synchronized static Squad getClientSquad(String username) {
         return clientSquadMap.get(username);
+    }
+
+    public synchronized static Squad getSquad(String squadName) {
+        for (Squad squad : squads) {
+            if (squad.getName().equals(squadName))
+                return squad;
+        }
+        return null;
     }
 
     public static ArrayList<String> getClientUsernames() {
         return clientUsernames;
+    }
+
+    public static synchronized void removeSquad(Squad squad) {
+        for (Squad dataSquad : squads) {
+            if (dataSquad.getName().equals(squad.getName())) {
+                squads.remove(dataSquad);
+                return;
+            }
+        }
     }
 }

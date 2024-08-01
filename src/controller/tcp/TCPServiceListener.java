@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import controller.client.TCPClient;
 import controller.tcp.requests.*;
 import controller.tcp.requests.getAllSquadRequest.ClientGetAllSquadsRequest;
-import controller.tcp.requests.getSquadMembers.ClientGetSquadMembersRequest;
+import controller.tcp.requests.getSquadInfo.ClientGetSquadInfoRequest;
 
 public class TCPServiceListener {
     private final TCPClient tcpClient;
@@ -61,14 +61,18 @@ public class TCPServiceListener {
                 case joinSquad:
                     new ClientJoinSquadRequest(tcpClient).checkRequest();
                     break;
-                case getSquadMembers:
-                    new ClientGetSquadMembersRequest(tcpClient).checkRequest();
+                case getSquadInfo:
+                    new ClientGetSquadInfoRequest(tcpClient).checkRequest();
                     break;
                 case leaveSquad:
                     new ClientLeaveSquadRequest(tcpClient).checkRequest();
                     break;
                 case kickOut:
                     new ClientKickOutSquadRequest(tcpClient).checkRequest();
+                    break;
+                case killSquad:
+                    new ClientKillSquadRequest(tcpClient).checkRequest();
+                    break;
             }
         }
         System.out.println("LOST CLIENT!");

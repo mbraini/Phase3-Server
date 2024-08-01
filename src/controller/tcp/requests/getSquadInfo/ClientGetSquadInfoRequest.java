@@ -1,4 +1,4 @@
-package controller.tcp.requests.getSquadMembers;
+package controller.tcp.requests.getSquadInfo;
 
 import com.google.gson.Gson;
 import controller.OnlineData;
@@ -10,12 +10,12 @@ import controller.tcp.TCPClientRequest;
 
 import java.util.ArrayList;
 
-public class ClientGetSquadMembersRequest extends TCPClientRequest {
+public class ClientGetSquadInfoRequest extends TCPClientRequest {
 
     private TCPClient tcpClient;
     private Gson gson;
 
-    public ClientGetSquadMembersRequest(TCPClient tcpClient) {
+    public ClientGetSquadInfoRequest(TCPClient tcpClient) {
         this.tcpClient = tcpClient;
         initGson();
     }
@@ -26,7 +26,7 @@ public class ClientGetSquadMembersRequest extends TCPClientRequest {
 
     @Override
     public void checkRequest() {
-        Squad squad = OnlineData.getSquad(tcpClient.getUsername());
+        Squad squad = OnlineData.getClientSquad(tcpClient.getUsername());
         ArrayList<GetSquadMembersJsonHelper> helpers = new ArrayList<>();
         for (String member : squad.getMembers()) {
             if (member.equals(this.tcpClient.getUsername()))
@@ -42,7 +42,7 @@ public class ClientGetSquadMembersRequest extends TCPClientRequest {
                     )
             );
         }
-        tcpClient.getTcpMessager().sendMessage(ServerMessageType.getSquadMembers);
+        tcpClient.getTcpMessager().sendMessage(ServerMessageType.getSquadInfo);
         tcpClient.getTcpMessager().sendMessage(gson.toJson(helpers));
         tcpClient.getTcpMessager().sendMessage(
                 gson.toJson(
@@ -53,5 +53,12 @@ public class ClientGetSquadMembersRequest extends TCPClientRequest {
                         )
                 )
         );
+        tcpClient.getTcpMessager().sendMessage(squad.getName());
+        if (tcpClient.getUsername().equals(squad.getOwner())) {
+            tcpClient.getTcpMessager().sendMessage(true);
+        }
+        else {
+            tcpClient.getTcpMessager().sendMessage(false);
+        }
     }
 }

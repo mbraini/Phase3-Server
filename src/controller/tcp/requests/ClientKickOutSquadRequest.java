@@ -19,7 +19,7 @@ public class ClientKickOutSquadRequest extends TCPClientRequest {
     public void checkRequest() {
 
         String username = tcpClient.getTcpMessager().readMessage();
-        Squad squad = OnlineData.getSquad(username);
+        Squad squad = OnlineData.getClientSquad(username);
         squad.removeMember(username);
         OnlineData.putClientSquadMap(username ,null);
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.kickOut);

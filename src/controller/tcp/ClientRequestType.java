@@ -7,8 +7,10 @@ public enum ClientRequestType {
     getAllSquads,
     createSquad,
     joinSquad,
-    getSquadMembers,
+    getSquadInfo,
     leaveSquad,
-    kickOut, hasSquad
+    kickOut,
+    killSquad,
+    hasSquad
 
 }

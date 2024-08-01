@@ -17,7 +17,7 @@ public class ClientLeaveSquadRequest extends TCPClientRequest {
 
     @Override
     public void checkRequest() {
-        Squad squad = OnlineData.getSquad(tcpClient.getUsername());
+        Squad squad = OnlineData.getClientSquad(tcpClient.getUsername());
         squad.removeMember(tcpClient.getUsername());
         OnlineData.putClientSquadMap(tcpClient.getUsername() ,null);
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.leaveSquad);
