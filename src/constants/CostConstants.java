@@ -14,4 +14,6 @@ public class CostConstants {
     public static final int MELAMPUS_UNLOCK_COST = 750;
     public static final int PROTEUS_UNLOCK_COST = 1000;
     public static final int SQUAD_XP_COST = 100;
+    public static final int MAXIMUM_MEMBER_DONATION = 200;
+    public static final int CREATE_SQUAD_XP_COST = 100;
 }

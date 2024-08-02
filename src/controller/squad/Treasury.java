@@ -45,4 +45,12 @@ public class Treasury {
     public void setXp(int xp) {
         this.xp = xp;
     }
+
+    public HashMap<String, Integer> getDonateMap() {
+        return donateMap;
+    }
+
+    public void setDonateMap(HashMap<String, Integer> donateMap) {
+        this.donateMap = donateMap;
+    }
 }

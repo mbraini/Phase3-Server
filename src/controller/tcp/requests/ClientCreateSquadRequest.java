@@ -34,6 +34,11 @@ public class ClientCreateSquadRequest extends TCPClientRequest {
                 return;
             }
         }
+        if (OnlineData.getGameClient(tcpClient.getUsername()).getXp() < CostConstants.SQUAD_XP_COST) {
+            tcpClient.getTcpMessager().sendMessage(ServerMessageType.createSquadRecponce);
+            tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
+            return;
+        }
         Squad newSquad = new Squad(squadName);
         newSquad.addMember(tcpClient.getUsername());
         newSquad.setOwner(tcpClient.getUsername());
@@ -43,6 +48,7 @@ public class ClientCreateSquadRequest extends TCPClientRequest {
         OnlineData.getGameClient(tcpClient.getUsername()).setXp(
                 OnlineData.getGameClient(tcpClient.getUsername()).getXp() - CostConstants.SQUAD_XP_COST
         );
+
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.createSquadRecponce);
         tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
     }
