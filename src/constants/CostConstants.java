@@ -16,4 +16,6 @@ public class CostConstants {
     public static final int SQUAD_XP_COST = 100;
     public static final int MAXIMUM_MEMBER_DONATION = 200;
     public static final int CREATE_SQUAD_XP_COST = 100;
+    public static final int GEFJON_XP_COST = 300;
+    public static final int ADONIS_XP_COST = 400;
 }

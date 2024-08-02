@@ -11,6 +11,6 @@ public enum ClientRequestType {
     kickOut,
     killSquad,
     updateHasSquad,
-    hasSquadBattle, updateBattleSquad, updateTreasury, donateXP, updateTreasuryShop, hasSquad
+    hasSquadBattle, updateBattleSquad, updateTreasury, donateXP, updateTreasuryShop, buyCall, hasSquad
 
 }

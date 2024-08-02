@@ -88,6 +88,9 @@ public class TCPServiceListener {
                 case donateXP:
                     new ClientDonateXPRequest(tcpClient).checkRequest();
                     break;
+                case buyCall:
+                    new ClientBuyCallRequest(tcpClient).checkRequest();
+                    break;
             }
         }
     }
