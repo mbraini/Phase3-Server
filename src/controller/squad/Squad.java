@@ -10,15 +10,14 @@ import java.util.ArrayList;
 public class Squad {
 
     private String name;
-    private String fightingWith;
-    @SkippedForClient
+    private SquadBattle squadBattle;
     private ArrayList<String> members;
-    @SkippedForClient
     private String owner;
 
     public Squad(String name) {
         this.name = name;
         members = new ArrayList<>();
+        squadBattle = new SquadBattle();
         owner = "";
     }
 
@@ -54,14 +53,17 @@ public class Squad {
             owner = "";
             if (!members.isEmpty())
                 owner = members.getFirst();
+            else {
+                OnlineData.removeSquad(this);
+            }
         }
     }
 
-    public String getFightingWith() {
-        return fightingWith;
+    public SquadBattle getSquadBattle() {
+        return squadBattle;
     }
 
-    public void setFightingWith(String fightingWith) {
-        this.fightingWith = fightingWith;
+    public void setSquadBattle(SquadBattle squadBattle) {
+        this.squadBattle = squadBattle;
     }
 }

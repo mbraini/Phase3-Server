@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import controller.client.TCPClient;
 import controller.tcp.requests.*;
 import controller.tcp.requests.getAllSquadRequest.ClientGetAllSquadsRequest;
+import controller.tcp.requests.updateBattleSquad.ClientUpdateBattleSquadRequest;
 import controller.tcp.requests.updateHasSquad.ClientUpdateHasSquadRequest;
 
 public class TCPServiceListener {
@@ -71,6 +72,12 @@ public class TCPServiceListener {
                     break;
                 case updateHasSquad:
                     new ClientUpdateHasSquadRequest(tcpClient).checkRequest();
+                    break;
+                case hasSquadBattle:
+                    new ClientHasBattleSquadRequest(tcpClient).checkRequest();
+                    break;
+                case updateBattleSquad:
+                    new ClientUpdateBattleSquadRequest(tcpClient).checkRequest();
                     break;
             }
         }

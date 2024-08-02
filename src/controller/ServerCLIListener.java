@@ -1,5 +1,8 @@
 package controller;
 
+import controller.squad.Squad;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ServerCLIListener extends Thread {
@@ -15,13 +18,22 @@ public class ServerCLIListener extends Thread {
         while (true) {
             String command = scanner.nextLine();
             if (command.equals("initiateSquadBattle")) {
-                System.out.println("FIGHT!");
-                ///todo
+                startSquadBattle();
             }
             else if (command.equals("terminateSquadBattle")) {
                 System.out.println("WHO WON?");
                 ///todo
             }
+        }
+    }
+
+    private void startSquadBattle() {
+        ArrayList<Squad> squads = (ArrayList<Squad>) OnlineData.getSquads().clone();
+        for (int i = 0; i < squads.size() ;i = i + 2) {
+            if (i + 1 >= squads.size())
+                continue;
+            squads.get(i).getSquadBattle().setInBattleWith(squads.get(i + 1).getName());
+            squads.get(i + 1).getSquadBattle().setInBattleWith(squads.get(i).getName());
         }
     }
 }
