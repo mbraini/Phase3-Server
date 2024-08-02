@@ -82,6 +82,9 @@ public class TCPServiceListener {
                 case updateTreasury:
                     new ClientUpdateTreasuryRequest(tcpClient).checkRequest();
                     break;
+                case updateTreasuryShop:
+                    new ClientUpdateTreasuryShopRequest(tcpClient).checkRequest();
+                    break;
                 case donateXP:
                     new ClientDonateXPRequest(tcpClient).checkRequest();
                     break;
