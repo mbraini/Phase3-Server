@@ -1,9 +1,15 @@
 package controller.client;
 
+import constants.ControllerConstants;
+import controller.OnlineData;
 import controller.SkippedByJson;
 import controller.squad.Squad;
+import controller.tcp.ConnectionChecker;
 import controller.tcp.messages.ClientMessage;
 import utils.TCPMessager;
+
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -15,9 +21,12 @@ public class TCPClient {
     private volatile ClientState clientState;
     @SkippedByJson
     private final TCPMessager tcpMessager;
+    @SkippedByJson
+    private final ConnectionChecker connectionChecker;
 
     public TCPClient(Socket socket) {
         tcpMessager = new TCPMessager(socket);
+        connectionChecker = new ConnectionChecker(this);
         messages = new ArrayList<>();
         clientState = ClientState.online;
         username = "";
@@ -62,5 +71,9 @@ public class TCPClient {
 
     public void setMessages(ArrayList<ClientMessage> messages) {
         this.messages = messages;
+    }
+
+    public ConnectionChecker getConnectionChecker() {
+        return connectionChecker;
     }
 }

@@ -20,8 +20,10 @@ public class OnlineData {
     public synchronized static void addClient(TCPClient tcpClient) {
         for (int i = 0 ;i < clientUsernames.size() ;i++) {
             if (clientUsernames.get(i).equals(tcpClient.getUsername())) {
-                clientTCPMap.remove(tcpClient.getUsername());
+                TCPClient lastTCP = clientTCPMap.remove(tcpClient.getUsername());
+                tcpClient.setMessages(lastTCP.getMessages());
                 clientTCPMap.put(tcpClient.getUsername() ,tcpClient);
+                return;
             }
         }
         clientTCPMap.put(tcpClient.getUsername() ,tcpClient);

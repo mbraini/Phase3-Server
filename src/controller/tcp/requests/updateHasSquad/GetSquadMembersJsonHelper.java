@@ -1,4 +1,4 @@
-package controller.tcp.requests.getSquadInfo;
+package controller.tcp.requests.updateHasSquad;
 
 import controller.client.ClientState;
 
@@ -6,6 +6,10 @@ public class GetSquadMembersJsonHelper {
     private String username;
     private int xp;
     private ClientState clientState;
+
+    public GetSquadMembersJsonHelper() {
+
+    }
 
     public GetSquadMembersJsonHelper(String username, int xp, ClientState clientState) {
         this.username = username;
@@ -35,5 +39,12 @@ public class GetSquadMembersJsonHelper {
 
     public void setClientState(ClientState clientState) {
         this.clientState = clientState;
+    }
+
+    public boolean equals(GetSquadMembersJsonHelper helper) {
+        if (getXp() == helper.getXp() && getClientState().equals(helper.getClientState())
+                && getUsername().equals(helper.getUsername()))
+            return true;
+        return false;
     }
 }

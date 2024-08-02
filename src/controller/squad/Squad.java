@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Squad {
 
     private String name;
+    private String fightingWith;
     @SkippedForClient
     private ArrayList<String> members;
     @SkippedForClient
@@ -54,5 +55,13 @@ public class Squad {
             if (!members.isEmpty())
                 owner = members.getFirst();
         }
+    }
+
+    public String getFightingWith() {
+        return fightingWith;
+    }
+
+    public void setFightingWith(String fightingWith) {
+        this.fightingWith = fightingWith;
     }
 }

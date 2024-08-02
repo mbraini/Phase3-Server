@@ -21,6 +21,10 @@ public class Application implements Runnable{
         }
         OnlineData.setAvailablePorts(ports);
         /////
+
+        ////cli
+        new ServerCLIListener().start();
+        ////
         try {
             ServerWorker.serverWorker.listen();
         } catch (IOException e) {

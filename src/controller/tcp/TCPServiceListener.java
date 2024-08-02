@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import controller.client.TCPClient;
 import controller.tcp.requests.*;
 import controller.tcp.requests.getAllSquadRequest.ClientGetAllSquadsRequest;
-import controller.tcp.requests.getSquadInfo.ClientGetSquadInfoRequest;
+import controller.tcp.requests.updateHasSquad.ClientUpdateHasSquadRequest;
 
 public class TCPServiceListener {
     private final TCPClient tcpClient;
@@ -28,11 +28,10 @@ public class TCPServiceListener {
     }
 
     public void listen() {
+        tcpClient.getConnectionChecker().start();
         while (true) {
-            if (isConnectionLost())
-                break;
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -61,9 +60,6 @@ public class TCPServiceListener {
                 case joinSquad:
                     new ClientJoinSquadRequest(tcpClient).checkRequest();
                     break;
-                case getSquadInfo:
-                    new ClientGetSquadInfoRequest(tcpClient).checkRequest();
-                    break;
                 case leaveSquad:
                     new ClientLeaveSquadRequest(tcpClient).checkRequest();
                     break;
@@ -73,20 +69,10 @@ public class TCPServiceListener {
                 case killSquad:
                     new ClientKillSquadRequest(tcpClient).checkRequest();
                     break;
+                case updateHasSquad:
+                    new ClientUpdateHasSquadRequest(tcpClient).checkRequest();
+                    break;
             }
         }
-        System.out.println("LOST CLIENT!");
-        tcpClient.getTcpMessager().close();
-    }
-
-    private boolean isConnectionLost() {
-//        try {
-//            TCPClient.getTcpMessager().sendMessage(ServerRecponceType.connectionCheck);
-//        }
-//        catch (Exception e) {
-//            return true;
-//        }
-//        return false;
-        return false;
     }
 }
