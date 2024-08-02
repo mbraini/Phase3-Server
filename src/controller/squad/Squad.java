@@ -11,6 +11,7 @@ public class Squad {
 
     private String name;
     private SquadBattle squadBattle;
+    private Treasury treasury;
     private ArrayList<String> members;
     private String owner;
 
@@ -18,6 +19,7 @@ public class Squad {
         this.name = name;
         members = new ArrayList<>();
         squadBattle = new SquadBattle();
+        treasury = new Treasury();
         owner = "";
     }
 
@@ -65,5 +67,13 @@ public class Squad {
 
     public void setSquadBattle(SquadBattle squadBattle) {
         this.squadBattle = squadBattle;
+    }
+
+    public Treasury getTreasury() {
+        return treasury;
+    }
+
+    public void setTreasury(Treasury treasury) {
+        this.treasury = treasury;
     }
 }

@@ -11,7 +11,7 @@ public enum ServerMessageType {
     killSquad,
     connectionCheck,
     updateHasSquad,
-    hasSquadBattle, updateBattleSquad, hasSquadRecponce
+    hasSquadBattle, updateBattleSquad, updateTreasury, hasSquadRecponce
 
 
 }

@@ -79,6 +79,9 @@ public class TCPServiceListener {
                 case updateBattleSquad:
                     new ClientUpdateBattleSquadRequest(tcpClient).checkRequest();
                     break;
+                case updateTreasury:
+                    new ClientUpdateTreasuryRequest(tcpClient).checkRequest();
+                    break;
             }
         }
     }

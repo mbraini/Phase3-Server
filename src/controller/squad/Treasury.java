@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Treasury {
 
-    private int plaioxisCount;
+    private int palioxisCount;
     private int adonisCount;
     private int gefjonCount;
     private int xp;
@@ -14,12 +14,12 @@ public class Treasury {
         donateMap = new HashMap<>();
     }
 
-    public int getPlaioxisCount() {
-        return plaioxisCount;
+    public int getPalioxisCount() {
+        return palioxisCount;
     }
 
-    public void setPlaioxisCount(int plaioxisCount) {
-        this.plaioxisCount = plaioxisCount;
+    public void setPalioxisCount(int palioxisCount) {
+        this.palioxisCount = palioxisCount;
     }
 
     public int getAdonisCount() {
