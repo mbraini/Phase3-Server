@@ -8,8 +8,8 @@ public class VelocityConstants {
     public static final double OMENOCT_NAVIGATE_VELOCITY = 0.1;
     public static final double OMENOCT_BULLET_VELOCITY = 0.6;
     public static final double NECROPCIK_NAVIGATION_VELOCITY = 1;
-    public static final double WYRM_ANGULAR_VELOCITY = 1.3;
-    public static final int WYRM_CIRCULAR_T = (int)(Math.PI * 2 * SizeConstants.WYRM_NAVIGATION_RADIOS / WYRM_ANGULAR_VELOCITY);
+    public static final double WYRM_VELOCITY = 0.5;
+    public static final double WYRM_THETA_UPDATE = WYRM_VELOCITY / SizeConstants.WYRM_NAVIGATION_RADIOS;
     public static final double WYRM_BULLET_VELOCITY = 0.4;
     public static final double FRAME_SHRINKAGE_VELOCITY = 0.01;
     public static final double HAND_SQUEEZE_NAVIGAE_VELOCITY = 1;

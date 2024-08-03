@@ -4,7 +4,6 @@ public class RefreshRateConstants {
 
 
     public static final int WYRM_THETA_UPDATE_COUNT = 360;
-    public static final int WYRM_THREAD_REFRESH_RATE = VelocityConstants.WYRM_CIRCULAR_T / WYRM_THETA_UPDATE_COUNT;
     public static final int BLACK_ORB_THEAD_REFRESH_RATE = 100;
     public static final int BOSS_THREAD_REFRESH_RATE = 100;
     public static final int SQUEEZE_THREAD_REFRESH_RATE = 10;
