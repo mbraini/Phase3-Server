@@ -1,7 +1,6 @@
 package model.skillTreeAbilities;
 
 import constants.CostConstants;
-import controller.game.configs.Configs;
 import controller.game.enums.SkillTreeAbilityType;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
@@ -11,7 +10,7 @@ public class Proteus extends SkillTreeAbility{
     private EpsilonModel epsilonModel;
 
     public Proteus(){
-        isBought = Configs.SkillTreeConfigs.proteusBought;
+//        isBought = Configs.SkillTreeConfigs.proteusBought;
         unlockXpCost = CostConstants.PROTEUS_UNLOCK_COST;
         type = SkillTreeAbilityType.proteus;
         initTimer();
@@ -19,7 +18,7 @@ public class Proteus extends SkillTreeAbility{
     }
 
     private void initEpsilon() {
-        epsilonModel = ModelData.getEpsilon();
+//        epsilonModel = ModelData.getEpsilon(); ///todo
     }
 
 
@@ -33,6 +32,6 @@ public class Proteus extends SkillTreeAbility{
     @Override
     public void setUp() {
         super.setUp();
-        epsilonModel = ModelData.getEpsilon();
+//        epsilonModel = ModelData.getEpsilon(); ///todo
     }
 }

@@ -3,6 +3,7 @@ package controller.game.listeners;
 
 import constants.SizeConstants;
 import constants.TimeConstants;
+import controller.game.Player;
 import controller.game.ViewRequestController;
 import controller.game.manager.GameState;
 import model.ModelData;
@@ -16,30 +17,30 @@ public class EpsilonAiming extends MouseAdapter {
 
     double timer;
     public static int AIM_CODE = 1;
-    public EpsilonAiming(){
+    private Player player;
+    public EpsilonAiming(Player player){
+        this.player = player;
         timer = 0;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (GameState.isInAnimation())
+        if (player.getGame().getGameState().isInAnimation())
             return;
         if (e.getButton() != AIM_CODE) {
             return;
         }
-        if (GameState.isPause())
+        if (player.getGame().getGameState().isPause())
             return;
-        if (GameState.getTime() - timer < TimeConstants.EPSILON_SHOOTIN_TIME)
+        if (player.getGame().getGameState().getTime() - timer < TimeConstants.EPSILON_SHOOTIN_TIME)
             return;
-        timer = GameState.getTime();
-        EpsilonModel epsilon = ModelData.getEpsilon();
+        timer = player.getGame().getGameState().getTime();
+        EpsilonModel epsilon = player.getPlayerData().getEpsilon();
         Vector clickedPoint = new Vector(
                 e.getX() - SizeConstants.SCREEN_SIZE.width ,
                 e.getY() - SizeConstants.SCREEN_SIZE.height
         );
         if (clickedPoint.Equals(epsilon.getPosition()))
-            return;
-        if (!ViewRequestController.shootRequest(clickedPoint))
             return;
 
 //        try {

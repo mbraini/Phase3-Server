@@ -1,5 +1,6 @@
 package model.inGameAbilities;
 
+import controller.game.Player;
 import controller.game.enums.InGameAbilityType;
 
 public abstract class InGameAbility {
@@ -8,6 +9,7 @@ public abstract class InGameAbility {
     protected boolean isAvailable = true;
     protected boolean isActive = false;
     protected int xpCost;
+    protected Player player;
     public abstract void performAbility();
     public abstract void setUp();
 

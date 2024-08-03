@@ -32,7 +32,7 @@ public class Quake extends Ability {
         reorderTimer = new Timer(8000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ModelRequestController.reorderKeys();
+//                ModelRequestController.reorderKeys(); ////////////////todo
                 endAbility();
                 reorderTimer.stop();
             }
@@ -40,8 +40,9 @@ public class Quake extends Ability {
         randomizeTimer = new Timer(RefreshRateConstants.ABILITY_SETUP_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ModelRequestController.randomizeKeys();
+//                ModelRequestController.randomizeKeys(); /////////////todo
                 new Impact(
+                        boss.getGame(),
                         boss.getPunch().getPosition(),
                         SizeConstants.SCREEN_SIZE.height,
                         3000,

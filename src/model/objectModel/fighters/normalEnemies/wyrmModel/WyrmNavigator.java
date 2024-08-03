@@ -14,7 +14,7 @@ public class WyrmNavigator {
     }
 
     public void navigate() {
-        Vector epsilonPosition = ModelData.getModels().getFirst().getPosition();
+        Vector epsilonPosition = wyrmModel.getGame().getModelData().getModels().getFirst().getPosition();
         Vector direction = Math.VectorAdd(
                 Math.ScalarInVector(-1 ,wyrmModel.getPosition()),
                 epsilonPosition
@@ -33,7 +33,7 @@ public class WyrmNavigator {
     }
 
     public boolean hasArrived() {
-        Vector epsilonPosition = ModelData.getModels().getFirst().getPosition();
+        Vector epsilonPosition = wyrmModel.getGame().getModelData().getModels().getFirst().getPosition();
         Vector distance = Math.VectorAdd(
                 epsilonPosition,
                 Math.ScalarInVector(-1 ,wyrmModel.getPosition())

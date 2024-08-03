@@ -26,10 +26,10 @@ public class BossThread extends Thread {
     private int ability;
 
     public BossThread(Boss boss){
-        synchronized (ModelData.getModels()) {
-            epsilon = ModelData.getEpsilon();
-            epsilonFrame = ModelData.getEpsilonFrame();
-        }
+//        synchronized (boss.getGame().getModelData().getModels()) {
+//            epsilon = ModelData.getEpsilon();
+//            epsilonFrame = ModelData.getEpsilonFrame();
+//        }
         this.boss = boss;
         bossAI = new BossAI(boss ,epsilon);
         abilityCaster = new AbilityCaster(boss ,epsilonFrame ,epsilon);
@@ -43,9 +43,9 @@ public class BossThread extends Thread {
         double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double deltaModel = 0;
-        while (!GameState.isOver()) {
+        while (!boss.getGame().getGameState().isOver()) {
             long now = System.nanoTime();
-            if (GameState.isPause() || GameState.isInAnimation() || GameState.isDizzy()){
+            if (boss.getGame().getGameState().isPause() || boss.getGame().getGameState().isInAnimation() || boss.getGame().getGameState().isDizzy()){
                 lastTime = now;
                 continue;
             }
@@ -62,8 +62,8 @@ public class BossThread extends Thread {
     private void updateAbilities() {
         if (boss.getHead().getHP() < 0)
             return;
-        synchronized (ModelData.getModels()) {
-            models = (ArrayList<ObjectModel>) ModelData.getModels().clone();
+        synchronized (boss.getGame().getModelData().getModels()) {
+            models = (ArrayList<ObjectModel>) boss.getGame().getModelData().getModels().clone();
         }
         bossAI.setModels(models);
         if (boss.getAttackPhase() != 2) {
@@ -79,7 +79,7 @@ public class BossThread extends Thread {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if (GameState.isInAnimation())
+                if (boss.getGame().getGameState().isInAnimation())
                     return;
                 abilityCaster.cast();
             }

@@ -1,6 +1,7 @@
 package model.objectModel.fighters.normalEnemies.necropickModel;
 
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
 import utils.Math;
@@ -9,9 +10,11 @@ import utils.Vector;
 public class NecropickShooter {
 
     private Vector position;
+    private Game game;
 
-    public NecropickShooter(Vector position) {
+    public NecropickShooter(Game game, Vector position) {
         this.position = position;
+        this.game = game;
     }
 
     public void shoot() {
@@ -26,6 +29,7 @@ public class NecropickShooter {
                     position
             );
             Spawner.addProjectile(
+                    game,
                     spawnPosition,
                     direction,
                     ModelType.necropickBullet

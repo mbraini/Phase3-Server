@@ -53,7 +53,7 @@ public class Vomit extends Ability {
                 this,
                 Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
         );
-        Spawner.addBossEffect(effectModel);
+        Spawner.addBossEffect(getBoss().getGame() ,effectModel);
         synchronized (effects) {
             effects.add(effectModel);
         }
@@ -70,5 +70,13 @@ public class Vomit extends Ability {
                 return;
             }
         }
+    }
+
+    public Boss getBoss() {
+        return boss;
+    }
+
+    public void setBoss(Boss boss) {
+        this.boss = boss;
     }
 }

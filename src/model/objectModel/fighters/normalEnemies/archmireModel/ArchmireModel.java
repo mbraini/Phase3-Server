@@ -117,7 +117,7 @@ public class ArchmireModel extends NormalEnemyModel implements MoveAble , Abilit
     @Override
     public void die() {
         super.die();
-        Spawner.addCollectives(position ,5 ,6);
+        Spawner.addCollectives(game ,position ,5 ,6);
         thread.interrupt();
     }
 
@@ -142,8 +142,8 @@ public class ArchmireModel extends NormalEnemyModel implements MoveAble , Abilit
 
     @Override
     public void ability() {
-        synchronized (ModelData.getModels()) {
-            Vector epsilonPosition = ModelData.getModels().getFirst().getPosition();
+        synchronized (game.getModelData().getModels()) {
+            Vector epsilonPosition = game.getModelData().getModels().getFirst().getPosition();
             velocity = Math.VectorWithSize(Math.VectorAdd(
                     epsilonPosition,
                     Math.ScalarInVector(-1 ,position)

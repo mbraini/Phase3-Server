@@ -28,7 +28,7 @@ public class Slaughter extends InGameAbility{
         timer = new Timer(RefreshRateConstants.IN_GAME_ABILITY_TIMER_REFRESH_RATE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (GameState.isPause())
+                if (player.getGame().getGameState().isPause())
                     return;
                 timePassed += RefreshRateConstants.IN_GAME_ABILITY_TIMER_REFRESH_RATE;
                 if (timePassed >= TimeConstants.SLAUGHTER_COOLDOWN){

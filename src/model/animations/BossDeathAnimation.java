@@ -26,7 +26,7 @@ public class BossDeathAnimation extends TimerAnimation {
     public BossDeathAnimation(Boss boss) {
         this.boss = boss;
         ModelRequestController.playSound(SoundPathConstants.winSound);
-        GameState.setIsInAnimation(true);
+        boss.getGame().getGameState().setIsInAnimation(true);
         setUpTimer();
         setUpWait();
     }
@@ -50,7 +50,7 @@ public class BossDeathAnimation extends TimerAnimation {
             public void actionPerformed(ActionEvent e) {
                 timePassed += delay;
                 if (timePassed / delay >= 95) {
-                    GameState.setIsInAnimation(false);
+                    boss.getGame().getGameState().setIsInAnimation(false);
                     wait.start();
                     timer.stop();
                     return;
@@ -98,13 +98,13 @@ public class BossDeathAnimation extends TimerAnimation {
         ObjectController.removeFrame(boss.getHead().getFrame());
         ObjectController.removeObject(boss.getPunch());
         ObjectController.removeFrame(boss.getPunch().getFrame());
-        ModelRequests.removeAbstractEnemy(boss.getId());
+        boss.getGame().getModelRequests().removeAbstractEnemy(boss.getId());
         Controller.addXP(300);
     }
 
     @Override
     public void StartAnimation() {
-        GameState.setIsInAnimation(true);
+        boss.getGame().getGameState().setIsInAnimation(true);
         setUpPictures();
         timer.start();
     }

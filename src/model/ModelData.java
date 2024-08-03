@@ -1,5 +1,6 @@
 package model;
 
+import controller.game.Game;
 import model.inGameAbilities.InGameAbility;
 import model.objectModel.ObjectModel;
 import model.objectModel.effects.EffectModel;
@@ -13,74 +14,75 @@ import java.util.HashMap;
 
 public class ModelData {
 
-    private static ArrayList<FrameModel> frames;
-    private static ArrayList<ObjectModel> models;
-    private static HashMap<ObjectModel ,FrameModel> localFrames;
-    private static ArrayList<EffectModel> effectModels;
-    private static ArrayList<AbstractEnemy> abstractEnemies;
-    private static ArrayList<InGameAbility> inGameAbilities;
-    private static ArrayList<SkillTreeAbility> skillTreeAbilities = new ArrayList<>();
-    public static ArrayList<AbstractEnemy> getAbstractEnemies() {
+    private Game game;
+
+    public ModelData(Game game) {
+        this.game = game;
+    }
+
+    private ArrayList<FrameModel> frames;
+    private ArrayList<ObjectModel> models;
+    private HashMap<ObjectModel ,FrameModel> localFrames;
+    private ArrayList<EffectModel> effectModels;
+    private ArrayList<AbstractEnemy> abstractEnemies;
+    public ArrayList<AbstractEnemy> getAbstractEnemies() {
         return abstractEnemies;
     }
-    private static EpsilonModel epsilon;
-    private static FrameModel epsilonFrame;
 
-    public static void resetAll() {
+    public void resetAll() {
         frames = new ArrayList<>();
         models = new ArrayList<>();
         localFrames = new HashMap<>();
         effectModels = new ArrayList<>();
         abstractEnemies = new ArrayList<>();
-        inGameAbilities = new ArrayList<>();
     }
 
 
-    public static void setAbstractEnemies(ArrayList<AbstractEnemy> abstractEnemies) {
-        ModelData.abstractEnemies = abstractEnemies;
+    public void setAbstractEnemies(ArrayList<AbstractEnemy> abstractEnemies) {
+        this.abstractEnemies = abstractEnemies;
     }
 
-    public static ArrayList<FrameModel> getFrames() {
+    public ArrayList<FrameModel> getFrames() {
         return frames;
     }
 
-    public static ArrayList<ObjectModel> getModels() {
+    public ArrayList<ObjectModel> getModels() {
         return models;
     }
 
-    public static void setFrames(ArrayList<FrameModel> frames) {
-        ModelData.frames = frames;
+    public void setFrames(ArrayList<FrameModel> frames) {
+        this.frames = frames;
     }
 
-    public static void setModels(ArrayList<ObjectModel> models) {
-        ModelData.models = models;
+    public void setModels(ArrayList<ObjectModel> models) {
+        this.models = models;
     }
 
-    public static void addModel(ObjectModel objectModel){
+    public void addModel(ObjectModel objectModel){
         models.add(objectModel);
     }
 
-    public static void addFrame(FrameModel frameModel){
+    public void addFrame(FrameModel frameModel){
         frames.add(frameModel);
     }
 
-    public static HashMap<ObjectModel, FrameModel> getLocalFrames() {
+    public HashMap<ObjectModel, FrameModel> getLocalFrames() {
         return localFrames;
     }
 
-    public static void setLocalFrames(HashMap<ObjectModel, FrameModel> localFrames) {
-        ModelData.localFrames = localFrames;
+    public void setLocalFrames(HashMap<ObjectModel, FrameModel> localFrames) {
+        this.localFrames = localFrames;
     }
 
-    public static ArrayList<EffectModel> getEffectModels() {
+    public ArrayList<EffectModel> getEffectModels() {
         return effectModels;
     }
 
-    public static void setEffectModels(ArrayList<EffectModel> effectModels) {
-        ModelData.effectModels = effectModels;
+    public void setEffectModels(ArrayList<EffectModel> effectModels) {
+        this.effectModels = effectModels;
     }
 
-    public static void removeModel(String id) {
+    public void removeModel(String id) {
         for (ObjectModel model : models){
             if (model.getId().equals(id)){
                 models.remove(model);
@@ -89,7 +91,7 @@ public class ModelData {
         }
     }
 
-    public static void removeFrame(String id) {
+    public void removeFrame(String id) {
         for (FrameModel frameModel : frames){
             if (frameModel.getId().equals(id)){
                 frames.remove(frameModel);
@@ -98,7 +100,7 @@ public class ModelData {
         }
     }
 
-    public static void removeEffect(String id){
+    public void removeEffect(String id){
         for (EffectModel effectModel : effectModels){
             if (effectModel.getId().equals(id)){
                 effectModels.remove(effectModel);
@@ -107,11 +109,11 @@ public class ModelData {
         }
     }
 
-    public static void addEffect(EffectModel effectModel) {
+    public void addEffect(EffectModel effectModel) {
         effectModels.add(effectModel);
     }
 
-    public static void removeAbstractEnemy(String id){
+    public void removeAbstractEnemy(String id){
         for (AbstractEnemy abstractEnemy : abstractEnemies){
             if (abstractEnemy.getId().equals(id)){
                 abstractEnemies.remove(abstractEnemy);
@@ -120,39 +122,8 @@ public class ModelData {
         }
     }
 
-    public static void addAbstractEnemy(AbstractEnemy abstractEnemy){
+    public void addAbstractEnemy(AbstractEnemy abstractEnemy){
         abstractEnemies.add(abstractEnemy);
     }
 
-    public static ArrayList<InGameAbility> getInGameAbilities() {
-        return inGameAbilities;
-    }
-
-    public static void setInGameAbilities(ArrayList<InGameAbility> inGameAbilities) {
-        ModelData.inGameAbilities = inGameAbilities;
-    }
-
-    public static ArrayList<SkillTreeAbility> getSkillTreeAbilities() {
-        return skillTreeAbilities;
-    }
-
-    public static void setSkillTreeAbilities(ArrayList<SkillTreeAbility> skillTreeAbilities) {
-        ModelData.skillTreeAbilities = skillTreeAbilities;
-    }
-
-    public static EpsilonModel getEpsilon() {
-        return epsilon;
-    }
-
-    public static void setEpsilon(EpsilonModel epsilon) {
-        ModelData.epsilon = epsilon;
-    }
-
-    public static FrameModel getEpsilonFrame() {
-        return epsilonFrame;
-    }
-
-    public static void setEpsilonFrame(FrameModel epsilonFrame) {
-        ModelData.epsilonFrame = epsilonFrame;
-    }
 }

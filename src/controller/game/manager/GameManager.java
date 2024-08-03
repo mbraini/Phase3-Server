@@ -1,23 +1,26 @@
 package controller.game.manager;
 
 
+import controller.game.Game;
 
 public class GameManager {
 
     private WaveSpawner waveSpawner;
-    private GameManagerThread gameManager;
+    private GameManagerThread gameManagerThread;
+    private Game game;
 
-    public GameManager(){
-        gameManager = new GameManagerThread();
-        this.waveSpawner = new WaveSpawner();
+    public GameManager(Game game){
+        this.game = game;
+        gameManagerThread = new GameManagerThread(game);
+        this.waveSpawner = new WaveSpawner(game);
     }
 
-    public GameManagerThread getGameManager() {
-        return gameManager;
+    public GameManagerThread getGameManagerThread() {
+        return gameManagerThread;
     }
 
-    public void setGameManager(GameManagerThread gameManager) {
-        this.gameManager = gameManager;
+    public void setGameManagerThread(GameManagerThread gameManagerThread) {
+        this.gameManagerThread = gameManagerThread;
     }
 
     public WaveSpawner getWaveSpawner() {

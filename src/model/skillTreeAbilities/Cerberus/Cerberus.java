@@ -2,7 +2,6 @@ package model.skillTreeAbilities.Cerberus;
 
 import constants.CostConstants;
 import constants.SizeConstants;
-import controller.game.configs.Configs;
 import controller.game.enums.ModelType;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.manager.Spawner;
@@ -15,7 +14,7 @@ import utils.Vector;
 public class Cerberus extends SkillTreeAbility {
 
     public Cerberus(){
-        isBought = Configs.SkillTreeConfigs.cerberusBought;
+//        isBought = Configs.SkillTreeConfigs.cerberusBought;
         unlockXpCost = CostConstants.CERBERUS_UNLOCK_COST;
         type = SkillTreeAbilityType.cerberus;
         initTimer();
@@ -24,8 +23,9 @@ public class Cerberus extends SkillTreeAbility {
     @Override
     protected void cast() {
         canCast = false;
-        EpsilonModel epsilon = (EpsilonModel) ModelData.getModels().getFirst();
-
+        EpsilonModel epsilon = null;
+//        EpsilonModel epsilon = (EpsilonModel) ModelData.getModels().getFirst();
+////////todo
         Vector direction = new Vector(0 ,1);
         direction = Math.VectorWithSize(
                 direction,
@@ -33,6 +33,7 @@ public class Cerberus extends SkillTreeAbility {
         );
         for (int i = 0; i < 3 ;i++) {
             Spawner.spawnObject(
+                    player.getGame(),
                     Math.VectorAdd(
                             epsilon.getPosition(),
                             direction

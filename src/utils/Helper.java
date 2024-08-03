@@ -5,8 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import constants.DistanceConstants;
 import constants.SizeConstants;
-import controller.game.configs.Configs;
-import controller.game.configs.helper.GameConfigsJsonHelper;
 import model.objectModel.frameModel.FrameModel;
 
 import java.awt.*;
@@ -129,18 +127,6 @@ public class Helper {
 
     public static void resetAllJsons(String path) {
         Helper.writeFile(path + "/models.json" ,"");
-    }
-
-    public static void saveXP(int xp) {
-        GameConfigsJsonHelper helper = new GameConfigsJsonHelper();
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-        Gson gson = builder.create();
-        StringBuilder stringBuilder = Helper.readFile("src/controller/configs/gameConfigs.json");
-        helper = gson.fromJson(stringBuilder.toString() ,GameConfigsJsonHelper.class);
-        helper.XP = xp;
-        Configs.GameConfigs.XP = xp;
-        Helper.writeFile("src/controller/configs/gameConfigs.json" ,gson.toJson(helper));
     }
 
     public static synchronized StringBuilder readFile(String path) {

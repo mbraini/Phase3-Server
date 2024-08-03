@@ -1,7 +1,6 @@
 package model.skillTreeAbilities;
 
 import constants.CostConstants;
-import controller.game.configs.Configs;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.manager.GameState;
 import controller.online.annotations.SkippedByJson;
@@ -19,7 +18,7 @@ public class Aceso extends SkillTreeAbility{
     private int healAmount;
 
     public Aceso(){
-        isBought = Configs.SkillTreeConfigs.acesoBought;
+//        isBought = Configs.SkillTreeConfigs.acesoBought;
         unlockXpCost = CostConstants.ACESO_UNLOCK_COST;
         type = SkillTreeAbilityType.aceso;
         initTimer();
@@ -28,14 +27,15 @@ public class Aceso extends SkillTreeAbility{
     }
 
     private void initEpsilon() {
-        epsilon = ModelData.getEpsilon();
+//        epsilon = ModelData.getEpsilon();
+        ////todo
     }
 
     private void initHealTimer() {
         healTimer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (GameState.isPause())
+                if (player.getGame().getGameState().isPause())
                     return;
                 epsilon.setHP(epsilon.getHP() + healAmount);
                 epsilon.checkHP();

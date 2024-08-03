@@ -1,6 +1,5 @@
 package controller.game;
 
-import controller.game.listeners.keyHelper.KeyHelper;
 import controller.game.manager.GameState;
 import model.ModelData;
 import model.objectModel.ObjectModel;
@@ -12,36 +11,30 @@ import java.util.ArrayList;
 public class ModelRequestController {
 
 
-    private static PortalModel portalModel;
 
-    public static void randomizeKeys() {
-        KeyHelper.randomize();
-    }
-
-    public static void reorderKeys() {
-        KeyHelper.reorder();
-    }
+//    public static void randomizeKeys() {
+//        KeyHelper.randomize();
+//    }
+//
+//    public static void reorderKeys() {
+//        KeyHelper.reorder();
+//    }
 
     public static void portalWindow() {
         Controller.pause();
-        ObjectController.removeObject(portalModel);
-        int totalPR = GameState.getAllPR();
-        int PR = (int) (totalPR * GameState.getXpGained() * 10 / GameState.getHp());
+//        int totalPR = GameState.getAllPR();
+//        int PR = (int) (totalPR * GameState.getXpGained() * 10 / GameState.getHp());
     }
 
     public synchronized static void killEveryThing() {
-        ArrayList<ObjectModel> models;
-        synchronized (ModelData.getModels()) {
-            models = (ArrayList<ObjectModel>) ModelData.getModels().clone();
-        }
-        for (ObjectModel model : models) {
-            if (!(model instanceof EpsilonModel))
-                model.die();
-        }
-    }
-
-    public static void setPortalModel(PortalModel portalModel) {
-        ModelRequestController.portalModel = portalModel;
+//        ArrayList<ObjectModel> models;
+//        synchronized (ModelData.getModels()) {
+//            models = (ArrayList<ObjectModel>) ModelData.getModels().clone();
+//        }
+//        for (ObjectModel model : models) {
+//            if (!(model instanceof EpsilonModel))
+//                model.die();
+//        }
     }
 
     public static void playSound(String path) {
@@ -58,4 +51,11 @@ public class ModelRequestController {
 //        sound.play();
     }
 
+    public void reorderKeys() {
+
+    }
+
+    public void randomizeKeys() {
+
+    }
 }

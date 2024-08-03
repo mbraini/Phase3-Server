@@ -1,6 +1,7 @@
 package model.objectModel.fighters.normalEnemies;
 
 import constants.RefreshRateConstants;
+import controller.game.GameData;
 import controller.game.manager.GameState;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
@@ -10,7 +11,7 @@ import utils.Math;
 public abstract class NormalEnemyModel extends EnemyModel implements IsPolygon, HasVertices {
 
     public void move() {
-        if (GameState.isDizzy())
+        if (game.getGameState().isDizzy())
             return;
 
         velocity = Math.VectorAdd(velocity ,Math.ScalarInVector(RefreshRateConstants.UPS ,acceleration));

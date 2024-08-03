@@ -16,8 +16,8 @@ public class FrameResizer {
 
     public FrameResizer(FrameModel frameModel){
         this.frameModel = frameModel;
-        synchronized (ModelData.getModels()){
-            frames = (ArrayList<FrameModel>) ModelData.getFrames().clone();
+        synchronized (frameModel.getGame().getModelData().getModels()){
+            frames = (ArrayList<FrameModel>) frameModel.getGame().getModelData().getFrames().clone();
         }
     }
 

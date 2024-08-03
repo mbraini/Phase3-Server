@@ -79,7 +79,7 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
                 this ,
                 Math.VectorAdd(
                         Math.ScalarInVector(-1 ,position) ,
-                        ModelData.getModels().getFirst().getPosition()
+                        game.getModelData().getModels().getFirst().getPosition()
                 ) ,
                 700 ,
                 110 ,
@@ -106,6 +106,6 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
     @Override
     public void die() {
         super.die();
-        Spawner.addCollectives(position ,1 ,5);
+        Spawner.addCollectives(game ,position ,1 ,5);
     }
 }

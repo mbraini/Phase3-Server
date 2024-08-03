@@ -16,24 +16,24 @@ import java.util.ArrayList;
 public class ViewRequestController {
 
 
-    public static boolean shootRequest(Vector clickedPoint){
+    public boolean shootRequest(Vector clickedPoint){
         if (ShootRequest.canShoot()){
-            new ShootRequest(ModelData.getEpsilon()).shoot(clickedPoint);
-            GameState.setTotalBullets(GameState.getTotalBullets() + 1);
+//            new ShootRequest(ModelData.getEpsilon()).shoot(clickedPoint);
+//            GameState.setTotalBullets(GameState.getTotalBullets() + 1);
             return true;
         }
         return false;
     }
 
-    public static void inGameAbilityRequest(InGameAbilityType type){
+    public void inGameAbilityRequest(InGameAbilityType type){
         InGameAbilityRequests.abilityRequest(type);
     }
 
-    public static void skillTreeAbilityRequest(SkillTreeAbilityType type) {
+    public void skillTreeAbilityRequest(SkillTreeAbilityType type) {
         SkillTreeAbilityRequests.abilityRequest(type);
     }
 
-    public synchronized static void updateView(){
+    public synchronized void updateView(){
 //        ArrayList<ObjectView> objectViews;
 //        ArrayList<FrameView> frameViews;
 //        ArrayList<ObjectModel> objectModels;
@@ -63,7 +63,7 @@ public class ViewRequestController {
 //        setVariables();
     }
 
-    private static void setAbilities(ArrayList<SkillTreeAbility> skillTreeAbilities, ArrayList<InGameAbility> inGameAbilities) {
+    private void setAbilities(ArrayList<SkillTreeAbility> skillTreeAbilities, ArrayList<InGameAbility> inGameAbilities) {
 //        ViewData.setAbilityViews(new ArrayList<>());
 //        for (SkillTreeAbility skillTreeAbility : skillTreeAbilities) {
 //            ViewData.addAbilityWithType(
@@ -169,7 +169,7 @@ public class ViewRequestController {
 //        ViewData.setWave(GameState.getWave());
 //    }
 
-    public static void buySkillTreeRequest(SkillTreeAbilityType type) {
+    public void buySkillTreeRequest(SkillTreeAbilityType type) {
         SkillTreeAbilityRequests.buyRequest(type);
     }
 }

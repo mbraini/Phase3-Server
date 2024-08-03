@@ -8,20 +8,21 @@ import model.objectModel.fighters.EnemyModel;
 import model.objectModel.frameModel.FrameModel;
 
 public class ObjectController {
+
     public synchronized static void removeObject(ObjectModel model) {
-        ModelRequests.removeObjectModel(model.getId());
+        model.getGame().getModelRequests().removeObjectModel(model.getId());
 //        ViewRequest.removeObjectView(model.getId());
         if (model instanceof EnemyModel)
             ModelRequestController.playSound(SoundPathConstants.enemyOnDeathSound);
     }
 
     public synchronized static void removeEffect(EffectModel effectModel) {
-        ModelRequests.removeEffectModel(effectModel.getId());
+        effectModel.getGame().getModelRequests().removeEffectModel(effectModel.getId());
 //        ViewRequest.removeEffectView(effectModel.getId());
     }
 
     public static void removeFrame(FrameModel frameModel) {
-        ModelRequests.removeFrameModel(frameModel.getId());
+        frameModel.getGame().getModelRequests().removeFrameModel(frameModel.getId());
 //        ViewRequest.removeFrameView(frameModel.getId());
     }
 }

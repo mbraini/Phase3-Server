@@ -1,6 +1,7 @@
 package controller.game.manager;
 
 import constants.VelocityConstants;
+import controller.game.Game;
 import model.ModelData;
 import model.objectModel.ObjectModel;
 
@@ -8,37 +9,32 @@ import java.util.ArrayList;
 
 public class GameState {
 
-    private static double time;
-    private static int xp = 1000;
-    private static double hp;
-    private static int wave = 1;
-    private static double shrinkageVelocity;
-    private static int enemyKilled;
-    private static int totalBullets;
-    private static int successfulBullets;
-    private static int enemyCount;
-    private static double lastWaveTime;
-    private static int xpGained;
-    private static int firstWavePR;
-    private static int secondWavePR;
-    private static int thirdWavePR;
-    private static int forthWavePR;
-    private static int fifthWavePR;
-    private volatile static boolean isPause;
-    private volatile static boolean isOver;
-    private volatile static boolean isDizzy;
-    private volatile static boolean isInAnimation;
+    private double time;
+    private int wave = 1;
+    private int enemyKilled;
+    private double shrinkageVelocity;
+    private int enemyCount;
+    private double lastWaveTime;
+    private int xpGained;
+    private int firstWavePR;
+    private int secondWavePR;
+    private int thirdWavePR;
+    private int forthWavePR;
+    private int fifthWavePR;
+    private volatile boolean isPause;
+    private volatile boolean isOver;
+    private volatile boolean isDizzy;
+    private volatile boolean isInAnimation;
+    private Game game;
 
-    public GameState(){
-        /////todo
+    public GameState(Game game){
+        this.game = game;
     }
 
 
-    public static void reset(){
+    public void reset(){
         enemyKilled = 0;
         enemyCount = 0;
-        successfulBullets = 0;
-        totalBullets = 0;
         lastWaveTime = 0;
         xpGained = 0;
         firstWavePR = 0;
@@ -49,7 +45,6 @@ public class GameState {
         shrinkageVelocity = VelocityConstants.FRAME_SHRINKAGE_VELOCITY;
         WaveSpawner.repeatedCount = 0;
         time = 0;
-        hp = 100;
         wave = 1;
         isPause = false;
         isOver = false;
@@ -58,56 +53,39 @@ public class GameState {
     }
 
 
-    public static double getTime() {
+    public double getTime() {
         return time;
     }
 
-    public static void setTime(double time) {
-        GameState.time = time;
+    public void setTime(double time) {
+        this.time = time;
     }
 
-    public static int getXp() {
-        return xp;
-    }
-
-    public static void setXp(int xp) {
-        GameState.xp = xp;
-    }
-
-    public static double getHp() {
-        return hp;
-    }
-
-    public static void setHp(double hp) {
-        GameState.hp = hp;
-    }
-
-    public static int getWave() {
+    public int getWave() {
         return wave;
     }
 
-    public static void setWave(int wave) {
-        GameState.wave = wave;
+    public void setWave(int wave) {
+        this.wave = wave;
     }
 
-    public static boolean isPause() {
+    public boolean isPause() {
         return isPause;
     }
 
-    public static void setPause(boolean isPause) {
-        GameState.isPause = isPause;
+    public void setPause(boolean isPause) {
+        this.isPause = isPause;
     }
 
-    public static boolean isOver() {
+    public boolean isOver() {
         return isOver;
     }
 
-    public static void setOver(boolean isOver) {
-        GameState.isOver = isOver;
+    public void setOver(boolean isOver) {
+        this.isOver = isOver;
     }
 
-    public static void update(ArrayList<ObjectModel> models ,double time) {
-        setHp(ModelData.getEpsilon().getHP());
+    public void update(ArrayList<ObjectModel> models ,double time) {
         setTime(getTime() + time);
         if (wave == 1) {
             firstWavePR = (int) (getTime() - lastWaveTime) * wave / 1000;
@@ -126,119 +104,103 @@ public class GameState {
         }
     }
 
-    public static boolean isDizzy() {
+    public boolean isDizzy() {
         return isDizzy;
     }
 
-    public static void setDizzy(boolean isDizzy) {
-        GameState.isDizzy = isDizzy;
+    public void setDizzy(boolean isDizzy) {
+        this.isDizzy = isDizzy;
     }
 
-    public static int getEnemyKilled() {
+    public int getEnemyKilled() {
         return enemyKilled;
     }
 
-    public static void setEnemyKilled(int enemyKilled) {
-        GameState.enemyKilled = enemyKilled;
+    public void setEnemyKilled(int enemyKilled) {
+        this.enemyKilled = enemyKilled;
     }
 
-    public static int getTotalBullets() {
-        return totalBullets;
-    }
-
-    public static void setTotalBullets(int totalBullets) {
-        GameState.totalBullets = totalBullets;
-    }
-
-    public static int getSuccessfulBullets() {
-        return successfulBullets;
-    }
-
-    public static void setSuccessfulBullets(int successfulBullets) {
-        GameState.successfulBullets = successfulBullets;
-    }
-
-    public static int getEnemyCount() {
+    public int getEnemyCount() {
         return enemyCount;
     }
 
-    public static void setEnemyCount(int enemyCount) {
-        GameState.enemyCount = enemyCount;
+    public void setEnemyCount(int enemyCount) {
+        this.enemyCount = enemyCount;
     }
 
-    public static int getXpGained() {
+    public int getXpGained() {
         return xpGained;
     }
 
-    public static void setXpGained(int xpGained) {
-        GameState.xpGained = xpGained;
+    public void setXpGained(int xpGained) {
+        this.xpGained = xpGained;
     }
 
-    public static int getFirstWavePR() {
+    public int getFirstWavePR() {
         return firstWavePR;
     }
 
-    public static void setFirstWavePR(int firstWavePR) {
-        GameState.firstWavePR = firstWavePR;
+    public void setFirstWavePR(int firstWavePR) {
+        this.firstWavePR = firstWavePR;
     }
 
-    public static int getSecondWavePR() {
+    public int getSecondWavePR() {
         return secondWavePR;
     }
 
-    public static void setSecondWavePR(int secondWavePR) {
-        GameState.secondWavePR = secondWavePR;
+    public void setSecondWavePR(int secondWavePR) {
+        this.secondWavePR = secondWavePR;
     }
 
-    public static int getThirdWavePR() {
+    public int getThirdWavePR() {
         return thirdWavePR;
     }
 
-    public static void setThirdWavePR(int thirdWavePR) {
-        GameState.thirdWavePR = thirdWavePR;
+    public void setThirdWavePR(int thirdWavePR) {
+        this.thirdWavePR = thirdWavePR;
     }
 
-    public static int getForthWavePR() {
+    public int getForthWavePR() {
         return forthWavePR;
     }
 
-    public static void setForthWavePR(int forthWavePR) {
-        GameState.forthWavePR = forthWavePR;
+    public void setForthWavePR(int forthWavePR) {
+        this.forthWavePR = forthWavePR;
     }
 
-    public static int getFifthWavePR() {
+    public int getFifthWavePR() {
         return fifthWavePR;
     }
 
-    public static void setFifthWavePR(int fifthWavePR) {
-        GameState.fifthWavePR = fifthWavePR;
+    public void setFifthWavePR(int fifthWavePR) {
+        this.fifthWavePR = fifthWavePR;
     }
 
-    public static int getAllPR() {
+    public int getAllPR() {
         return firstWavePR + secondWavePR + thirdWavePR + forthWavePR + fifthWavePR;
     }
 
-    public static double getLastWaveTime() {
+    public double getLastWaveTime() {
         return lastWaveTime;
     }
 
-    public static void setLastWaveTime(double lastWaveTime) {
-        GameState.lastWaveTime = lastWaveTime;
+    public void setLastWaveTime(double lastWaveTime) {
+        this.lastWaveTime = lastWaveTime;
     }
 
-    public static void setIsInAnimation(boolean isInAnimation) {
-        GameState.isInAnimation = isInAnimation;
+    public void setIsInAnimation(boolean isInAnimation) {
+        this.isInAnimation = isInAnimation;
     }
 
-    public static boolean isInAnimation() {
+    public boolean isInAnimation() {
         return isInAnimation;
     }
 
-    public static double getShrinkageVelocity() {
+    public double getShrinkageVelocity() {
         return shrinkageVelocity;
     }
 
-    public static void setShrinkageVelocity(double shrinkageVelocity) {
-        GameState.shrinkageVelocity = shrinkageVelocity;
+    public void setShrinkageVelocity(double shrinkageVelocity) {
+        this.shrinkageVelocity = shrinkageVelocity;
     }
 }

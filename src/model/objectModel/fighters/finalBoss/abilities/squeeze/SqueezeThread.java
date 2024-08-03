@@ -22,12 +22,12 @@ public class SqueezeThread extends Thread {
         double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double deltaModel = 0;
-        while (!GameState.isOver() && !isInterrupted()) {
-            if (GameState.isPause() || GameState.isDizzy()){
+        while (!squeeze.getBoss().getGame().getGameState().isOver() && !isInterrupted()) {
+            if (squeeze.getBoss().getGame().getGameState().isPause() || squeeze.getBoss().getGame().getGameState().isDizzy()){
                 lastTime = System.nanoTime();
                 continue;
             }
-            if (GameState.isInAnimation()) {
+            if (squeeze.getBoss().getGame().getGameState().isInAnimation()) {
                 squeeze.endAbility();
                 return;
             }

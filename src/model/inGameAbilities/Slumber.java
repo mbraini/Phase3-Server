@@ -26,14 +26,14 @@ public class Slumber extends InGameAbility{
         timer = new Timer(RefreshRateConstants.IN_GAME_ABILITY_TIMER_REFRESH_RATE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (GameState.isPause())
+                if (player.getGame().getGameState().isPause())
                     return;
                 timePassed += RefreshRateConstants.IN_GAME_ABILITY_TIMER_REFRESH_RATE;
                 if (timePassed >= TimeConstants.SLUMBER_DURATION){
                     isAvailable = true;
                     isActive = false;
                     timePassed = 0;
-                    GameState.setDizzy(false);
+                    player.getGame().getGameState().setDizzy(false);
                     InGameAbilityHandler.permitAll();
                     timer.stop();
                 }
@@ -46,7 +46,7 @@ public class Slumber extends InGameAbility{
     public void performAbility() {
         isActive = true;
         isAvailable = false;
-        GameState.setDizzy(true);
+        player.getGame().getGameState().setDizzy(true);
         InGameAbilityHandler.disableAll();
         timer.start();
     }
@@ -55,7 +55,7 @@ public class Slumber extends InGameAbility{
     public void setUp() {
         initTimer();
         if (timePassed <= TimeConstants.SLUMBER_DURATION && isActive) {
-            GameState.setDizzy(true);
+            player.getGame().getGameState().setDizzy(true);
             timer.start();
         }
     }

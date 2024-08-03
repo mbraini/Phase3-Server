@@ -21,9 +21,9 @@ public class HeadShooter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (GameState.isPause() || GameState.isDizzy())
+        if (rapidFire.getBoss().getGame().getGameState().isPause() || rapidFire.getBoss().getGame().getGameState().isDizzy())
             return;
-        if (GameState.isInAnimation()) {
+        if (rapidFire.getBoss().getGame().getGameState().isInAnimation()) {
             rapidFire.endAbility();
             return;
         }
@@ -38,6 +38,7 @@ public class HeadShooter implements ActionListener {
                     rapidFire.getBoss().getHead().getPosition()
             );
             Spawner.addProjectile(
+                    rapidFire.getBoss().getGame(),
                     spawnPosition,
                     direction,
                     ModelType.bossBullet

@@ -65,7 +65,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
         ObjectController.removeFrame(frameModel);
         if (shooter != null)
             shooter.setInterrupt(true);
-        Spawner.addCollectives(position ,2 ,8);
+        Spawner.addCollectives(game ,position ,2 ,8);
     }
 
     public FrameModel getFrameModel() {
@@ -96,7 +96,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
         isInRange = navigator.hasArrived();
         if (isInRange){
             setVelocity(0 ,0);
-            origin = ModelData.getModels().getFirst().getPosition().clone();
+            origin = game.getModelData().getModels().getFirst().getPosition().clone();
             start();
         }
     }

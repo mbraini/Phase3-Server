@@ -1,6 +1,7 @@
 package controller.game.manager;
 
 import constants.TimeConstants;
+import controller.game.Game;
 import model.ModelData;
 import model.inGameAbilities.InGameAbility;
 import model.interfaces.Fader;
@@ -25,9 +26,10 @@ public class GameManagerThread extends Thread{
     private final static Object jsonLock = new Object();
     private int epsilonDeath;
     private int bossDeath;
+    private Game game;
 
-    public GameManagerThread() {
-
+    public GameManagerThread(Game game) {
+        this.game = game;
     }
 
     @Override
@@ -36,8 +38,8 @@ public class GameManagerThread extends Thread{
         double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double deltaModel = 0;
-        while (!GameState.isOver() && epsilonDeath <= 0) {
-            if (GameState.isPause()) {
+        while (!game.getGameState().isOver() && epsilonDeath <= 0) {
+            if (game.getGameState().isPause()) {
                 lastTime = System.nanoTime();
                 continue;
             }
@@ -54,17 +56,17 @@ public class GameManagerThread extends Thread{
 
     private void manage() {
 
-        synchronized (ModelData.getModels()){
-            models = (ArrayList<ObjectModel>) ModelData.getModels().clone();
-            effects = (ArrayList<EffectModel>) ModelData.getEffectModels().clone();
-            frames = (ArrayList<FrameModel>) ModelData.getFrames().clone();
-            abstractEnemies = (ArrayList<AbstractEnemy>) ModelData.getAbstractEnemies().clone();
-            abilities = (ArrayList<InGameAbility>) ModelData.getInGameAbilities().clone();
-            skillTreeAbilities =(ArrayList<SkillTreeAbility>) ModelData.getSkillTreeAbilities().clone();
+        synchronized (game.getModelData().getModels()){
+            models = (ArrayList<ObjectModel>) game.getModelData().getModels().clone();
+            effects = (ArrayList<EffectModel>) game.getModelData().getEffectModels().clone();
+            frames = (ArrayList<FrameModel>) game.getModelData().getFrames().clone();
+            abstractEnemies = (ArrayList<AbstractEnemy>) game.getModelData().getAbstractEnemies().clone();
+//            abilities = (ArrayList<InGameAbility>) game.getModelData().getInGameAbilities().clone();
+//            skillTreeAbilities =(ArrayList<SkillTreeAbility>) game.getModelData().getSkillTreeAbilities().clone();
         }
         interfaces();
         checkAoeDamage();
-        GameState.update(models , TimeConstants.MANAGER_THREAD_REFRESH_TIME);
+        game.getGameState().update(models , TimeConstants.MANAGER_THREAD_REFRESH_TIME);
         killObjects();
     }
 

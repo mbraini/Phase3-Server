@@ -28,9 +28,9 @@ public class OmenoctShooter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (GameState.isDizzy() || GameState.isPause())
+        if (omenoctModel.getGame().getGameState().isDizzy() || omenoctModel.getGame().getGameState().isPause())
             return;
-        if (GameState.isOver()) {
+        if (omenoctModel.getGame().getGameState().isOver()) {
             System.out.println("OMENOCT OUT");
             omenoctModel.getShooter().stop();
             omenoctModel.getShooter().removeActionListener(this);
@@ -39,10 +39,11 @@ public class OmenoctShooter implements ActionListener {
         timePassed += 1000;
         if (timePassed >= TimeConstants.OMENOCT_FIRING_TIME) {
             timePassed = 0;
-            EpsilonModel epsilon = ModelData.getEpsilon();
+//            EpsilonModel epsilon = ModelData.getEpsilon(); ////todo
             Vector direction = Math.VectorAdd(
                     Math.ScalarInVector(-1, position),
-                    epsilon.getPosition()
+                    new Vector()
+//                    epsilon.getPosition()  //// todo
             );
             String id = Helper.RandomStringGenerator(ControllerConstants.ID_SIZE);
             Vector bulletPosition = Math.VectorAdd(
@@ -52,7 +53,7 @@ public class OmenoctShooter implements ActionListener {
                             SizeConstants.OMENOCT_BULLET_RADIOS + SizeConstants.OMENOCT_RADIOS
                     )
             );
-            Spawner.addProjectile(bulletPosition, direction, ModelType.omenoctBullet);
+            Spawner.addProjectile(omenoctModel.getGame() ,bulletPosition, direction, ModelType.omenoctBullet);
         }
     }
 

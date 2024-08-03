@@ -35,8 +35,8 @@ public class BlackOrbThread extends Thread{
         double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double deltaModel = 0;
-        while (!GameState.isOver()) {
-            if (GameState.isPause()){
+        while (!blackOrbModel.getGame().getGameState().isOver()) {
+            if (blackOrbModel.getGame().getGameState().isPause()){
                 lastTime = System.nanoTime();
                 continue;
             }
@@ -46,7 +46,7 @@ public class BlackOrbThread extends Thread{
             deltaModel += (now - lastTime) / ns;
             lastTime = now;
             if (deltaModel >= RefreshRateConstants.BLACK_ORB_THEAD_REFRESH_RATE) {
-                if (GameState.isDizzy()){
+                if (blackOrbModel.getGame().getGameState().isDizzy()){
                     setUpDizzy();
                     continue;
                 }
@@ -115,8 +115,8 @@ public class BlackOrbThread extends Thread{
     }
 
     private void updateVariables() {
-        synchronized (ModelData.getModels()){
-            models = (ArrayList<OrbModel>) ModelData.getModels().clone();
+        synchronized (blackOrbModel.getGame().getModelData().getModels()){
+            models = (ArrayList<OrbModel>) blackOrbModel.getGame().getModelData().getModels().clone();
         }
         synchronized (blackOrbModel.getEffectModels()) {
             effects =

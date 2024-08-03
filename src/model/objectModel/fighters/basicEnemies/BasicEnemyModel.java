@@ -11,7 +11,7 @@ import utils.Math;
 public abstract class BasicEnemyModel extends EnemyModel implements MoveAble ,HasVertices, IsPolygon {
     @Override
     public void move() {
-        if (GameState.isDizzy())
+        if (game.getGameState().isDizzy())
             return;
 
         velocity = Math.VectorAdd(velocity ,Math.ScalarInVector(RefreshRateConstants.UPS ,acceleration));

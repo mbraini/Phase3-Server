@@ -2,6 +2,7 @@ package controller.game.listeners;
 
 
 import constants.SizeConstants;
+import controller.game.Player;
 import controller.game.manager.GameState;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
@@ -13,13 +14,15 @@ import java.awt.event.MouseMotionAdapter;
 
 public class EpsilonCirculation extends MouseMotionAdapter {
     private EpsilonModel epsilon;
-    public EpsilonCirculation(){
-        this.epsilon = ModelData.getEpsilon();
+    private Player player;
+    public EpsilonCirculation(Player player){
+        this.player = player;
+        this.epsilon = player.getPlayerData().getEpsilon();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (GameState.isInAnimation())
+        if (player.getGame().getGameState().isInAnimation())
             return;
         Vector mousePosition = new Vector(e.getX() ,e.getY());
         mousePosition = Math.VectorAdd(

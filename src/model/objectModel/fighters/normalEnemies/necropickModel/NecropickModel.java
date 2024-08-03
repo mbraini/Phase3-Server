@@ -47,9 +47,9 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
         hoveringTimer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (GameState.isPause() || GameState.isDizzy())
+                if (game.getGameState().isPause() || game.getGameState().isDizzy())
                     return;
-                if (GameState.isOver()) {
+                if (game.getGameState().isOver()) {
                     hoveringTimer.stop();
                     return;
                 }
@@ -68,9 +68,9 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
         abilityTimer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (GameState.isPause() || GameState.isDizzy())
+                if (game.getGameState().isPause() || game.getGameState().isDizzy())
                     return;
-                if (GameState.isOver()) {
+                if (game.getGameState().isOver()) {
                     abilityTimer.stop();
                     return;
                 }
@@ -79,7 +79,7 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
                 if (abilityTime >= 4000) {
                     abilityTime = 0;
                     isMotionless = false;
-                    new NecropickShooter(position).shoot();
+                    new NecropickShooter(game ,position).shoot();
                     setHovering(false);
                     hasAbility = false;
                     velocity = new Vector();
@@ -100,7 +100,7 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
         super.die();
         abilityTimer.stop();
         hoveringTimer.stop();
-        Spawner.addCollectives(position ,4 ,2);
+        Spawner.addCollectives(game ,position ,4 ,2);
     }
 
 
@@ -123,7 +123,7 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
     public void ability() {
         NecropickNavigator navigator = new NecropickNavigator(
                 position,
-                ModelData.getModels().getFirst().getPosition()
+                game.getModelData().getModels().getFirst().getPosition()
         );
         navigator.navigate();
         setVelocity(navigator.getVelocity());

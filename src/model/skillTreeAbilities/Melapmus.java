@@ -1,7 +1,6 @@
 package model.skillTreeAbilities;
 
 import constants.CostConstants;
-import controller.game.configs.Configs;
 import controller.game.enums.SkillTreeAbilityType;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
@@ -11,7 +10,7 @@ public class Melapmus extends SkillTreeAbility{
     private EpsilonModel epsilonModel;
 
     public Melapmus(){
-        isBought = Configs.SkillTreeConfigs.melampusBought;
+//        isBought = Configs.SkillTreeConfigs.melampusBought;
         unlockXpCost = CostConstants.MELAMPUS_UNLOCK_COST;
         type = SkillTreeAbilityType.melampus;
         initTimer();
@@ -19,7 +18,7 @@ public class Melapmus extends SkillTreeAbility{
     }
 
     private void initEpsilon() {
-        epsilonModel = ModelData.getEpsilon();
+//        epsilonModel = ModelData.getEpsilon();  ///todo
     }
 
 

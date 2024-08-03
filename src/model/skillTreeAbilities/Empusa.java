@@ -1,7 +1,6 @@
 package model.skillTreeAbilities;
 
 import constants.CostConstants;
-import controller.game.configs.Configs;
 import controller.game.enums.SkillTreeAbilityType;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
@@ -12,7 +11,7 @@ public class Empusa extends SkillTreeAbility{
     private EpsilonModel epsilonModel;
 
     public Empusa() {
-        isBought = Configs.SkillTreeConfigs.empusaBought;
+//        isBought = Configs.SkillTreeConfigs.empusaBought;
         unlockXpCost = CostConstants.EMPUSA_UNLOCK_COST;
         type = SkillTreeAbilityType.empusa;
         initTimer();
@@ -20,7 +19,7 @@ public class Empusa extends SkillTreeAbility{
     }
 
     private void initEpsilon() {
-        this.epsilonModel = ModelData.getEpsilon();
+//        this.epsilonModel = ModelData.getEpsilon(); ///todo
     }
 
 

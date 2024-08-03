@@ -37,7 +37,7 @@ public class OrbModel extends MiniBossModel implements IsCircle {
             blackOrbModel.removeOrb(id);
             blackOrbModel.checkDeath();
             ObjectController.removeFrame(frameModel);
-            Spawner.addCollectives(position, 1, 30);
+            Spawner.addCollectives(game ,position, 1, 30);
         }
     }
 

@@ -39,12 +39,12 @@ public class ProjectileThread extends Thread{
         double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double deltaModel = 0;
-        while (!GameState.isOver() && !isInterrupted()) {
-            if (GameState.isPause() || GameState.isDizzy()){
+        while (!epsilon.getGame().getGameState().isOver() && !isInterrupted()) {
+            if (epsilon.getGame().getGameState().isPause() || epsilon.getGame().getGameState().isDizzy()){
                 lastTime = System.nanoTime();
                 continue;
             }
-            if (GameState.isInAnimation()) {
+            if (epsilon.getGame().getGameState().isInAnimation()) {
                 projectile.endAbility();
                 return;
             }
@@ -91,7 +91,7 @@ public class ProjectileThread extends Thread{
                 )
         );
 
-        Spawner.addProjectile(bulletPosition ,direction , ModelType.bossBullet);
+        Spawner.addProjectile(epsilon.getGame() ,bulletPosition ,direction , ModelType.bossBullet);
     }
 
     private void turnAround() {

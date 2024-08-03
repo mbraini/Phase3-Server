@@ -24,7 +24,7 @@ public class Heal extends InGameAbility{
 
     @Override
     public void setUp() {
-        epsilon = ModelData.getEpsilon();
+//        epsilon = ModelData.getEpsilon();
     }
 
 

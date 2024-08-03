@@ -43,13 +43,13 @@ public class ShootRequest {
         );
         int constant = -1;
         if (slaughterBulletCount >= 1){
-            Spawner.addProjectile(position ,direction ,ModelType.slaughterBullet);
+            Spawner.addProjectile(epsilon.getGame() ,position ,direction ,ModelType.slaughterBullet);
             slaughterBulletCount -= 1;
             Slaughter slaughter = (Slaughter) InGameAbilityHandler.getInGameAbility(InGameAbilityType.slaughter);
             slaughter.setUsed(true);
         }
         else {
-            Spawner.addProjectile(position, direction, ModelType.epsilonBullet);
+            Spawner.addProjectile(epsilon.getGame() ,position, direction, ModelType.epsilonBullet);
         }
         for (int i = 0; i < extraAim ;i++) {
             constant = constant * (-1);
@@ -63,6 +63,7 @@ public class ShootRequest {
                     position
             );
             Spawner.addProjectile(
+                    epsilon.getGame(),
                     spawnPosition,
                     direction2,
                     ModelType.epsilonBullet

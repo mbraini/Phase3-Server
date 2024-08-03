@@ -37,7 +37,7 @@ public class CerberusModel extends FighterModel implements IsCircle {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (GameState.isPause())
+                if (game.getGameState().isPause())
                     return;
                 timePassed += 1000;
                 if (timePassed >= TimeConstants.CERBERUS_COOLDOWN){

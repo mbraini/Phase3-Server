@@ -2,6 +2,7 @@
 package model.threads;
 
 import constants.RefreshRateConstants;
+import controller.game.Game;
 import controller.game.manager.GameState;
 import model.ModelData;
 import model.logics.collision.Collision;
@@ -20,8 +21,9 @@ public class FrameThread extends Thread{
     private ArrayList<ObjectModel> models;
     private HashMap<ObjectModel ,FrameModel> localFrames;
     private HashMap<ObjectModel ,FrameModel> previousLocals;
-
-    public FrameThread(){
+    private Game game;
+    public FrameThread(Game game){
+        this.game = game;
         frames = new ArrayList<>();
         models = new ArrayList<>();
         previousLocals = new HashMap<>();
@@ -33,8 +35,8 @@ public class FrameThread extends Thread{
         double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
-        while (!GameState.isOver()){
-            if (GameState.isPause()) {
+        while (!game.getGameState().isOver()){
+            if (game.getGameState().isPause()) {
                 lastTime = System.nanoTime();
                 continue;
             }
@@ -49,14 +51,14 @@ public class FrameThread extends Thread{
     }
 
     private void updateFrames() {
-        synchronized (ModelData.getModels()) {
-            localFrames = (HashMap<ObjectModel, FrameModel>) ModelData.getLocalFrames().clone();
-            models = (ArrayList<ObjectModel>) ModelData.getModels().clone();
-            frames = (ArrayList<FrameModel>) ModelData.getFrames().clone();
+        synchronized (game.getModelData().getModels()) {
+            localFrames = (HashMap<ObjectModel, FrameModel>) game.getModelData().getLocalFrames().clone();
+            models = (ArrayList<ObjectModel>) game.getModelData().getModels().clone();
+            frames = (ArrayList<FrameModel>) game.getModelData().getFrames().clone();
         }
         defineLocalFrames();
-        synchronized (ModelData.getModels()) {
-            localFrames = (HashMap<ObjectModel, FrameModel>) ModelData.getLocalFrames().clone();
+        synchronized (game.getModelData().getModels()) {
+            localFrames = (HashMap<ObjectModel, FrameModel>) game.getModelData().getLocalFrames().clone();
         }
         resetDisables();
         setDisablesForSolidObjects();
@@ -132,11 +134,11 @@ public class FrameThread extends Thread{
                 }
             }
         }
-        ModelData.setLocalFrames(newLocals);
+        game.getModelData().setLocalFrames(newLocals);
     }
 
     private void resize(ArrayList<FrameModel> frameModels) {
-        if (GameState.isDizzy())
+        if (game.getGameState().isDizzy())
             return;
         for (FrameModel frame : frameModels){
             if (!frame.isIsometric()){
@@ -146,15 +148,15 @@ public class FrameThread extends Thread{
     }
     private void framePressure(FrameModel frame) {
         if (!frame.isResizing()){
-            frame.setUpDownV(-GameState.getShrinkageVelocity(),-GameState.getShrinkageVelocity());
-            frame.setLeftRightV(-GameState.getShrinkageVelocity(),-GameState.getShrinkageVelocity());
+            frame.setUpDownV(-game.getGameState().getShrinkageVelocity(),-game.getGameState().getShrinkageVelocity());
+            frame.setLeftRightV(-game.getGameState().getShrinkageVelocity(),-game.getGameState().getShrinkageVelocity());
         }
     }
 
 
     private ArrayList<FrameModel> defineFrame(ObjectModel model){
         ArrayList<FrameModel> frames = new ArrayList<>();
-        ArrayList<FrameModel> dataFrames = ModelData.getFrames();
+        ArrayList<FrameModel> dataFrames = game.getModelData().getFrames();
         for (int i = 0 ;i < dataFrames.size() ;i++){
             if (Collision.isInFrame(dataFrames.get(i) ,model.getPosition())){
                 frames.add(dataFrames.get(i));

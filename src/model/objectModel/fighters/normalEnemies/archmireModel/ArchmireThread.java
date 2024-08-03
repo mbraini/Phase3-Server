@@ -33,8 +33,8 @@ public class ArchmireThread extends Thread{
         double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double deltaModel = 0;
-        while (!GameState.isOver()) {
-            if (GameState.isPause()) {
+        while (!archmire.getGame().getGameState().isOver()) {
+            if (archmire.getGame().getGameState().isPause()) {
                 lastTime = System.nanoTime();
                 continue;
             }
@@ -52,10 +52,10 @@ public class ArchmireThread extends Thread{
     }
 
     private void updateAOE() {
-        if (GameState.isDizzy())
+        if (archmire.getGame().getGameState().isDizzy())
             return;
-        synchronized (ModelData.getModels()){
-            models = (ArrayList<ObjectModel>) ModelData.getModels().clone();
+        synchronized (archmire.getGame().getModelData().getModels()){
+            models = (ArrayList<ObjectModel>) archmire.getGame().getModelData().getModels().clone();
         }
         checkRemovedAOEs();
         addEffect();
@@ -118,7 +118,7 @@ public class ArchmireThread extends Thread{
                 archmire,
                 Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
         );
-        Spawner.addArchmireEffect(effectModel);
+        Spawner.addArchmireEffect(archmire.getGame() ,effectModel);
         archmire.getAoeEffects().add(effectModel);
     }
 

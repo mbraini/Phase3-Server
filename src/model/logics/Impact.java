@@ -2,6 +2,7 @@ package model.logics;
 
 
 import constants.TimeConstants;
+import controller.game.Game;
 import model.ModelData;
 import model.interfaces.movementIntefaces.ImpactAble;
 import model.objectModel.fighters.EpsilonModel;
@@ -13,21 +14,25 @@ public class Impact {
     private double distance;
     private int time;
     private boolean sameForce;
+    private Game game;
 
-    public Impact(Vector collisionPoint ,double distance){
+    public Impact(Game game ,Vector collisionPoint ,double distance){
+        this.game = game;
         this.collisionPoint = collisionPoint;
         this.distance = distance;
         time = TimeConstants.REGULAR_IMPACT_TIME;
     }
 
 
-    public Impact(Vector collisionPoint ,double distance ,int time){
+    public Impact(Game game ,Vector collisionPoint ,double distance ,int time){
+        this.game = game;
         this.collisionPoint = collisionPoint;
         this.distance = distance;
         this.time = time;
     }
 
-    public Impact(Vector collisionPoint ,double distance ,int time ,boolean sameForce){
+    public Impact(Game game, Vector collisionPoint , double distance , int time , boolean sameForce){
+        this.game = game;
         this.collisionPoint = collisionPoint;
         this.distance = distance;
         this.time = time;
@@ -36,10 +41,10 @@ public class Impact {
 
     public void MakeImpact(){
         double distance;
-        for (int i = 0; i < ModelData.getModels().size() ; i++){
-            if (ModelData.getModels().get(i) instanceof ImpactAble) {
+        for (int i = 0; i < game.getModelData().getModels().size() ; i++){
+            if (game.getModelData().getModels().get(i) instanceof ImpactAble) {
                 Vector direction;
-                direction = Math.VectorAdd(Math.ScalarInVector(-1, collisionPoint), ModelData.getModels().get(i).getPosition());
+                direction = Math.VectorAdd(Math.ScalarInVector(-1, collisionPoint), game.getModelData().getModels().get(i).getPosition());
                 distance = Math.VectorSize(direction);
                 //////////////////todo
                 if (distance >= this.distance) {
@@ -55,9 +60,9 @@ public class Impact {
                 else {
                     dashDistance = this.distance - distance;
                 }
-                if (!(ModelData.getModels().get(i) instanceof EpsilonModel)) {
+                if (!(game.getModelData().getModels().get(i) instanceof EpsilonModel)) {
                     new Dash(
-                            ModelData.getModels().get(i),
+                            game.getModelData().getModels().get(i),
                             direction,
                             time,
                             dashDistance,
@@ -68,7 +73,7 @@ public class Impact {
                 else {
                     if (sameForce) {
                         new Dash(
-                                ModelData.getModels().get(i),
+                                game.getModelData().getModels().get(i),
                                 direction,
                                 time,
                                 dashDistance,
@@ -78,7 +83,7 @@ public class Impact {
                     }
                     else {
                         new Dash(
-                                ModelData.getModels().get(i),
+                                game.getModelData().getModels().get(i),
                                 direction,
                                 time,
                                 100,

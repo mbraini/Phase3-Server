@@ -97,11 +97,11 @@ public class CollisionHandler {
     private void BulletToEnemyHandler(EnemyModel enemy, EpsilonBulletModel epsilonBullet) {
         if (enemy.isVulnerableToEpsilonBullet())
             enemy.setHP(enemy.getHP() - epsilonBullet.getDamage());
-        GameState.setSuccessfulBullets(GameState.getSuccessfulBullets() + 1);
-        EpsilonModel epsilonModel = ModelData.getEpsilon();
-        epsilonModel.setHP(epsilonModel.getHP() + epsilonModel.getLifeSteal());
-        epsilonModel.checkHP();
-        new Impact(epsilonBullet.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+//        GameState.setSuccessfulBullets(GameState.getSuccessfulBullets() + 1);
+//        EpsilonModel epsilonModel = ModelData.getEpsilon();
+//        epsilonModel.setHP(epsilonModel.getHP() + epsilonModel.getLifeSteal());
+//        epsilonModel.checkHP();
+        new Impact(enemy.getGame() ,epsilonBullet.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
         epsilonBullet.die();
     }
 
@@ -114,7 +114,7 @@ public class CollisionHandler {
             pullOutObject(enemy1 ,enemy2);
         else
             pullOutObject(enemy2 ,enemy1);
-        new Impact(collisionPoint , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+        new Impact(enemy1.getGame() ,collisionPoint , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
         if (enemy1 instanceof CollisionDetector)
             ((CollisionDetector) enemy1).detect();
         if (enemy2 instanceof CollisionDetector)
@@ -128,7 +128,7 @@ public class CollisionHandler {
         if (object instanceof EnemyModel){
             epsilonEnemyMeleeHandler(epsilon ,(EnemyModel)object);
             pullOutObject(epsilon ,object);
-            new Impact(collisionPoint , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+            new Impact(epsilon.getGame() ,collisionPoint , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
             ModelRequestController.playSound(SoundPathConstants.impactSound);
             if (object instanceof BossHelperModel){
                 object.setAcceleration(0 ,0);
@@ -137,7 +137,7 @@ public class CollisionHandler {
         }
         if (object instanceof EnemyBulletModel){
             epsilon.setHP(epsilon.getHP() - ((BulletModel) object).getDamage());
-            new Impact(object.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+            new Impact(object.getGame() ,object.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
             object.die();
         }
         if (object instanceof CollisionDetector){

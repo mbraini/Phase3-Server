@@ -28,12 +28,12 @@ public class VomitThread extends Thread{
         double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double deltaModel = 0;
-        while (!GameState.isOver() && !isInterrupted()) {
-            if (GameState.isPause() || GameState.isDizzy()){
+        while (!vomit.getBoss().getGame().getGameState().isOver() && !isInterrupted()) {
+            if (vomit.getBoss().getGame().getGameState().isPause() || vomit.getBoss().getGame().getGameState().isDizzy()){
                 lastTime = System.nanoTime();
                 continue;
             }
-            if (GameState.isInAnimation()) {
+            if (vomit.getBoss().getGame().getGameState().isInAnimation()) {
                 vomit.endAbility();
                 return;
             }
@@ -54,8 +54,8 @@ public class VomitThread extends Thread{
     }
 
     private void updateVariables() {
-        synchronized (ModelData.getModels()){
-            models = (ArrayList<ObjectModel>) ModelData.getModels().clone();
+        synchronized (vomit.getBoss().getGame().getModelData().getModels()){
+            models = (ArrayList<ObjectModel>) vomit.getBoss().getGame().getModelData().getModels().clone();
         }
     }
 

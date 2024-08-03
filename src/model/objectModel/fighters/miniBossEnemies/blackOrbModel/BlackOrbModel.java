@@ -107,7 +107,7 @@ public class BlackOrbModel extends AbstractEnemy {
                 id
         );
         effectModels.add(effectModel);
-        Spawner.addBlackOrbEffectModel(effectModel);
+        Spawner.addBlackOrbEffectModel(game ,effectModel);
     }
 
     public void removeOrb(String id) {
@@ -128,7 +128,7 @@ public class BlackOrbModel extends AbstractEnemy {
 
     public void checkDeath() {
         if (orbModels.isEmpty()) {
-            ModelRequests.removeAbstractEnemy(id);
+            game.getModelRequests().removeAbstractEnemy(id);
         }
     }
 }

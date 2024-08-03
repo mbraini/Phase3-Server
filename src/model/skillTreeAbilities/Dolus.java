@@ -1,7 +1,6 @@
 package model.skillTreeAbilities;
 
 import constants.CostConstants;
-import controller.game.configs.Configs;
 import controller.game.enums.SkillTreeAbilityType;
 import model.ModelData;
 
@@ -14,7 +13,7 @@ public class Dolus extends SkillTreeAbility{
     private SkillTreeAbilityType secondAbility;
 
     public Dolus() {
-        isBought = Configs.SkillTreeConfigs.dolusBought;
+//        isBought = Configs.SkillTreeConfigs.dolusBought;
         unlockXpCost = CostConstants.DOLUS_UNLOCK_COST;
         type = SkillTreeAbilityType.dolus;
         initTimer();
@@ -45,7 +44,8 @@ public class Dolus extends SkillTreeAbility{
     }
 
     private void defineAbilities() {
-        ArrayList<SkillTreeAbility> abilities = (ArrayList<SkillTreeAbility>) ModelData.getSkillTreeAbilities().clone();
+//        ArrayList<SkillTreeAbility> abilities = (ArrayList<SkillTreeAbility>) ModelData.getSkillTreeAbilities().clone();
+        ArrayList<SkillTreeAbility> abilities = new ArrayList<>(); /////todo
         for (int i = 0 ;i < abilities.size() ;i++) {
             if (abilities.get(i).getType() == SkillTreeAbilityType.dolus) {
                 abilities.remove(i);

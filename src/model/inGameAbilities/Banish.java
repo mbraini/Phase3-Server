@@ -18,12 +18,12 @@ public class Banish extends InGameAbility{
 
     @Override
     public void performAbility() {
-        new Impact(epsilon.getPosition() , DistanceConstants.BANISH_IMPACT_RANGE ,2000 ,true).MakeImpact();
+        new Impact(epsilon.getGame() ,epsilon.getPosition() , DistanceConstants.BANISH_IMPACT_RANGE ,2000 ,true).MakeImpact();
         isActive = false;
     }
 
     @Override
     public void setUp() {
-        epsilon = ModelData.getEpsilon();
+//        epsilon = ModelData.getEpsilon();
     }
 }

@@ -12,13 +12,13 @@ public class WyrmThread extends Thread{
 
     @Override
     public void run() {
-        while (!GameState.isOver()) {
+        while (!wyrmModel.getGame().getGameState().isOver()) {
             try {
                 Thread.sleep(TimeConstants.WYRM_SHOOTING_TIME);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if (GameState.isPause() || GameState.isDizzy()){
+            if (wyrmModel.getGame().getGameState().isPause() || wyrmModel.getGame().getGameState().isDizzy()){
                 continue;
             }
             if (isInterrupt())
@@ -28,7 +28,7 @@ public class WyrmThread extends Thread{
     }
 
     private void shoot() {
-        if (GameState.isOver())
+        if (wyrmModel.getGame().getGameState().isOver())
             return;
         new WyrmShooter(wyrmModel).shoot();
     }

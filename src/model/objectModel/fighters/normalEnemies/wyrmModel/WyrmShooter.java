@@ -16,7 +16,8 @@ public class WyrmShooter {
     }
     public void shoot() {
         Vector position = wyrmModel.getPosition();
-        EpsilonModel epsilon = ModelData.getEpsilon();
+//        EpsilonModel epsilon = ModelData.getEpsilon();  todo
+        EpsilonModel epsilon = null; //// todo
 
         Vector direction = Math.VectorAdd(
                 Math.ScalarInVector(-1 ,position),
@@ -31,6 +32,6 @@ public class WyrmShooter {
                 )
         );
 
-        Spawner.addProjectile(bulletPosition ,direction , ModelType.wyrmBullet);
+        Spawner.addProjectile(wyrmModel.getGame() ,bulletPosition ,direction , ModelType.wyrmBullet);
     }
 }

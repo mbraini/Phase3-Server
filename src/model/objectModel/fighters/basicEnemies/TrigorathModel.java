@@ -66,12 +66,12 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
 
     @Override
     public void ability() {
-        Vector epsilonPosition = ModelData.getModels().getFirst().getPosition();
+        Vector epsilonPosition = game.getModelData().getModels().getFirst().getPosition();
         velocity = new Vector(epsilonPosition.x - getPosition().x ,epsilonPosition.y - getPosition().y);
         double distance = Math.VectorSize(
                 Math.VectorAdd(
                         Math.ScalarInVector(-1 ,position) ,
-                        ModelData.getModels().getFirst().getPosition()
+                        game.getModelData().getModels().getFirst().getPosition()
                 )
         );
         /////////////todo
@@ -132,6 +132,6 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
     @Override
     public void die() {
         super.die();
-        Spawner.addCollectives(position ,2 ,5);
+        Spawner.addCollectives(game ,position ,2 ,5);
     }
 }

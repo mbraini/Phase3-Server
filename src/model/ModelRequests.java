@@ -1,5 +1,6 @@
 package model;
 
+import controller.game.Game;
 import model.objectModel.ObjectModel;
 import model.objectModel.effects.EffectModel;
 import model.objectModel.fighters.AbstractEnemy;
@@ -9,17 +10,25 @@ import java.util.ArrayList;
 
 public class ModelRequests {
 
-    public static ArrayList<String> removeObjectModelReq;
-    private static ArrayList<String> removeFrameModelReq;
-    private static ArrayList<String> removeEffectModelReq;
-    private static ArrayList<String> removeAbstractEnemyReq;
-    private static ArrayList<AbstractEnemy> addedAbstractEnemy;
-    private static ArrayList<EffectModel> addedEffectModel;
-    private static ArrayList<ObjectModel> addedObjectModel;
-    private static ArrayList<FrameModel> addedFrameModel;
-    private static boolean endRequest;
+    public ArrayList<String> removeObjectModelReq;
+    private ArrayList<String> removeFrameModelReq;
+    private ArrayList<String> removeEffectModelReq;
+    private ArrayList<String> removeAbstractEnemyReq;
+    private ArrayList<AbstractEnemy> addedAbstractEnemy;
+    private ArrayList<EffectModel> addedEffectModel;
+    private ArrayList<ObjectModel> addedObjectModel;
+    private ArrayList<FrameModel> addedFrameModel;
+    private boolean endRequest;
+    private Game game;
 
-    public synchronized static void resetAll() {
+
+    public ModelRequests(Game game) {
+        this.game = game;
+    }
+
+
+
+    public synchronized void resetAll() {
         removeObjectModelReq = new ArrayList<>();
         removeFrameModelReq = new ArrayList<>();
         removeEffectModelReq = new ArrayList<>();
@@ -30,11 +39,11 @@ public class ModelRequests {
         addedFrameModel = new ArrayList<>();
     }
 
-    public synchronized static void checkRequests(){
+    public synchronized void checkRequests(){
         if (endRequest) {
             endRequest = false;
             resetAll();
-            ModelData.resetAll();
+            game.getModelData().resetAll();
         }
         checkObjects();
         checkFrames();
@@ -42,93 +51,93 @@ public class ModelRequests {
         checkAbstractEnemies();
     }
 
-    private synchronized static void checkAbstractEnemies() {
+    private synchronized void checkAbstractEnemies() {
         for (int i = 0 ;i < addedAbstractEnemy.size() ;i++){
-            ModelData.addAbstractEnemy(addedAbstractEnemy.get(i));
+            game.getModelData().addAbstractEnemy(addedAbstractEnemy.get(i));
             addedAbstractEnemy.remove(i);
             i--;
         }
         for (int i = 0 ;i < removeAbstractEnemyReq.size() ;i++){
-            ModelData.removeAbstractEnemy(removeAbstractEnemyReq.get(i));
+            game.getModelData().removeAbstractEnemy(removeAbstractEnemyReq.get(i));
             removeAbstractEnemyReq.remove(i);
             i--;
         }
     }
 
-    private synchronized static void checkEffects() {
+    private synchronized void checkEffects() {
         for (int i = 0 ;i < addedEffectModel.size() ;i++){
-            ModelData.addEffect(addedEffectModel.get(i));
+            game.getModelData().addEffect(addedEffectModel.get(i));
             addedEffectModel.remove(i);
             i--;
         }
         for (int i = 0 ;i < removeEffectModelReq.size() ;i++){
-            ModelData.removeEffect(removeEffectModelReq.get(i));
+            game.getModelData().removeEffect(removeEffectModelReq.get(i));
             removeEffectModelReq.remove(i);
             i--;
         }
     }
 
-    private synchronized static void checkObjects() {
+    private synchronized void checkObjects() {
         for (int i = 0; i <addedObjectModel.size() ;i++){
-            ModelData.addModel(addedObjectModel.get(i));
+            game.getModelData().addModel(addedObjectModel.get(i));
             addedObjectModel.remove(i);
             i--;
         }
         for (int i = 0; i < removeObjectModelReq.size() ;i++){
-            ModelData.removeModel(removeObjectModelReq.get(i));
+            game.getModelData().removeModel(removeObjectModelReq.get(i));
             removeObjectModelReq.remove(i);
             i--;
         }
     }
 
-    private synchronized static void checkFrames() {
+    private synchronized void checkFrames() {
         for (int i = 0; i <addedFrameModel.size() ;i++){
-            ModelData.addFrame(addedFrameModel.get(i));
+            game.getModelData().addFrame(addedFrameModel.get(i));
             addedFrameModel.remove(i);
             i--;
         }
         for (int i = 0 ;i < removeFrameModelReq.size() ;i++){
-            ModelData.removeFrame(removeFrameModelReq.get(i));
+            game.getModelData().removeFrame(removeFrameModelReq.get(i));
             removeFrameModelReq.remove(i);
             i--;
         }
     }
 
 
-    public synchronized static void addObjectModel(ObjectModel objectModel){
+    public synchronized void addObjectModel(ObjectModel objectModel){
         addedObjectModel.add(objectModel);
     }
 
-    public synchronized static void addFrameModel(FrameModel frameModel){
+    public synchronized void addFrameModel(FrameModel frameModel){
         addedFrameModel.add(frameModel);
     }
 
-    public synchronized static void removeObjectModel(String id){
+    public synchronized void removeObjectModel(String id){
         removeObjectModelReq.add(id);
     }
 
-    public synchronized static void removeFrameModel(String id){
+    public synchronized void removeFrameModel(String id){
         removeFrameModelReq.add(id);
     }
 
-    public synchronized static void addEffectModel(EffectModel effectModel){
+    public synchronized void addEffectModel(EffectModel effectModel){
         addedEffectModel.add(effectModel);
     }
 
-    public synchronized static void removeEffectModel(String id){
+    public synchronized void removeEffectModel(String id){
         removeEffectModelReq.add(id);
     }
 
-    public synchronized static void addAbstractEnemy(AbstractEnemy abstractEnemy){
+    public synchronized void addAbstractEnemy(AbstractEnemy abstractEnemy){
         addedAbstractEnemy.add(abstractEnemy);
     }
 
-    public synchronized static void removeAbstractEnemy(String id){
+    public synchronized void removeAbstractEnemy(String id){
         removeAbstractEnemyReq.add(id);
     }
 
 
-    public synchronized static void endRequest() {
+    public synchronized void endRequest() {
         endRequest = true;
         checkRequests();
     }

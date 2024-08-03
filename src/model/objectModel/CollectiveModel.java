@@ -50,7 +50,7 @@ public class CollectiveModel extends ObjectModel implements IsCircle, Ability, M
 
     @Override
     public void ability() {
-        Vector epsilonPosition = ModelData.getModels().getFirst().getPosition();
+        Vector epsilonPosition = game.getModelData().getModels().getFirst().getPosition();
         Vector distance = Math.VectorAdd(
                 epsilonPosition,
                 Math.ScalarInVector(-1 ,position)
@@ -60,8 +60,8 @@ public class CollectiveModel extends ObjectModel implements IsCircle, Ability, M
                 VelocityConstants.COLLECTIVE_VELOCITY
         );
         if (Math.VectorSize(distance) <= SizeConstants.EPSILON_DIMENSION.width) {
-            GameState.setXp(GameState.getXp() + value);
-            GameState.setXpGained(GameState.getXpGained() + value);
+//            GameState.setXp(GameState.getXp() + value);
+//            GameState.setXpGained(GameState.getXpGained() + value);
             die();
             hasAbility = false;
         }

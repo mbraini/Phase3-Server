@@ -1,11 +1,13 @@
 package model.objectModel;
 
 
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import model.logics.MovementManager;
 import utils.Vector;
 
 public abstract class ObjectModel {
+    protected Game game;
     protected Vector position;
     protected Vector velocity;
     protected Vector acceleration;
@@ -140,5 +142,13 @@ public abstract class ObjectModel {
 
     public void setMovementManager(MovementManager movementManager) {
         this.movementManager = movementManager;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

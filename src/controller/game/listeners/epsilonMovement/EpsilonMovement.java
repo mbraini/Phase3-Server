@@ -1,6 +1,7 @@
 package controller.game.listeners.epsilonMovement;
 
 
+import controller.game.Player;
 import controller.game.configs.Configs;
 import controller.game.manager.GameState;
 import model.ModelData;
@@ -23,14 +24,17 @@ public class EpsilonMovement extends KeyAdapter {
     public static int UP_KEY = 38;
     public static int RIGHT_KEY = 39;
     public static int DOWN_KEY = 40;
+    private Player player;
 
-    public EpsilonMovement(){
-        this.epsilon = (EpsilonModel) (ModelData.getModels().getFirst());
+
+    public EpsilonMovement(Player player){
+        this.player = player;
+        this.epsilon = (EpsilonModel) (player.getPlayerData().getEpsilon());
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (GameState.isInAnimation())
+        if (player.getGame().getGameState().isInAnimation())
             return;
         detectKeyPressed(e.getKeyCode());
         addAcc();
@@ -38,7 +42,7 @@ public class EpsilonMovement extends KeyAdapter {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (GameState.isInAnimation())
+        if (player.getGame().getGameState().isInAnimation())
             return;
         detectKeyReleased(e.getKeyCode());
         addDec();

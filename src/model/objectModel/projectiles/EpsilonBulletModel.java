@@ -14,7 +14,7 @@ public class EpsilonBulletModel extends BulletModel implements IsCircle {
         this.position = position;
         this.velocity = Math.VectorWithSize(direction , VelocityConstants.EPSILON_BULLET_VELOCITY);
         this.acceleration = new Vector(0 ,0);
-        damage = ModelData.getEpsilon().getEpsilonBulletDamage();
+//        damage = ModelData.getEpsilon().getEpsilonBulletDamage();
         setSolid(true);
         this.id = id;
         this.HP = 1;

@@ -1,6 +1,7 @@
 package model.skillTreeAbilities;
 
 import constants.RefreshRateConstants;
+import controller.game.Player;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.manager.GameState;
 import controller.online.annotations.SkippedByJson;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 
 public abstract class SkillTreeAbility {
 
+    protected Player player;
     protected boolean isBought;
     protected int inGameXpCost = 100;
     protected int inGameCoolDownTime = 300000;
@@ -103,9 +105,9 @@ public abstract class SkillTreeAbility {
         coolDownTimer = new Timer(RefreshRateConstants.SKILL_TREE_ABILITY_TIMER_REFRESH_RATE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (GameState.isPause())
+                if (player.getGame().getGameState().isPause())
                     return;
-                if (GameState.isOver())
+                if (player.getGame().getGameState().isOver())
                     coolDownTimer.stop();
                 coolDownTimePassed += RefreshRateConstants.SKILL_TREE_ABILITY_TIMER_REFRESH_RATE;
                 if (coolDownTimePassed >= inGameCoolDownTime){

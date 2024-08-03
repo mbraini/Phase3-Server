@@ -40,7 +40,7 @@ public class NullLocalFrameHandler {
                 new Vector(0 ,-epsilon.getRadios())
         );
         if (isInNoFrame(top)) {
-            new Impact(top , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+            new Impact(model.getGame() ,top , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
         }
 
         Vector right = Math.VectorAdd(
@@ -48,7 +48,7 @@ public class NullLocalFrameHandler {
                 new Vector(epsilon.getRadios() ,0)
         );
         if (isInNoFrame(right)) {
-            new Impact(right , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+            new Impact(model.getGame(), right , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
         }
 
         Vector bottom = Math.VectorAdd(
@@ -56,7 +56,7 @@ public class NullLocalFrameHandler {
                 new Vector(0 ,epsilon.getRadios())
         );
         if (isInNoFrame(bottom)) {
-            new Impact(bottom , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+            new Impact(model.getGame() ,bottom , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
         }
 
         Vector left = Math.VectorAdd(
@@ -64,7 +64,7 @@ public class NullLocalFrameHandler {
                 new Vector(-epsilon.getRadios() ,0)
         );
         if (isInNoFrame(left)) {
-            new Impact(left , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+            new Impact(model.getGame() ,left , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
         }
 
     }
@@ -106,7 +106,7 @@ public class NullLocalFrameHandler {
         FrameModel closestFrame = map.get(min);
         Vector newPosition = getEpsilonNewPosition(closestFrame ,min);
         model.setPosition(newPosition);
-        new Impact(impactPoint , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+        new Impact(model.getGame() ,impactPoint , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
     }
 
     private void bulletHandler() {

@@ -20,7 +20,7 @@ public class BossPhase2Animation extends TimerAnimation {
 
     @Override
     public void StartAnimation() {
-        GameState.setIsInAnimation(true);
+        boss.getGame().getGameState().setIsInAnimation(true);
         boss.spawnPunch();
         timer.start();
     }
@@ -29,7 +29,7 @@ public class BossPhase2Animation extends TimerAnimation {
         timer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameState.setIsInAnimation(false);
+                boss.getGame().getGameState().setIsInAnimation(false);
                 timer.stop();
             }
         });

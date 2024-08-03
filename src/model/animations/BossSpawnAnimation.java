@@ -30,7 +30,7 @@ public class BossSpawnAnimation extends TimerAnimation {
             public void actionPerformed(ActionEvent e) {
                 boss.spawnLeftHand();
                 boss.spawnRightHand();
-                GameState.setIsInAnimation(false);
+                boss.getGame().getGameState().setIsInAnimation(false);
                 timer.stop();
             }
         });
@@ -51,37 +51,38 @@ public class BossSpawnAnimation extends TimerAnimation {
 
     private Vector findDirection() {
         Vector headPosition = boss.getHead().getPosition().clone();
-        Vector framePosition = ModelData.getEpsilon().getPosition().clone();
-        return Math.VectorAdd(
-                Math.ScalarInVector(-1 ,headPosition),
-                Math.VectorAdd(
-                        framePosition,
-                        new Vector(
-                                0 ,
-                                -ModelData.getEpsilonFrame().getSize().height / 2d - SizeConstants.HEAD_DIMENSION.height / 2d
-                                - SizeConstants.barD.height - 1
-                        )
-                )
-        );
+//        Vector framePosition = ModelData.getEpsilon().getPosition().clone();
+//        return Math.VectorAdd(
+//                Math.ScalarInVector(-1 ,headPosition),
+//                Math.VectorAdd(
+//                        framePosition,
+//                        new Vector(
+//                                0 ,
+//                                -ModelData.getEpsilonFrame().getSize().height / 2d - SizeConstants.HEAD_DIMENSION.height / 2d
+//                                - SizeConstants.barD.height - 1
+//                        )
+//                )
+//        );
+        return null;
     }
 
     private void setUp() {
-        FrameModel epsilonFrame = ModelData.getEpsilonFrame();
-        epsilonFrame.transfer(
-                new Vector(
-                        SizeConstants.SCREEN_SIZE.width / 2d - epsilonFrame.getSize().width / 2d,
-                        SizeConstants.SCREEN_SIZE.height / 2d - epsilonFrame.getSize().height / 2d
-                )
-        );
-        ModelData.getEpsilon().setPosition(
-                SizeConstants.SCREEN_SIZE.width / 2d,
-                SizeConstants.SCREEN_SIZE.height / 2d
-        );
+//        FrameModel epsilonFrame = ModelData.getEpsilonFrame();
+//        epsilonFrame.transfer(
+//                new Vector(
+//                        SizeConstants.SCREEN_SIZE.width / 2d - epsilonFrame.getSize().width / 2d,
+//                        SizeConstants.SCREEN_SIZE.height / 2d - epsilonFrame.getSize().height / 2d
+//                )
+//        );
+//        ModelData.getEpsilon().setPosition(
+//                SizeConstants.SCREEN_SIZE.width / 2d,
+//                SizeConstants.SCREEN_SIZE.height / 2d
+//        );
     }
 
     @Override
     public void StartAnimation() {
-        GameState.setIsInAnimation(true);
+        boss.getGame().getGameState().setIsInAnimation(true);
         setUp();
         boss.spawnHead();
         headAnimation();

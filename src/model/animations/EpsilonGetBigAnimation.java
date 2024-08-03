@@ -25,27 +25,27 @@ public class EpsilonGetBigAnimation extends TimerAnimation {
         timer = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (ModelData.getEpsilon().getSize().width >= ModelData.getEpsilonFrame().getSize().width
-                        || ModelData.getEpsilon().getSize().height >= ModelData.getEpsilonFrame().getSize().height)
-                {
-                    Controller.endGame(true);
-                    System.out.println("EPSILON GOT BIG!");
-                    ModelRequestController.playSound(SoundPathConstants.endSound);
-                    timer.stop();
-                }
-                ModelData.getEpsilon().setSize(
-                        new Dimension(
-                                ModelData.getEpsilon().getSize().width + SizeConstants.EPSILON_DIMENSION.width / 10,
-                                ModelData.getEpsilon().getSize().height + SizeConstants.EPSILON_DIMENSION.height / 10
-                        )
-                );
+//                if (ModelData.getEpsilon().getSize().width >= ModelData.getEpsilonFrame().getSize().width
+//                        || ModelData.getEpsilon().getSize().height >= ModelData.getEpsilonFrame().getSize().height)
+//                {
+//                    Controller.endGame(true);
+//                    System.out.println("EPSILON GOT BIG!");
+//                    ModelRequestController.playSound(SoundPathConstants.endSound);
+//                    timer.stop();
+//                }
+//                ModelData.getEpsilon().setSize(
+//                        new Dimension(
+//                                ModelData.getEpsilon().getSize().width + SizeConstants.EPSILON_DIMENSION.width / 10,
+//                                ModelData.getEpsilon().getSize().height + SizeConstants.EPSILON_DIMENSION.height / 10
+//                        )
+//                );
             }
         });
     }
 
     @Override
     public void StartAnimation() {
-        GameState.setIsInAnimation(true);
+//        GameState.setIsInAnimation(true);
         timer.start();
     }
 }

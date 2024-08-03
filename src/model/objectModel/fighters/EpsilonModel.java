@@ -6,7 +6,6 @@ import constants.DamageConstants;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.game.Controller;
-import controller.game.configs.Configs;
 import controller.game.enums.ModelType;
 import controller.game.interfaces.SizeChanger;
 import controller.game.manager.Spawner;
@@ -69,12 +68,6 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
         double currentSpeed = java.lang.Math.sqrt(java.lang.Math.pow(velocity.x ,2)
                 + java.lang.Math.pow(velocity.y ,2));
         assert currentSpeed != 0;
-        if (currentSpeed > Configs.GameConfigs.EPSILON_MAX_SPEED){
-            setVelocity(
-                    getVelocity().x * Configs.GameConfigs.EPSILON_MAX_SPEED / currentSpeed ,
-                    getVelocity().y * Configs.GameConfigs.EPSILON_MAX_SPEED / currentSpeed
-            );
-        }
     }
 
     @Override

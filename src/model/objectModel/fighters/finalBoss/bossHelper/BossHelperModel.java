@@ -76,7 +76,7 @@ public abstract class BossHelperModel extends EnemyModel implements ImageChanger
 
     @Override
     public void move() {
-        if (GameState.isDizzy())
+        if (game.getGameState().isDizzy())
             return;
 
         velocity = Math.VectorAdd(velocity ,Math.ScalarInVector(RefreshRateConstants.UPS ,acceleration));

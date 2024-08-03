@@ -43,7 +43,7 @@ public class Dismay extends InGameAbility {
         timer = new Timer(RefreshRateConstants.IN_GAME_ABILITY_TIMER_REFRESH_RATE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (GameState.isPause())
+                if (player.getGame().getGameState().isPause())
                     return;
                 timePassed += RefreshRateConstants.IN_GAME_ABILITY_TIMER_REFRESH_RATE;
                 if (timePassed >= TimeConstants.DISMAY_DURATION){
@@ -68,7 +68,7 @@ public class Dismay extends InGameAbility {
     @Override
     public void setUp() {
         initTimer();
-        this.epsilon =ModelData.getEpsilon();
+//        this.epsilon =ModelData.getEpsilon();
         protectorModel.setEpsilon(epsilon);
         if (timePassed <= TimeConstants.DISMAY_DURATION && isActive) {
             Spawner.spawnProtector(protectorModel);
