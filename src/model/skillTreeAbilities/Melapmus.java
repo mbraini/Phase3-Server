@@ -18,7 +18,7 @@ public class Melapmus extends SkillTreeAbility{
     }
 
     private void initEpsilon() {
-//        epsilonModel = ModelData.getEpsilon();  ///todo
+        epsilonModel = player.getPlayerData().getEpsilon();
     }
 
 

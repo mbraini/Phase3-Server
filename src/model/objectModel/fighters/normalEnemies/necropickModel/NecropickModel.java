@@ -2,6 +2,7 @@ package model.objectModel.fighters.normalEnemies.necropickModel;
 
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.GameState;
 import controller.game.manager.Spawner;
@@ -30,7 +31,8 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
     private ArrayList<Vector> vertices;
     private boolean isArrived;
 
-    public NecropickModel(Vector position ,String id){
+    public NecropickModel(Game game ,Vector position , String id){
+        super(game);
         this.position = position;
         this.velocity = new Vector(0 ,0);
         this.acceleration = new Vector(0 ,0);

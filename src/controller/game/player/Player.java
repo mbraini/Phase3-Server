@@ -1,4 +1,15 @@
-package controller.game;
+package controller.game.player;
+
+import com.google.gson.Gson;
+import controller.game.Game;
+import controller.game.ModelRequestController;
+import controller.game.PlayerData;
+import controller.game.ViewRequestController;
+import model.objectModel.ObjectModel;
+import model.objectModel.effects.EffectModel;
+import model.objectModel.frameModel.FrameModel;
+
+import java.util.ArrayList;
 
 public class Player {
 
@@ -7,6 +18,12 @@ public class Player {
     private ViewRequestController viewRequestController;
     private ModelRequestController modelRequestController;
     private PlayerData playerData;
+    private InfoSender infoSender;
+
+    public Player(String username) {
+        this.username = username;
+    }
+
 
     public Game getGame() {
         return game;
@@ -47,4 +64,12 @@ public class Player {
     public void setPlayerData(PlayerData playerData) {
         this.playerData = playerData;
     }
+
+
+    public void startInfoSender() {
+
+    }
+
+
+
 }

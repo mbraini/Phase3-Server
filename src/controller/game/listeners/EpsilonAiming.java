@@ -3,10 +3,7 @@ package controller.game.listeners;
 
 import constants.SizeConstants;
 import constants.TimeConstants;
-import controller.game.Player;
-import controller.game.ViewRequestController;
-import controller.game.manager.GameState;
-import model.ModelData;
+import controller.game.player.Player;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Vector;
 

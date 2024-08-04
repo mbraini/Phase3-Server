@@ -18,7 +18,7 @@ public class Proteus extends SkillTreeAbility{
     }
 
     private void initEpsilon() {
-//        epsilonModel = ModelData.getEpsilon(); ///todo
+        epsilonModel = player.getPlayerData().getEpsilon();
     }
 
 
@@ -32,6 +32,6 @@ public class Proteus extends SkillTreeAbility{
     @Override
     public void setUp() {
         super.setUp();
-//        epsilonModel = ModelData.getEpsilon(); ///todo
+        epsilonModel = player.getPlayerData().getEpsilon();
     }
 }

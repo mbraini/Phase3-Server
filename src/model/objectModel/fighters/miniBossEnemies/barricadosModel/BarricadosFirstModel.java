@@ -1,11 +1,13 @@
 package model.objectModel.fighters.miniBossEnemies.barricadosModel;
 
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import utils.Vector;
 
 public class BarricadosFirstModel extends BarricadosModel {
 
-    public BarricadosFirstModel(Vector position ,String id){
+    public BarricadosFirstModel(Game game ,Vector position , String id){
+        super(game);
         this.position = position;
         this.HP = 10000000;
         this.id = id;

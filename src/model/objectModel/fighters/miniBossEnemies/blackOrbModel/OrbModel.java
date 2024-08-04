@@ -1,6 +1,7 @@
 package model.objectModel.fighters.miniBossEnemies.blackOrbModel;
 
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.manager.Spawner;
 import controller.online.annotations.SkippedByJson;
@@ -16,7 +17,8 @@ public class OrbModel extends MiniBossModel implements IsCircle {
     private FrameModel frameModel;
     private int number;
 
-    public OrbModel(Vector position ,BlackOrbModel blackOrbModel ,int number ,String id){
+    public OrbModel(Game game ,Vector position ,BlackOrbModel blackOrbModel ,int number ,String id){
+        super(game);
         this.position = position;
         this.id = id;
         this.blackOrbModel = blackOrbModel;

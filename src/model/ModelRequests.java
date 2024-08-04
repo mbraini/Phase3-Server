@@ -24,6 +24,7 @@ public class ModelRequests {
 
     public ModelRequests(Game game) {
         this.game = game;
+        resetAll();
     }
 
 

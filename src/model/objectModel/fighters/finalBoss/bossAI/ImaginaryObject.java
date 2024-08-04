@@ -1,5 +1,6 @@
 package model.objectModel.fighters.finalBoss.bossAI;
 
+import controller.game.Game;
 import model.interfaces.collisionInterfaces.IsPolygon;
 import model.objectModel.ObjectModel;
 import utils.Vector;
@@ -10,7 +11,8 @@ public class ImaginaryObject extends ObjectModel implements IsPolygon {
 
     private ArrayList<Vector> vertices;
 
-    public ImaginaryObject(ArrayList<Vector> vertices) {
+    public ImaginaryObject(Game game ,ArrayList<Vector> vertices) {
+        super(game);
         this.vertices = vertices;
     }
 

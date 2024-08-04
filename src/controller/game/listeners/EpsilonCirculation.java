@@ -2,9 +2,7 @@ package controller.game.listeners;
 
 
 import constants.SizeConstants;
-import controller.game.Player;
-import controller.game.manager.GameState;
-import model.ModelData;
+import controller.game.player.Player;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Math;
 import utils.Vector;

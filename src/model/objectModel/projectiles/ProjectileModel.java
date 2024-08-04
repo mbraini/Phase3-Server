@@ -1,9 +1,14 @@
 package model.objectModel.projectiles;
 
+import controller.game.Game;
 import model.objectModel.ObjectModel;
 
 public abstract class ProjectileModel extends ObjectModel {
     protected double damage;
+
+    public ProjectileModel(Game game) {
+        super(game);
+    }
 
     public double getDamage() {
         return damage;

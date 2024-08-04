@@ -22,6 +22,10 @@ public abstract class ObjectModel {
     protected boolean isMotionless;
     protected ModelType type;
 
+    public ObjectModel(Game game) {
+        this.game = game;
+    }
+
     public Vector getPosition() {
         return position;
     }

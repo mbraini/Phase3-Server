@@ -23,9 +23,7 @@ public class Cerberus extends SkillTreeAbility {
     @Override
     protected void cast() {
         canCast = false;
-        EpsilonModel epsilon = null;
-//        EpsilonModel epsilon = (EpsilonModel) ModelData.getModels().getFirst();
-////////todo
+        EpsilonModel epsilon = player.getPlayerData().getEpsilon();
         Vector direction = new Vector(0 ,1);
         direction = Math.VectorWithSize(
                 direction,

@@ -1,8 +1,14 @@
 package model.objectModel;
 
+import controller.game.Game;
+
 public abstract class FighterModel extends ObjectModel{
     protected boolean hasMeleeAttack;
     protected int meleeAttack;
+
+    public FighterModel(Game game) {
+        super(game);
+    }
 
 
     public boolean isHasMeleeAttack() {

@@ -8,6 +8,10 @@ public abstract class AbstractEnemy {
     protected AbstractEnemyType type;
     protected Game game;
 
+    public AbstractEnemy(Game game) {
+        this.game = game;
+    }
+
     public String getId() {
         return id;
     }

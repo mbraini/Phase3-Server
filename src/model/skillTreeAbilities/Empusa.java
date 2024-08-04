@@ -19,7 +19,7 @@ public class Empusa extends SkillTreeAbility{
     }
 
     private void initEpsilon() {
-//        this.epsilonModel = ModelData.getEpsilon(); ///todo
+        this.epsilonModel = player.getPlayerData().getEpsilon();
     }
 
 

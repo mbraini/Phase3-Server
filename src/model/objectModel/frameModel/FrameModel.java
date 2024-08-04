@@ -1,5 +1,6 @@
 package model.objectModel.frameModel;
 
+import controller.game.Game;
 import controller.game.ObjectController;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
@@ -30,7 +31,8 @@ public class FrameModel extends ObjectModel implements IsPolygon , HasVertices {
     private boolean canRightResize = true;
     private boolean canLeftResize = true;
 
-    public FrameModel(Vector positionInit ,Dimension dimensionInit ,String id){
+    public FrameModel(Game game ,Vector positionInit , Dimension dimensionInit , String id){
+        super(game);
         this.position = positionInit.clone();
         this.size = dimensionInit;
         this.id = id;

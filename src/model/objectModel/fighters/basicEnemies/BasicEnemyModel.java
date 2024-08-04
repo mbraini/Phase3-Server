@@ -1,6 +1,7 @@
 package model.objectModel.fighters.basicEnemies;
 
 import constants.RefreshRateConstants;
+import controller.game.Game;
 import controller.game.manager.GameState;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
@@ -9,6 +10,10 @@ import model.objectModel.fighters.EnemyModel;
 import utils.Math;
 
 public abstract class BasicEnemyModel extends EnemyModel implements MoveAble ,HasVertices, IsPolygon {
+    public BasicEnemyModel(Game game) {
+        super(game);
+    }
+
     @Override
     public void move() {
         if (game.getGameState().isDizzy())

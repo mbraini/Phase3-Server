@@ -1,5 +1,6 @@
 package model.objectModel.fighters.miniBossEnemies.blackOrbModel;
 
+import controller.game.Game;
 import controller.game.enums.AbstractEnemyType;
 import controller.game.manager.Spawner;
 import controller.online.annotations.SkippedByJson;
@@ -22,7 +23,8 @@ public class BlackOrbModel extends AbstractEnemy {
     private int frameCount;
     private int orbCount;
 
-    public BlackOrbModel(Vector center ,String id){
+    public BlackOrbModel(Game game ,Vector center , String id){
+        super(game);
         this.id = id;
         frameModels = new ArrayList<>();
         orbModels = new ArrayList<>();
@@ -101,6 +103,7 @@ public class BlackOrbModel extends AbstractEnemy {
 
     public void addEffect(BlackOrbModel blackOrbModel ,OrbModel orbOrigin, OrbModel orbDestination, String id) {
         BlackOrbAoeEffectModel effectModel = new BlackOrbAoeEffectModel(
+                blackOrbModel.game,
                 blackOrbModel ,
                 orbOrigin ,
                 orbDestination ,

@@ -1,10 +1,8 @@
 package controller.game.listeners.epsilonMovement;
 
 
-import controller.game.Player;
+import controller.game.player.Player;
 import controller.game.configs.Configs;
-import controller.game.manager.GameState;
-import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
 
 import java.awt.event.KeyAdapter;

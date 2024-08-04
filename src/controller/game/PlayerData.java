@@ -14,10 +14,8 @@ public class PlayerData {
     private ArrayList<SkillTreeAbility> skillTreeAbilities = new ArrayList<>();
     private EpsilonModel epsilon;
     private FrameModel epsilonFrame;
-    private double time;
     private int xp = 1000;
     private double hp;
-    private int wave = 1;
     private int enemyKilled;
     private int totalBullets;
     private int successfulBullets;
@@ -78,6 +76,19 @@ public class PlayerData {
         this.successfulBullets = successfulBullets;
     }
 
+    public int getXp() {
+        return xp;
+    }
 
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
 
+    public double getHp() {
+        return hp;
+    }
+
+    public void setHp(double hp) {
+        this.hp = hp;
+    }
 }

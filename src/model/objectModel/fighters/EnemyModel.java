@@ -1,6 +1,7 @@
 package model.objectModel.fighters;
 
 
+import controller.game.Game;
 import controller.game.GameData;
 import controller.game.ObjectController;
 import controller.game.manager.GameState;
@@ -14,6 +15,10 @@ public abstract class EnemyModel extends FighterModel {
 
     protected boolean vulnerableToEpsilonMelee;
     protected boolean vulnerableToEpsilonBullet;
+
+    public EnemyModel(Game game) {
+        super(game);
+    }
 
     public void meleeAttack(EpsilonModel epsilon){
         if (!hasMeleeAttack)

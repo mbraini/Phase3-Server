@@ -1,6 +1,7 @@
 package model.objectModel.fighters.finalBoss.bossHelper;
 
 import constants.RefreshRateConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.interfaces.ImageChanger;
 import controller.game.interfaces.SizeChanger;
@@ -26,6 +27,10 @@ public abstract class BossHelperModel extends EnemyModel implements ImageChanger
     protected boolean isDead;
     protected boolean dashedInPositiveWay;
     private boolean inDash;
+
+    public BossHelperModel(Game game) {
+        super(game);
+    }
 
     protected abstract void initFrame();
 

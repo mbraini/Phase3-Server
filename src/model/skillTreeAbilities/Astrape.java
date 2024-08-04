@@ -18,8 +18,8 @@ public class Astrape extends SkillTreeAbility{
     @Override
     protected void cast() {
         canCast = false;
-//        EpsilonModel epsilon = (EpsilonModel) ModelData.getModels().getFirst();  ////todo
-//        epsilon.setEpsilonDamageOnCollision(epsilon.getEpsilonDamageOnCollision() + 2);
+        EpsilonModel epsilon = player.getPlayerData().getEpsilon();
+        epsilon.setEpsilonDamageOnCollision(epsilon.getEpsilonDamageOnCollision() + 2);
         coolDownTimer.start();
     }
 

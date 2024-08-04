@@ -115,6 +115,7 @@ public class ArchmireThread extends Thread{
 
     private synchronized void addEffect() {
         ArchmireAoeEffectModel effectModel = new ArchmireAoeEffectModel(
+                archmire.getGame(),
                 archmire,
                 Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
         );

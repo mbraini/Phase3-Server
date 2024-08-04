@@ -48,6 +48,7 @@ public class Vomit extends Ability {
 
     public void addEffect(FrameModel epsilonFrame){
         BossAoeEffectModel effectModel = new BossAoeEffectModel(
+                epsilonFrame.getGame(),
                 Helper.createRandomPosition(epsilonFrame ,true),
                 thread,
                 this,

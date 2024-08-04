@@ -3,6 +3,7 @@ package model.objectModel.fighters.normalEnemies.archmireModel;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import constants.VelocityConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
@@ -23,7 +24,8 @@ public class ArchmireModel extends NormalEnemyModel implements MoveAble , Abilit
     private ArrayList<Vector> vertices = new ArrayList<>();
     private ArrayList<ArchmireAoeEffectModel> aoeEffects = new ArrayList<>();
 
-    public ArchmireModel(Vector position ,String id){
+    public ArchmireModel(Game game ,Vector position , String id){
+        super(game);
         this.position = position;
         this.velocity = new Vector(0 ,0);
         this.acceleration = new Vector(0 ,0);

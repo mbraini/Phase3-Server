@@ -18,8 +18,8 @@ public class Athena extends SkillTreeAbility{
     @Override
     protected void cast() {
         canCast = false;
-//        GameState.setShrinkageVelocity(GameState.getShrinkageVelocity() - 0.2 * GameState.getShrinkageVelocity());
-        ///todo
+        GameState gameState = player.getGame().getGameState();
+        gameState.setShrinkageVelocity(gameState.getShrinkageVelocity() - 0.2 * gameState.getShrinkageVelocity());
         coolDownTimer.start();
     }
 

@@ -1,6 +1,7 @@
 package model.inGameAbilities.Dismay;
 
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.enums.ModelType;
 import model.interfaces.Ability;
@@ -13,7 +14,8 @@ public class EpsilonProtectorModel extends ObjectModel implements IsCircle , Abi
 
     private EpsilonModel epsilon;
 
-    public EpsilonProtectorModel(EpsilonModel epsilon ,String id){
+    public EpsilonProtectorModel(Game game ,EpsilonModel epsilon , String id){
+        super(game);
         this.epsilon = epsilon;
         this.position = epsilon.getPosition().clone();
         this.id = id;

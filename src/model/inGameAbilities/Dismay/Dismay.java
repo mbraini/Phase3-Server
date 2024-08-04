@@ -34,6 +34,7 @@ public class Dismay extends InGameAbility {
 
     private void initProtector() {
         protectorModel = new EpsilonProtectorModel(
+                player.getGame(),
                 epsilon,
                 Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
         );

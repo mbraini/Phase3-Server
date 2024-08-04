@@ -2,6 +2,7 @@ package model.objectModel.fighters.finalBoss.bossHelper;
 
 import constants.ImageConstants;
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
@@ -18,7 +19,8 @@ public class HandModel extends BossHelperModel implements IsPolygon , HasVertice
     private ArrayList<Vector> vertices;
 
 
-    public HandModel(Vector position ,String id){
+    public HandModel(Game game ,Vector position , String id){
+        super(game);
         this.position = position;
         this.id = id;
         this.image = ImageConstants.hand;
@@ -57,6 +59,7 @@ public class HandModel extends BossHelperModel implements IsPolygon , HasVertice
     @Override
     protected void initFrame() {
         FrameModelBuilder builder = new FrameModelBuilder(
+                game,
                 Math.VectorAdd(
                         position,
                         new Vector(

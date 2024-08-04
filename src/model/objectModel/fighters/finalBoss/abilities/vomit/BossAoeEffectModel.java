@@ -2,6 +2,7 @@ package model.objectModel.fighters.finalBoss.abilities.vomit;
 
 import constants.DistanceConstants;
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.Fader;
@@ -18,7 +19,8 @@ public class BossAoeEffectModel extends AoeEffectModel implements Fader , IsCirc
     @SkippedByJson
     private VomitThread thread;
 
-    public BossAoeEffectModel(Vector center ,VomitThread thread ,Vomit vomit, String id){
+    public BossAoeEffectModel(Game game ,Vector center ,VomitThread thread ,Vomit vomit, String id){
+        super(game);
         this.id = id;
         this.vomit = vomit;
         this.thread = thread;

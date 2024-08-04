@@ -2,6 +2,7 @@ package model.objectModel.fighters.finalBoss.bossHelper;
 
 import constants.ImageConstants;
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.online.annotations.SkippedByJson;
 import model.animations.BossDeathAnimation;
@@ -20,7 +21,8 @@ public class HeadModel extends BossHelperModel implements IsCircle , CollisionDe
     @SkippedByJson
     private Boss boss;
 
-    public HeadModel(Vector position , Boss boss, String id){
+    public HeadModel(Game game ,Vector position , Boss boss, String id){
+        super(game);
         this.position = position;
         this.id = id;
         this.image = ImageConstants.smiley;
@@ -50,6 +52,7 @@ public class HeadModel extends BossHelperModel implements IsCircle , CollisionDe
     @Override
     protected void initFrame() {
         FrameModelBuilder builder = new FrameModelBuilder(
+                game,
                 Math.VectorAdd(
                         position,
                         new Vector(

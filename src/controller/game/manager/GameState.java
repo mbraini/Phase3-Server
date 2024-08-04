@@ -29,6 +29,7 @@ public class GameState {
 
     public GameState(Game game){
         this.game = game;
+        reset();
     }
 
 

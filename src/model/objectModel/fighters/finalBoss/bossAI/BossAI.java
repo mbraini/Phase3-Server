@@ -200,7 +200,7 @@ public class BossAI {
                         bullet.getPosition()
                 )
         );
-        ImaginaryObject imaginaryObject = new ImaginaryObject(imaginaryVertices);
+        ImaginaryObject imaginaryObject = new ImaginaryObject(bullet.getGame() ,imaginaryVertices);
         if (Collision.IsColliding(imaginaryObject ,helperModel)) {
             return true;
         }

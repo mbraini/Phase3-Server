@@ -1,5 +1,6 @@
 package model.objectModel.frameModel;
 
+import controller.game.Game;
 import utils.Vector;
 
 import java.awt.*;
@@ -8,9 +9,11 @@ public class FrameModelBuilder {
     private Vector positionInit;
     private Dimension dimensionInit;
     private String id;
+    private Game game;
     private boolean isometric;
     private boolean solid;
-    public FrameModelBuilder(Vector positionInit , Dimension dimensionInit ,String id){
+    public FrameModelBuilder(Game game, Vector positionInit , Dimension dimensionInit , String id){
+        this.game = game;
         this.positionInit = positionInit;
         this.dimensionInit = dimensionInit;
         this.id = id;
@@ -26,7 +29,7 @@ public class FrameModelBuilder {
     }
 
     public FrameModel create(){
-        FrameModel frameModel = new FrameModel(positionInit ,dimensionInit ,id);
+        FrameModel frameModel = new FrameModel(game ,positionInit ,dimensionInit ,id);
         frameModel.setSolid(solid);
         frameModel.setIsometric(isometric);
         return frameModel;

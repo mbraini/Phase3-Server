@@ -6,6 +6,7 @@ import constants.DamageConstants;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.game.Controller;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.interfaces.SizeChanger;
 import controller.game.manager.Spawner;
@@ -31,7 +32,8 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
     private int epsilonDamageOnCollision;
     private int chanceOfSurvival;
     private int lifeSteal;
-    public EpsilonModel(Vector position , String id){
+    public EpsilonModel(Game game ,Vector position , String id){
+        super(game);
         this.position = position;
         this.velocity = new Vector();
         this.acceleration = new Vector(0 ,0);
@@ -94,6 +96,7 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
                 SizeConstants.EPSILON_DIMENSION.width / 2d + SizeConstants.EPSILON_VERTICES_RADIOS
         );
         EpsilonVertexModel epsilonVertexModel = new EpsilonVertexModel(
+                game,
                 Math.VectorAdd(direction ,position),
                 position.clone(),
                 degree,

@@ -27,8 +27,7 @@ public class Aceso extends SkillTreeAbility{
     }
 
     private void initEpsilon() {
-//        epsilon = ModelData.getEpsilon();
-        ////todo
+        epsilon = player.getPlayerData().getEpsilon();
     }
 
     private void initHealTimer() {

@@ -3,6 +3,7 @@ package model.objectModel.projectiles;
 import constants.DamageConstants;
 import constants.SizeConstants;
 import constants.VelocityConstants;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import model.interfaces.collisionInterfaces.IsCircle;
 import utils.Math;
@@ -10,7 +11,8 @@ import utils.Vector;
 
 public class WyrmBulletModel extends EnemyBulletModel implements IsCircle {
 
-    public WyrmBulletModel(Vector position , Vector direction , String id){
+    public WyrmBulletModel(Game game ,Vector position , Vector direction , String id){
+        super(game);
         this.position = position;
         this.velocity = Math.VectorWithSize(direction , VelocityConstants.WYRM_BULLET_VELOCITY);
         this.acceleration = new Vector(0 ,0);

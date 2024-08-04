@@ -3,6 +3,7 @@ package model.objectModel.fighters.basicEnemies;
 import constants.DamageConstants;
 import constants.SizeConstants;
 import constants.VelocityConstants;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
 import model.ModelData;
@@ -17,7 +18,8 @@ import java.util.ArrayList;
 public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAble {
     private ArrayList<Vector> vertices;
     private boolean isImpacted = false;
-    public TrigorathModel(Vector position ,String id){
+    public TrigorathModel(Game game ,Vector position , String id){
+        super(game);
         this.position = position;
         this.velocity = new Vector(0 ,0);
         this.acceleration = new Vector(0 ,0);

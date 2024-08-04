@@ -2,6 +2,7 @@ package controller.game;
 
 import controller.game.manager.GameManager;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import model.ModelData;
 import model.ModelRequests;
 import model.threads.FrameThread;
@@ -114,7 +115,7 @@ public class Game {
         this.frameThread = frameThread;
     }
 
-    public void create() {
+    public void start() {
         gameLoop.start();
         frameThread.start();
         gameManager.getGameManagerThread().start();

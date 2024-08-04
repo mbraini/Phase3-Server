@@ -1,9 +1,8 @@
 package model.skillTreeAbilities;
 
 import constants.RefreshRateConstants;
-import controller.game.Player;
+import controller.game.player.Player;
 import controller.game.enums.SkillTreeAbilityType;
-import controller.game.manager.GameState;
 import controller.online.annotations.SkippedByJson;
 
 import javax.swing.*;

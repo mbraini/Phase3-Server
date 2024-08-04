@@ -16,6 +16,7 @@ public class OrbSpawner {
 
     public void spawn() {
         OrbModel orbModel = new OrbModel(
+                blackOrbModel.getGame(),
                 Math.VectorAdd(
                         blackOrbModel.getFrameModels().get(blackOrbModel.getOrbCount()).getPosition(),
                         new Vector(
@@ -28,6 +29,7 @@ public class OrbSpawner {
                 blackOrbModel.getFrameModels().get(blackOrbModel.getOrbCount()).getId()
         );
         Spawner.spawnOrb(
+                blackOrbModel.getGame(),
                 orbModel.getPosition(),
                 blackOrbModel,
                 blackOrbModel.getOrbCount(),

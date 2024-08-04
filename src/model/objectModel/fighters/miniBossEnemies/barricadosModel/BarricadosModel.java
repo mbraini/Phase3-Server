@@ -2,6 +2,7 @@ package model.objectModel.fighters.miniBossEnemies.barricadosModel;
 
 import constants.SizeConstants;
 import constants.TimeConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import model.interfaces.Fader;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -16,6 +17,10 @@ public abstract class BarricadosModel extends MiniBossModel implements Fader , I
 
     protected double time;
     protected ArrayList<Vector> vertices;
+
+    public BarricadosModel(Game game) {
+        super(game);
+    }
 
     @Override
     public void addTime(double time) {

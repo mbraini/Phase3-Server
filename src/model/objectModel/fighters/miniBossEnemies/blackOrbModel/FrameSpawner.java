@@ -46,6 +46,7 @@ public class FrameSpawner  {
         );
 
         FrameModelBuilder builder = new FrameModelBuilder(
+                blackOrbModel.getGame(),
                 framePosition,
                 SizeConstants.BLACK_ORB_FRAME_DIMENSION,
                 Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)

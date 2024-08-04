@@ -18,6 +18,7 @@ public class ModelData {
 
     public ModelData(Game game) {
         this.game = game;
+        resetAll();
     }
 
     private ArrayList<FrameModel> frames;

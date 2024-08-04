@@ -1,6 +1,7 @@
 package model.objectModel.fighters.miniBossEnemies.barricadosModel;
 
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.enums.ModelType;
 import model.objectModel.frameModel.FrameModel;
@@ -10,7 +11,8 @@ import utils.Vector;
 
 public class BarricadosSecondModel extends BarricadosModel{
 
-    public BarricadosSecondModel(Vector position ,String id){
+    public BarricadosSecondModel(Game game,Vector position , String id){
+        super(game);
         this.position = position;
         this.HP = 10000000;
         this.id = id;
@@ -24,6 +26,7 @@ public class BarricadosSecondModel extends BarricadosModel{
 
     private void initFrame() {
         FrameModelBuilder builder = new FrameModelBuilder(
+                game,
                 Math.VectorAdd(
                         position,
                         new Vector(

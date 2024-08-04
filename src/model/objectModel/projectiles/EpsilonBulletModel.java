@@ -3,6 +3,7 @@ package model.objectModel.projectiles;
 
 import constants.SizeConstants;
 import constants.VelocityConstants;
+import controller.game.Game;
 import model.ModelData;
 import model.interfaces.collisionInterfaces.IsCircle;
 import utils.Math;
@@ -10,7 +11,8 @@ import utils.Vector;
 
 public class EpsilonBulletModel extends BulletModel implements IsCircle {
 
-    public EpsilonBulletModel(Vector position , Vector direction , String id){
+    public EpsilonBulletModel(Game game ,Vector position , Vector direction , String id){
+        super(game);
         this.position = position;
         this.velocity = Math.VectorWithSize(direction , VelocityConstants.EPSILON_BULLET_VELOCITY);
         this.acceleration = new Vector(0 ,0);

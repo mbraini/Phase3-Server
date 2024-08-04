@@ -2,6 +2,7 @@ package model.skillTreeAbilities.Cerberus;
 
 import constants.SizeConstants;
 import constants.TimeConstants;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.GameState;
 import controller.online.annotations.SkippedByJson;
@@ -19,7 +20,8 @@ public class CerberusModel extends FighterModel implements IsCircle {
     private Timer timer;
     private int timePassed;
     private int coolDown;
-    public CerberusModel(Vector position ,String id){
+    public CerberusModel(Game game ,Vector position , String id){
+        super(game);
         this.id = id;
         this.position = position;
         velocity = new Vector();

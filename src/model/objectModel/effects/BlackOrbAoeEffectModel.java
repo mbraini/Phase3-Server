@@ -1,6 +1,7 @@
 package model.objectModel.effects;
 
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -21,7 +22,8 @@ public class BlackOrbAoeEffectModel extends AoeEffectModel implements IsPolygon 
     private ArrayList<Vector> vertices;
 
 
-    public BlackOrbAoeEffectModel (BlackOrbModel blackOrbModel ,OrbModel orbOrigin ,OrbModel orbDestination ,String id){
+    public BlackOrbAoeEffectModel (Game game ,BlackOrbModel blackOrbModel , OrbModel orbOrigin , OrbModel orbDestination , String id){
+        super(game);
         this.id = id;
         R =255;
         G = 0;

@@ -3,6 +3,7 @@ package model.objectModel.fighters.normalEnemies.wyrmModel;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import constants.VelocityConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
@@ -31,7 +32,8 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
     private boolean positiveDirection;
     private Vector origin;
 
-    public WyrmModel(Vector position ,String id){
+    public WyrmModel(Game game ,Vector position , String id){
+        super(game);
         this.id = id;
         this.position = position;
         this.velocity = new Vector(0 ,0);
@@ -49,6 +51,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
 
     private void setFrame() {
         FrameModelBuilder builder = new FrameModelBuilder(
+                game,
                 position.clone(),
                 SizeConstants.WYRM_FRAME_DIMENSION,
                 id

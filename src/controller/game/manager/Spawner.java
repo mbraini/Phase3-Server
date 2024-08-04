@@ -49,30 +49,31 @@ public abstract class Spawner {
     public synchronized static void spawnObjectWithId(Game game ,Vector position, ModelType modelType, String id){
         switch (modelType) {
             case epsilon:
-                game.getModelRequests().addObjectModel(new EpsilonModel(position, id));
+                game.getModelRequests().addObjectModel(new EpsilonModel(game ,position, id));
                 break;
             case trigorath:
-                game.getModelRequests().addObjectModel(new TrigorathModel(position, id));
+                game.getModelRequests().addObjectModel(new TrigorathModel(game ,position, id));
                 break;
             case squarantine:
-                game.getModelRequests().addObjectModel(new SquarantineModel(position, id));
+                game.getModelRequests().addObjectModel(new SquarantineModel(game ,position, id));
                 break;
             case omenoct:
-                game.getModelRequests().addObjectModel(new OmenoctModel(position, id));
+                game.getModelRequests().addObjectModel(new OmenoctModel(game ,position, id));
                 break;
             case necropick:
-                game.getModelRequests().addObjectModel(new NecropickModel(position ,id));
+                game.getModelRequests().addObjectModel(new NecropickModel(game ,position ,id));
                 break;
             case archmire:
-                game.getModelRequests().addObjectModel(new ArchmireModel(position ,id));
+                game.getModelRequests().addObjectModel(new ArchmireModel(game ,position ,id));
                 break;
             case wyrm:
-                WyrmModel wyrmModel = new WyrmModel(position ,id);
+                WyrmModel wyrmModel = new WyrmModel(game ,position ,id);
                 game.getModelRequests().addObjectModel(wyrmModel);
                 addFrame(wyrmModel.getFrameModel());
                 break;
             case blackOrb :
                 BlackOrbModel blackOrbModel = new BlackOrbModel(
+                        game,
                         position,
                         id
                 );
@@ -82,17 +83,17 @@ public abstract class Spawner {
             case barricados:
                 int randomInteger = (new Random()).nextInt(0 ,2);
                 if (randomInteger == 0){
-                    BarricadosFirstModel barricadosModel = new BarricadosFirstModel(position ,id);
+                    BarricadosFirstModel barricadosModel = new BarricadosFirstModel(game ,position ,id);
                     game.getModelRequests().addObjectModel(barricadosModel);
                 }
                 else {
-                    BarricadosSecondModel barricadosModel = new BarricadosSecondModel(position ,id);
+                    BarricadosSecondModel barricadosModel = new BarricadosSecondModel(game ,position ,id);
                     game.getModelRequests().addObjectModel(barricadosModel);
                     addFrame(barricadosModel.getFrameModel());
                 }
                 break;
             case cerberus:
-                game.getModelRequests().addObjectModel(new CerberusModel(position ,id));
+                game.getModelRequests().addObjectModel(new CerberusModel(game ,position ,id));
                  break;
         }
     }
@@ -112,31 +113,33 @@ public abstract class Spawner {
         switch (modelType) {
             case epsilonBullet:
                 game.getModelRequests().addObjectModel(new EpsilonBulletModel(
-                                position,
-                                direction,
-                                id
+                        game,
+                        position,
+                        direction,
+                        id
                         )
                 );
                 break;
             case omenoctBullet:
                 game.getModelRequests().addObjectModel(new OmenoctBulletModel(
-                                position,
-                                direction,
-                                id
+                        game,
+                        position,
+                        direction,
+                        id
                         )
                 );
                 break;
             case necropickBullet:
-                game.getModelRequests().addObjectModel(new NecropickBulletModel(position ,direction ,id));
+                game.getModelRequests().addObjectModel(new NecropickBulletModel(game, position ,direction ,id));
                 break;
             case wyrmBullet:
-                game.getModelRequests().addObjectModel(new WyrmBulletModel(position ,direction ,id));
+                game.getModelRequests().addObjectModel(new WyrmBulletModel(game ,position ,direction ,id));
                 break;
             case bossBullet:
-                game.getModelRequests().addObjectModel(new BossBulletModel(position ,direction ,id));
+                game.getModelRequests().addObjectModel(new BossBulletModel(game ,position ,direction ,id));
                 break;
             case slaughterBullet:
-                game.getModelRequests().addObjectModel(new SlaughterBulletModel(position, direction ,id));
+                game.getModelRequests().addObjectModel(new SlaughterBulletModel(game ,position, direction ,id));
                 break;
         }
     }
@@ -167,7 +170,7 @@ public abstract class Spawner {
 
     private static void addCollective(Game game ,Vector position, int value) {
         String id = Helper.RandomStringGenerator(ControllerConstants.ID_SIZE);
-        game.getModelRequests().addObjectModel(new CollectiveModel(position,id ,value));
+        game.getModelRequests().addObjectModel(new CollectiveModel(game ,position,id ,value));
     }
 
     public static void spawnBoss(Game game){
@@ -175,7 +178,7 @@ public abstract class Spawner {
         Timer timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Boss boss = new Boss(Helper.RandomStringGenerator(ControllerConstants.ID_SIZE));
+                Boss boss = new Boss(game ,Helper.RandomStringGenerator(ControllerConstants.ID_SIZE));
                 BossSpawnAnimation bossSpawnAnimation = new BossSpawnAnimation(boss);
                 bossSpawnAnimation.StartAnimation();
                 game.getModelRequests().addAbstractEnemy(boss);
@@ -207,8 +210,9 @@ public abstract class Spawner {
         punch.getGame().getModelRequests().addFrameModel(punch.getFrame());
     }
 
-    public static void spawnOrb(Vector position, BlackOrbModel blackOrbModel, int number, String id) {
+    public static void spawnOrb(Game game ,Vector position, BlackOrbModel blackOrbModel, int number, String id) {
         blackOrbModel.getGame().getModelRequests().addObjectModel(new OrbModel(
+                game,
                 position,
                 blackOrbModel,
                 number,

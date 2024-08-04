@@ -2,6 +2,7 @@ package model.objectModel.fighters.finalBoss;
 
 import constants.ControllerConstants;
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.manager.Spawner;
 import controller.online.annotations.SkippedByJson;
 import model.objectModel.fighters.AbstractEnemy;
@@ -21,7 +22,8 @@ public class Boss extends AbstractEnemy {
     @SkippedByJson
     private BossThread bossThread;
 
-    public Boss(String id){
+    public Boss(Game game, String id){
+        super(game);
         this.id = id;
         initHead();
         initHands();
@@ -32,6 +34,7 @@ public class Boss extends AbstractEnemy {
 
     private void initPunch() {
         punch = new PunchModel(
+                game,
                 new Vector(
                         SizeConstants.PUNCH_DIMENSION.width / 2d,
                         SizeConstants.SCREEN_SIZE.height - SizeConstants.PUNCH_DIMENSION.height /2d
@@ -42,6 +45,7 @@ public class Boss extends AbstractEnemy {
 
     private void initHands() {
         leftHand = new HandModel(
+                game,
                 new Vector(
                         SizeConstants.HAND_DIMENSION.width / 2d,
                         SizeConstants.SCREEN_SIZE.height / 2d
@@ -49,6 +53,7 @@ public class Boss extends AbstractEnemy {
                 Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
         );
         rightHand = new HandModel(
+                game,
                 new Vector(
                         SizeConstants.SCREEN_SIZE.width - SizeConstants.HAND_DIMENSION.width / 2d,
                         SizeConstants.SCREEN_SIZE.height / 2d
@@ -59,6 +64,7 @@ public class Boss extends AbstractEnemy {
 
     private void initHead() {
         head = new HeadModel(
+                game,
                 new Vector(
                         SizeConstants.SCREEN_SIZE.width / 2d,
                         -SizeConstants.HEAD_DIMENSION.width

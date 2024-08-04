@@ -5,6 +5,7 @@ import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import constants.TimeConstants;
 import constants.VelocityConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.manager.GameState;
 import model.ModelData;
@@ -21,7 +22,8 @@ public class CollectiveModel extends ObjectModel implements IsCircle, Ability, M
     double time;
     boolean hasAbility = false;
 
-    public CollectiveModel(Vector position , String id , int value){
+    public CollectiveModel(Game game ,Vector position , String id , int value){
+        super(game);
         this.position = position;
         this.velocity = new Vector(0 ,0);
         this.acceleration = new Vector(0 ,0);

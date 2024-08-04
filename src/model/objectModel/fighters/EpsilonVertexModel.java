@@ -2,6 +2,7 @@ package model.objectModel.fighters;
 
 
 import constants.SizeConstants;
+import controller.game.Game;
 import controller.game.enums.ModelType;
 import model.interfaces.collisionInterfaces.IsCircle;
 import model.objectModel.ObjectModel;
@@ -13,7 +14,8 @@ public class EpsilonVertexModel extends ObjectModel implements IsCircle {
 
     private Vector epsilonPosition;
 
-    public EpsilonVertexModel(Vector position ,Vector epsilonPosition ,double theta ,String id){
+    public EpsilonVertexModel(Game game ,Vector position , Vector epsilonPosition , double theta , String id){
+        super(game);
         this.position = position;
         this.id = id;
         this.theta = theta;

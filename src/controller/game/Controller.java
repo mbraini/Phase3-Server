@@ -2,25 +2,17 @@ package controller.game;
 
 import constants.ControllerConstants;
 import constants.SizeConstants;
-import controller.game.manager.GameManager;
-import controller.game.manager.GameState;
 import model.inGameAbilities.InGameAbilityHandler;
 import model.objectModel.fighters.EpsilonModel;
+import model.objectModel.fighters.basicEnemies.SquarantineModel;
 import model.objectModel.frameModel.FrameModel;
-import model.objectModel.frameModel.FrameModelBuilder;
 import model.skillTreeAbilities.SkillTreeAbilityHandler;
-import model.threads.FrameThread;
-import model.threads.GameLoop;
 import utils.Helper;
 import utils.Vector;
 
 import java.awt.*;
 
 public abstract class Controller {
-    private static GameLoop gameLoop;
-    private static FrameThread frameThread;
-    private static GameManager gameManager;
-    private static GameMode gameMode;
 
     public static void resume() {
 //        GameState.setPause(false);
@@ -93,15 +85,40 @@ public abstract class Controller {
 
 
     public static void startGame(){
-        gameMode = GameMode.inGame;
+        Game game = new Game();
+        game.getModelRequests().addObjectModel(
+                new EpsilonModel(
+                        game,
+                        new Vector(SizeConstants.SCREEN_SIZE.width / 2d,
+                                SizeConstants.SCREEN_SIZE.height / 2d),
+                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+                )
+        );
+        game.getModelRequests().addObjectModel(
+                new SquarantineModel(
+                        game,
+                        new Vector(),
+                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+                )
+        );
+        game.getModelRequests().addFrameModel(
+                new FrameModel(
+                        game,
+                        new Vector(SizeConstants.SCREEN_SIZE.width / 2d -300 ,SizeConstants.SCREEN_SIZE.height / 2d - 300),
+                        new Dimension(600 ,600),
+                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+                )
+        );
+        game.start();
+//        gameMode = GameMode.inGame;
 //        GameState.reset();
-        modelStarter();
-        viewStarter();
-        addEpsilonAndFrame();
+//        modelStarter();
+//        viewStarter();
+//        addEpsilonAndFrame();
 //        new GameStartAnimation(ModelData.getFrames().getFirst()).StartAnimation();
-        InGameAbilityHandler.initInGameAbilities();
-        SkillTreeAbilityHandler.initAbilities();
-        Controller.threadsStarter();
+//        InGameAbilityHandler.initInGameAbilities();
+//        SkillTreeAbilityHandler.initAbilities();
+//        Controller.threadsStarter();
     }
 
     public static void endGame(boolean won) {
@@ -130,30 +147,30 @@ public abstract class Controller {
 //        GameState.reset();
 //        ModelRequests.endRequest();
 //        ViewRequest.endRequest();
-        Helper.resetAllJsons("src/controller/manager/saving/inGameSaved");
     }
 
 
     private static void addEpsilonAndFrame() {
-        EpsilonModel epsilon = new EpsilonModel(
-                new Vector(SizeConstants.SCREEN_SIZE.width / 2d ,
-                        SizeConstants.SCREEN_SIZE.height / 2d
-                )
-                ,Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-        );
+//        EpsilonModel epsilon = new EpsilonModel(
+//                new Vector(
+//                        SizeConstants.SCREEN_SIZE.width / 2d ,
+//                        SizeConstants.SCREEN_SIZE.height / 2d
+//                )
+//                ,Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+//        );
 //        ModelData.addModel(epsilon);
 //        ModelData.setEpsilon(epsilon);
 //        ViewData.addObject(new EpsilonView(epsilon.getPosition() ,epsilon.getId()));
-        FrameModelBuilder builder = new FrameModelBuilder(
-                new Vector(
-                        SizeConstants.SCREEN_SIZE.width / 2d - SizeConstants.GAME_WIDTH / 2d ,
-                        SizeConstants.SCREEN_SIZE.height / 2d - SizeConstants.GAME_HEIGHT / 2d
-                ),
-                new Dimension(SizeConstants.GAME_WIDTH , SizeConstants.GAME_HEIGHT),
-                Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-        );
-        builder.setSolid(true);
-        FrameModel frameModel = builder.create();
+//        FrameModelBuilder builder = new FrameModelBuilder(
+//                new Vector(
+//                        SizeConstants.SCREEN_SIZE.width / 2d - SizeConstants.GAME_WIDTH / 2d ,
+//                        SizeConstants.SCREEN_SIZE.height / 2d - SizeConstants.GAME_HEIGHT / 2d
+//                ),
+//                new Dimension(SizeConstants.GAME_WIDTH , SizeConstants.GAME_HEIGHT),
+//                Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+//        );
+//        builder.setSolid(true);
+//        FrameModel frameModel = builder.create();
 //        ModelData.addFrame(frameModel);
 //        ModelData.setEpsilonFrame(frameModel);
 //        ViewData.addFrame(new FrameView(

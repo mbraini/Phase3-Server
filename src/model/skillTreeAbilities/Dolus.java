@@ -44,8 +44,7 @@ public class Dolus extends SkillTreeAbility{
     }
 
     private void defineAbilities() {
-//        ArrayList<SkillTreeAbility> abilities = (ArrayList<SkillTreeAbility>) ModelData.getSkillTreeAbilities().clone();
-        ArrayList<SkillTreeAbility> abilities = new ArrayList<>(); /////todo
+        ArrayList<SkillTreeAbility> abilities = (ArrayList<SkillTreeAbility>) player.getPlayerData().getSkillTreeAbilities().clone();
         for (int i = 0 ;i < abilities.size() ;i++) {
             if (abilities.get(i).getType() == SkillTreeAbilityType.dolus) {
                 abilities.remove(i);

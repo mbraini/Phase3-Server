@@ -1,5 +1,6 @@
 package model.objectModel.effects;
 
+import controller.game.Game;
 import controller.game.enums.EffectType;
 import model.objectModel.ObjectModel;
 import utils.area.Area;
@@ -10,6 +11,10 @@ public abstract class EffectModel extends ObjectModel {
     protected int B;
     protected Area area;
     protected EffectType effectType;
+
+    public EffectModel(Game game) {
+        super(game);
+    }
 
 
     public Area getArea() {

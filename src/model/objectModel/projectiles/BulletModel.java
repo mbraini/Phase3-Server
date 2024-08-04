@@ -1,12 +1,17 @@
 package model.objectModel.projectiles;
 
 import constants.RefreshRateConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import model.interfaces.movementIntefaces.MoveAble;
 import utils.Math;
 
 public abstract class BulletModel extends ProjectileModel implements MoveAble {
     protected double hp = 1;
+
+    public BulletModel(Game game) {
+        super(game);
+    }
 
     @Override
     public void move() {

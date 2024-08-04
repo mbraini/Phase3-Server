@@ -2,6 +2,7 @@ package model.objectModel;
 
 import constants.SizeConstants;
 import constants.TimeConstants;
+import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.enums.ModelType;
 import model.interfaces.Ability;
@@ -14,7 +15,8 @@ public class PortalModel extends ObjectModel implements IsCircle, Fader ,Ability
     private double fadeTime;
     private FrameModel epsilonFrame;
 
-    public PortalModel(FrameModel epsilonFrame, String id) {
+    public PortalModel(Game game ,FrameModel epsilonFrame, String id) {
+        super(game);
         this.id = id;
         this.epsilonFrame = epsilonFrame;
         position = new Vector(

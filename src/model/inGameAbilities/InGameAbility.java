@@ -1,6 +1,6 @@
 package model.inGameAbilities;
 
-import controller.game.Player;
+import controller.game.player.Player;
 import controller.game.enums.InGameAbilityType;
 
 public abstract class InGameAbility {
