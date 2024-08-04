@@ -8,7 +8,6 @@ import controller.game.ObjectController;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
 import controller.online.annotations.SkippedByJson;
-import model.ModelData;
 import model.interfaces.Ability;
 import model.interfaces.movementIntefaces.MoveAble;
 import model.objectModel.effects.ArchmireAoeEffectModel;
@@ -170,8 +169,8 @@ public class ArchmireModel extends NormalEnemyModel implements MoveAble , Abilit
         return aoeEffects;
     }
 
-    public void killEffect(ArchmireAoeEffectModel archmireAoeEffectModel) {
-        thread.getRemovedAoe().add(archmireAoeEffectModel.getId());
+    public synchronized void killEffect(ArchmireAoeEffectModel archmireAoeEffectModel) {
+        thread.addRemovedAoe(archmireAoeEffectModel.getId());
         ObjectController.removeEffect(archmireAoeEffectModel);
     }
 

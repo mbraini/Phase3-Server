@@ -1,5 +1,6 @@
 package controller.online;
 
+import controller.game.Game;
 import controller.online.client.GameClient;
 import controller.online.client.TCPClient;
 import controller.online.squad.Squad;
@@ -15,6 +16,7 @@ public class OnlineData {
     private volatile static HashMap<String , TCPClient> clientTCPMap = new HashMap<>();
     private volatile static HashMap<String ,Squad> clientSquadMap = new HashMap<>();
     private volatile static HashMap<String , GameClient> clientGameMap = new HashMap<>();
+    private volatile static HashMap<String , Game> clientOnlineGameMap = new HashMap<>();
 
 
     public synchronized static void addClient(TCPClient tcpClient) {
@@ -94,4 +96,15 @@ public class OnlineData {
             }
         }
     }
+
+    public static synchronized void putClientOnlineGame(String username ,Game game) {
+        clientOnlineGameMap.remove(username);
+        clientOnlineGameMap.put(username ,game);
+    }
+
+    public static synchronized Game getOnlineGame(String username) {
+        return clientOnlineGameMap.get(username);
+    }
+
+
 }

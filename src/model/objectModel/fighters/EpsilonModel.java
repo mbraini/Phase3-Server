@@ -10,6 +10,7 @@ import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.interfaces.SizeChanger;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsCircle;
 import model.interfaces.movementIntefaces.ImpactAble;
@@ -32,7 +33,7 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
     private int epsilonDamageOnCollision;
     private int chanceOfSurvival;
     private int lifeSteal;
-    public EpsilonModel(Game game ,Vector position , String id){
+    public EpsilonModel(Game game, Vector position , String id){
         super(game);
         this.position = position;
         this.velocity = new Vector();

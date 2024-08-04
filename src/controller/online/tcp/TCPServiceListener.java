@@ -91,6 +91,10 @@ public class TCPServiceListener {
                 case buyCall:
                     new ClientBuyCallRequest(tcpClient).checkRequest();
                     break;
+                case givePorts:
+                    new ClientGivePortRequest(tcpClient).checkRequest();
+                    break;
+
             }
         }
     }

@@ -4,10 +4,13 @@ import constants.RefreshRateConstants;
 import controller.game.Game;
 import controller.game.GameData;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
 import model.objectModel.fighters.EnemyModel;
 import utils.Math;
+
+import java.util.ArrayList;
 
 public abstract class NormalEnemyModel extends EnemyModel implements IsPolygon, HasVertices {
 

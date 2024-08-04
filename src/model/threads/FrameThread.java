@@ -52,12 +52,16 @@ public class FrameThread extends Thread{
 
     private void updateFrames() {
         synchronized (game.getModelData().getModels()) {
-            localFrames = (HashMap<ObjectModel, FrameModel>) game.getModelData().getLocalFrames().clone();
             models = (ArrayList<ObjectModel>) game.getModelData().getModels().clone();
+        }
+        synchronized (game.getModelData().getLocalFrames()){
+            localFrames = (HashMap<ObjectModel, FrameModel>) game.getModelData().getLocalFrames().clone();
+        }
+        synchronized (game.getModelData().getFrames()){
             frames = (ArrayList<FrameModel>) game.getModelData().getFrames().clone();
         }
         defineLocalFrames();
-        synchronized (game.getModelData().getModels()) {
+        synchronized (game.getModelData().getLocalFrames()) {
             localFrames = (HashMap<ObjectModel, FrameModel>) game.getModelData().getLocalFrames().clone();
         }
         resetDisables();

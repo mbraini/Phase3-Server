@@ -19,6 +19,12 @@ public class PlayerData {
     private int enemyKilled;
     private int totalBullets;
     private int successfulBullets;
+
+    public PlayerData() {
+        inGameAbilities = new ArrayList<>();
+        skillTreeAbilities = new ArrayList<>();
+    }
+
     public EpsilonModel getEpsilon() {
         return epsilon;
     }

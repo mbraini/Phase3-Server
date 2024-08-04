@@ -9,30 +9,43 @@ import java.util.ArrayList;
 public class VariablesSender extends Thread{
 
     private Game game;
-    private Player player;
+    private ArrayList<Player> players;
     private Gson gson;
 
-    public VariablesSender(Game game ,Player player) {
+    public VariablesSender(Game game ,ArrayList<Player> players) {
         this.game = game;
-        this.player = player;
+        this.players = (ArrayList<Player>) players.clone();
         gson = new Gson();
     }
 
     @Override
     public void run() {
         while (!isInterrupted()) {
-            FrameViewSender.FrameView frameView = new FrameViewSender.FrameView(
-                    player.getPlayerData().getEpsilonFrame().getPosition(),
-                    player.getPlayerData().getEpsilonFrame().getSize()
-            );
-            VariablesView variablesView = new VariablesView(
-                    (int)player.getGame().getGameState().getTime(),
-                    (int)player.getPlayerData().getEpsilon().getHP(),
-                    player.getPlayerData().getXp(),
-                    player.getGame().getGameState().getWave(),
-                    frameView
-            );
-            String JVariables = gson.toJson(variablesView);
+
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            for (Player player : players) {
+                FrameViewSender.FrameView frameView = null;
+                if (player.getPlayerData().getEpsilonFrame() != null) {
+                    frameView = new FrameViewSender.FrameView(
+                            player.getPlayerData().getEpsilonFrame().getPosition(),
+                            player.getPlayerData().getEpsilonFrame().getSize(),
+                            player.getPlayerData().getEpsilonFrame().getId()
+                    );
+                }
+                VariablesView variablesView = new VariablesView(
+                        (int) player.getGame().getGameState().getTime(),
+                        (int) player.getPlayerData().getEpsilon().getHP(),
+                        player.getPlayerData().getXp(),
+                        player.getGame().getGameState().getWave(),
+                        frameView
+                );
+                String JVariables = gson.toJson(variablesView);
+            }
         }
 
     }

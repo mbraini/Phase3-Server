@@ -2,6 +2,7 @@ package controller.game;
 
 import constants.ControllerConstants;
 import constants.SizeConstants;
+import controller.game.player.Player;
 import model.inGameAbilities.InGameAbilityHandler;
 import model.objectModel.fighters.EpsilonModel;
 import model.objectModel.fighters.basicEnemies.SquarantineModel;
@@ -84,7 +85,7 @@ public abstract class Controller {
     }
 
 
-    public static void startGame(){
+    public static void startGame(String username){
         Game game = new Game();
         game.getModelRequests().addObjectModel(
                 new EpsilonModel(
@@ -127,7 +128,7 @@ public abstract class Controller {
 //        int totalShots = GameState.getTotalBullets();
 //        int successfulShots = GameState.getSuccessfulBullets();
 //        int timePassed = (int) GameState.getTime() / 1000;
-        endRequest();
+//        endRequest();
         if (won) {
 //            new EndGamePanel(new EndGameFrame(),xpGained ,enemyKilled ,totalShots ,successfulShots ,timePassed).start();
             return;

@@ -15,7 +15,7 @@ public class FrameTransferer {
 
     public FrameTransferer(FrameModel frameModel){
         this.frameModel = frameModel;
-        synchronized (frameModel.getGame().getModelData().getModels()) {
+        synchronized (frameModel.getGame().getModelData().getFrames()) {
             frames = (ArrayList<FrameModel>) frameModel.getGame().getModelData().getFrames().clone();
         }
     }

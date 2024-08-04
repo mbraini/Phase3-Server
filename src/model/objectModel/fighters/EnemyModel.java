@@ -5,11 +5,14 @@ import controller.game.Game;
 import controller.game.GameData;
 import controller.game.ObjectController;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.IsCircle;
 import model.interfaces.collisionInterfaces.IsPolygon;
 import model.logics.collision.Collision;
 import model.objectModel.FighterModel;
 import utils.Vector;
+
+import java.util.ArrayList;
 
 public abstract class EnemyModel extends FighterModel {
 
@@ -35,7 +38,7 @@ public abstract class EnemyModel extends FighterModel {
 
     @Override
     public void die() {
-        ObjectController.removeObject(this);
+        game.getModelRequests().removeObjectModel(id);
         game.getGameState().setEnemyCount(game.getGameState().getEnemyCount() - 1);
         game.getGameState().setEnemyKilled(game.getGameState().getEnemyKilled() + 1);
     }

@@ -58,11 +58,15 @@ public class GameManagerThread extends Thread{
 
         synchronized (game.getModelData().getModels()){
             models = (ArrayList<ObjectModel>) game.getModelData().getModels().clone();
+        }
+        synchronized (game.getModelData().getEffectModels()) {
             effects = (ArrayList<EffectModel>) game.getModelData().getEffectModels().clone();
+        }
+        synchronized (game.getModelData().getFrames()) {
             frames = (ArrayList<FrameModel>) game.getModelData().getFrames().clone();
+        }
+        synchronized (game.getModelData().getAbstractEnemies()) {
             abstractEnemies = (ArrayList<AbstractEnemy>) game.getModelData().getAbstractEnemies().clone();
-//            abilities = (ArrayList<InGameAbility>) game.getModelData().getInGameAbilities().clone();
-//            skillTreeAbilities =(ArrayList<SkillTreeAbility>) game.getModelData().getSkillTreeAbilities().clone();
         }
         interfaces();
         checkAoeDamage();
@@ -92,16 +96,10 @@ public class GameManagerThread extends Thread{
     private void killObjects() {
         for (ObjectModel model : models){
             if (model.getHP() <= 0) {
-                if (model instanceof  EpsilonModel) {
-                    epsilonDeath++;
-                    if (epsilonDeath > 1) {
-                        return;
-                    }
-                }
                 if (model instanceof HeadModel) {
                     bossDeath++;
                     if (bossDeath > 1)
-                        return;
+                        continue;
                 }
                 model.die();
             }

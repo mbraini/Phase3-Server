@@ -3,9 +3,7 @@ package model.objectModel.fighters.normalEnemies.archmireModel;
 import constants.ControllerConstants;
 import constants.DamageConstants;
 import constants.TimeConstants;
-import controller.game.manager.GameState;
 import controller.game.manager.Spawner;
-import model.ModelData;
 import model.logics.collision.Collision;
 import model.objectModel.ObjectModel;
 import model.objectModel.effects.ArchmireAoeEffectModel;
@@ -88,27 +86,33 @@ public class ArchmireThread extends Thread{
     }
 
     private synchronized boolean isCollided(ObjectModel model) {
-        for (ArchmireAoeEffectModel effectModel : archmire.getAoeEffects()){
-            if (Collision.IsColliding(effectModel ,model)) {
-                if (model instanceof EnemyModel || model instanceof EpsilonModel)
-                    return true;
+        synchronized (archmire.getAoeEffects()) {
+            for (ArchmireAoeEffectModel effectModel : archmire.getAoeEffects()) {
+                if (Collision.IsColliding(effectModel, model)) {
+                    if (model instanceof EnemyModel || model instanceof EpsilonModel)
+                        return true;
+                }
             }
         }
         return false;
     }
 
     private synchronized void checkRemovedAOEs() {
-        for (String id : removedAoe){
-            removeAoe(id);
+        synchronized (removedAoe) {
+            for (String id : removedAoe) {
+                removeAoe(id);
+            }
+            removedAoe = new ArrayList<>();
         }
-        removedAoe = new ArrayList<>();
     }
 
     private synchronized void removeAoe(String id) {
-        for (ArchmireAoeEffectModel effectModel : archmire.getAoeEffects()){
-            if (effectModel.getId().equals(id)){
-                archmire.getAoeEffects().remove(effectModel);
-                return;
+        synchronized (archmire.getAoeEffects()) {
+            for (ArchmireAoeEffectModel effectModel : archmire.getAoeEffects()) {
+                if (effectModel.getId().equals(id)) {
+                    archmire.getAoeEffects().remove(effectModel);
+                    return;
+                }
             }
         }
     }
@@ -120,10 +124,14 @@ public class ArchmireThread extends Thread{
                 Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
         );
         Spawner.addArchmireEffect(archmire.getGame() ,effectModel);
-        archmire.getAoeEffects().add(effectModel);
+        synchronized (archmire.getAoeEffects()) {
+            archmire.getAoeEffects().add(effectModel);
+        }
     }
 
-    public ArrayList<String> getRemovedAoe() {
-        return removedAoe;
+    public synchronized void addRemovedAoe(String id) {
+        synchronized (removedAoe) {
+            removedAoe.add(id);
+        }
     }
 }

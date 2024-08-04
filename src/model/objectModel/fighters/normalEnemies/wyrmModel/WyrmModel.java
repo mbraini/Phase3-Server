@@ -7,6 +7,7 @@ import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.ModelData;
 import model.interfaces.FrameSticker;
@@ -32,7 +33,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
     private boolean positiveDirection;
     private Vector origin;
 
-    public WyrmModel(Game game ,Vector position , String id){
+    public WyrmModel(Game game, Vector position , String id){
         super(game);
         this.id = id;
         this.position = position;
@@ -65,7 +66,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
     @Override
     public void die() {
         super.die();
-        ObjectController.removeFrame(frameModel);
+        game.getModelRequests().removeFrameModel(frameModel.getId());
         if (shooter != null)
             shooter.setInterrupt(true);
         Spawner.addCollectives(game ,position ,2 ,8);

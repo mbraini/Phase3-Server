@@ -1,13 +1,21 @@
 package controller.game;
 
+import constants.ControllerConstants;
+import constants.SizeConstants;
 import controller.game.manager.GameManager;
 import controller.game.manager.GameState;
+import controller.game.player.InfoSender;
 import controller.game.player.Player;
 import model.ModelData;
 import model.ModelRequests;
+import model.objectModel.frameModel.FrameModel;
+import model.objectModel.frameModel.FrameModelBuilder;
 import model.threads.FrameThread;
 import model.threads.GameLoop;
+import utils.Helper;
+import utils.Vector;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Game {
@@ -21,11 +29,30 @@ public class Game {
     private GameManager gameManager;
     private GameLoop gameLoop;
     private FrameThread frameThread;
+    private InfoSender infoSender;
 
     public Game() {
+        players = new ArrayList<>();
         initControllers();
         initDataBase();
+        initInfoSender();
+        initFirstFrame();
         initThreads();
+    }
+
+    private void initFirstFrame() {
+        FrameModelBuilder builder = new FrameModelBuilder(
+                this,
+                new Vector(SizeConstants.SCREEN_SIZE.width / 2d - 350 ,SizeConstants.SCREEN_SIZE.height / 2d - 350),
+                new Dimension(700 ,700),
+                Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+        );
+        builder.setSolid(true);
+        modelRequests.addFrameModel(builder.create());
+    }
+
+    private void initInfoSender() {
+        infoSender = new InfoSender(this ,players);
     }
 
     private void initControllers() {
@@ -119,15 +146,28 @@ public class Game {
         gameLoop.start();
         frameThread.start();
         gameManager.getGameManagerThread().start();
-        gameManager.getWaveSpawner().getSpawner().start();
+        infoSender.start();
+//        gameManager.getWaveSpawner().getSpawner().start();
     }
 
     public void addPlayer(Player player) {
         players.add(player);
+        infoSender.addPlayer(player);
     }
 
+    public InfoSender getInfoSender() {
+        return infoSender;
+    }
 
+    public void setInfoSender(InfoSender infoSender) {
+        this.infoSender = infoSender;
+    }
 
-
-
+    public synchronized Player getPlayer(String username) {
+        for (Player player : players) {
+            if (player.getUsername().equals(username))
+                return player;
+        }
+        return null;
+    }
 }

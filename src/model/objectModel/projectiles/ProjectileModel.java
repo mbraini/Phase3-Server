@@ -1,7 +1,10 @@
 package model.objectModel.projectiles;
 
 import controller.game.Game;
+import controller.game.player.Player;
 import model.objectModel.ObjectModel;
+
+import java.util.ArrayList;
 
 public abstract class ProjectileModel extends ObjectModel {
     protected double damage;

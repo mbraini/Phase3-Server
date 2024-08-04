@@ -21,7 +21,8 @@ public class WyrmShooter {
 
         Vector direction = Math.VectorAdd(
                 Math.ScalarInVector(-1 ,position),
-                epsilon.getPosition()
+//                epsilon.getPosition()
+                new Vector() /////fix /////todo
         );
 
         Vector bulletPosition = Math.VectorAdd(
