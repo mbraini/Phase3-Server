@@ -22,6 +22,11 @@ public abstract class SkillTreeAbility {
     protected int unlockXpCost;
     protected SkillTreeAbilityType type;
 
+    public SkillTreeAbility(Player player ,boolean isBought) {
+        this.player = player;
+        this.isBought = isBought;
+    }
+
     protected abstract void cast();
 
     public boolean isBought() {

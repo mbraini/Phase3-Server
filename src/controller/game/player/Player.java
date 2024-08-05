@@ -31,16 +31,21 @@ public class Player {
         this.game = game;
         this.username = username;
         initData();
+        initEpsilon();
+        initControllers();
+    }
+
+    private void initControllers() {
+        modelRequestController = new ModelRequestController();
+        viewRequestController = new ViewRequestController(this);
     }
 
     private void initData() {
-        viewRequestController = new ViewRequestController(this);
-        modelRequestController = new ModelRequestController();
         playerData = new PlayerData();
     }
 
     public void start() {
-        initEpsilon();
+        ///todo
     }
 
     private void initEpsilon() {

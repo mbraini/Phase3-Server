@@ -1,5 +1,6 @@
 package controller.game;
 
+import constants.TimeConstants;
 import controller.game.manager.GameState;
 import model.inGameAbilities.InGameAbility;
 import model.objectModel.fighters.EpsilonModel;
@@ -11,14 +12,15 @@ import java.util.ArrayList;
 public class PlayerData {
 
     private ArrayList<InGameAbility> inGameAbilities;
-    private ArrayList<SkillTreeAbility> skillTreeAbilities = new ArrayList<>();
+    private ArrayList<SkillTreeAbility> skillTreeAbilities;
     private EpsilonModel epsilon;
     private FrameModel epsilonFrame;
-    private int xp = 1000;
+    private int xp;
     private double hp;
     private int enemyKilled;
     private int totalBullets;
     private int successfulBullets;
+    private int pauseTimeLeft = TimeConstants.PLAYER_PAUSE_TIME;
 
     public PlayerData() {
         inGameAbilities = new ArrayList<>();
@@ -96,5 +98,13 @@ public class PlayerData {
 
     public void setHp(double hp) {
         this.hp = hp;
+    }
+
+    public int getPauseTimeLeft() {
+        return pauseTimeLeft;
+    }
+
+    public void setPauseTimeLeft(int pauseTimeLeft) {
+        this.pauseTimeLeft = pauseTimeLeft;
     }
 }

@@ -5,6 +5,7 @@ import constants.SizeConstants;
 import controller.game.enums.ModelType;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
 import model.skillTreeAbilities.SkillTreeAbility;
@@ -13,7 +14,8 @@ import utils.Vector;
 
 public class Cerberus extends SkillTreeAbility {
 
-    public Cerberus(){
+    public Cerberus(Player player ,boolean isBought){
+        super(player ,isBought);
 //        isBought = Configs.SkillTreeConfigs.cerberusBought;
         unlockXpCost = CostConstants.CERBERUS_UNLOCK_COST;
         type = SkillTreeAbilityType.cerberus;

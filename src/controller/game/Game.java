@@ -30,6 +30,8 @@ public class Game {
     private GameLoop gameLoop;
     private FrameThread frameThread;
     private InfoSender infoSender;
+    private GameController gameController;
+    private PauseWatcher pauseWatcher;
 
     public Game() {
         players = new ArrayList<>();
@@ -56,6 +58,8 @@ public class Game {
     }
 
     private void initControllers() {
+        gameController = new GameController(this);
+        pauseWatcher = new PauseWatcher();
     }
 
     private void initDataBase() {
@@ -171,5 +175,21 @@ public class Game {
                 return player;
         }
         return null;
+    }
+
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
+    }
+
+    public PauseWatcher getPauseWatcher() {
+        return pauseWatcher;
+    }
+
+    public void setPauseWatcher(PauseWatcher pauseWatcher) {
+        this.pauseWatcher = pauseWatcher;
     }
 }

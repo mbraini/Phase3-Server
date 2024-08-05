@@ -37,10 +37,8 @@ public class ShootRequest {
 
     public void shoot() {
         EpsilonModel epsilon = player.getPlayerData().getEpsilon();
-        System.out.println(epsilon);
         if (epsilon == null || clickedPoint == null)
             return;
-        System.out.println("SHOOTING!");
         Vector direction = Math.VectorAdd(Math.ScalarInVector(-1 ,epsilon.getPosition()) ,clickedPoint);
         Vector position = Math.VectorAdd(
                 Math.VectorWithSize(

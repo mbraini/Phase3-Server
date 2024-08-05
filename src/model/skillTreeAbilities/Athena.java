@@ -3,10 +3,12 @@ package model.skillTreeAbilities;
 import constants.CostConstants;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 
 public class Athena extends SkillTreeAbility{
 
-    public Athena(){
+    public Athena(Player player ,boolean isBought){
+        super(player ,isBought);
 //        isBought = Configs.SkillTreeConfigs.athenaBought;
         unlockXpCost = CostConstants.ATHENA_UNLOCK_COST;
         type = SkillTreeAbilityType.athena;

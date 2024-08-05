@@ -2,12 +2,14 @@ package model.skillTreeAbilities;
 
 import constants.CostConstants;
 import controller.game.enums.SkillTreeAbilityType;
+import controller.game.player.Player;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
 
 public class Astrape extends SkillTreeAbility{
 
-    public Astrape(){
+    public Astrape(Player player ,boolean isBought){
+        super(player ,isBought);
 //        isBought = Configs.SkillTreeConfigs.astrapeBought;
         unlockXpCost = CostConstants.ASTRAPE_UNLOCK_COST;
         type = SkillTreeAbilityType.astrape;

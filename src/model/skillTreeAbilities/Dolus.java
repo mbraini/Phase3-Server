@@ -2,6 +2,7 @@ package model.skillTreeAbilities;
 
 import constants.CostConstants;
 import controller.game.enums.SkillTreeAbilityType;
+import controller.game.player.Player;
 import model.ModelData;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ public class Dolus extends SkillTreeAbility{
     private SkillTreeAbilityType firstAbility;
     private SkillTreeAbilityType secondAbility;
 
-    public Dolus() {
+    public Dolus(Player player ,boolean isBought) {
+        super(player ,isBought);
 //        isBought = Configs.SkillTreeConfigs.dolusBought;
         unlockXpCost = CostConstants.DOLUS_UNLOCK_COST;
         type = SkillTreeAbilityType.dolus;
@@ -26,16 +28,16 @@ public class Dolus extends SkillTreeAbility{
         if (firstAbility == null) {
             defineAbilities();
         }
-        SkillTreeAbility firstSkillTreeAbility = SkillTreeAbilityHandler.getAbility(firstAbility);
-        SkillTreeAbility secondSkillTreeAbility = SkillTreeAbilityHandler.getAbility(secondAbility);
+        SkillTreeAbility firstSkillTreeAbility = SkillTreeAbilityHandler.getAbility(firstAbility ,player);
+        SkillTreeAbility secondSkillTreeAbility = SkillTreeAbilityHandler.getAbility(secondAbility ,player);
         if (!firstSkillTreeAbility.canCast) {
             firstSkillTreeAbility.stop();
         }
-        SkillTreeAbilityHandler.activateSkillTreeAbility(firstAbility);
+        SkillTreeAbilityHandler.activateSkillTreeAbility(firstAbility ,player);
         if (!secondSkillTreeAbility.canCast) {
             secondSkillTreeAbility.stop();
         }
-        SkillTreeAbilityHandler.activateSkillTreeAbility(secondAbility);
+        SkillTreeAbilityHandler.activateSkillTreeAbility(secondAbility ,player);
 
         System.out.println(firstAbility);
         System.out.println(secondAbility);

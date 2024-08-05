@@ -3,12 +3,14 @@ package controller.game;
 import controller.game.enums.InGameAbilityType;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.listeners.EpsilonCirculation;
+import controller.game.listeners.KeyListener;
 import controller.game.listeners.epsilonMovement.EpsilonMovement;
 import controller.game.manager.GameState;
 import controller.game.player.Player;
 import model.ModelData;
 import model.inGameAbilities.InGameAbility;
 import model.skillTreeAbilities.SkillTreeAbility;
+import model.skillTreeAbilities.SkillTreeAbilityHandler;
 import model.viewRequests.InGameAbilityRequests;
 import model.viewRequests.ShootRequest;
 import model.viewRequests.SkillTreeAbilityRequests;
@@ -22,6 +24,7 @@ public class ViewRequestController {
 
     public ViewRequestController(Player player) {
         this.player = player;
+        SkillTreeAbilityHandler.initAbilities(player);
     }
 
     public void shootRequest(Vector clickedPoint){
@@ -35,16 +38,15 @@ public class ViewRequestController {
         InGameAbilityRequests.abilityRequest(type);
     }
 
-    public void skillTreeAbilityRequest(SkillTreeAbilityType type) {
-        SkillTreeAbilityRequests.abilityRequest(type);
-    }
-
-
-    public void buySkillTreeRequest(SkillTreeAbilityType type) {
-        SkillTreeAbilityRequests.buyRequest(type);
+    public void skillTreeAbilityRequest(SkillTreeAbilityType type ,Player player) {
+        SkillTreeAbilityRequests.abilityRequest(type ,player);
     }
 
     public void movementRequest(ArrayList<Integer> pressedKeys, ArrayList<Integer> releasedKeys) {
         new EpsilonMovement(player ,pressedKeys ,releasedKeys).applyMovement();
+    }
+
+    public void keyTypedHandler(ArrayList<Character> typedKeys) {
+        new KeyListener(player ,typedKeys).checkKey();
     }
 }

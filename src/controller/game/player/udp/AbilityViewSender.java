@@ -73,7 +73,7 @@ public class AbilityViewSender extends Thread{
                     }
                 }
 
-                String JAbilities = gson.toJson(abilityViews);
+//                String JAbilities = gson.toJson(abilityViews); ///todo
             }
         }
     }

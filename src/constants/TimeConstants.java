@@ -25,4 +25,5 @@ public class TimeConstants {
     public static final int CERBERUS_COOLDOWN = 15000;
     public static final int EPSILON_SHOOTIN_TIME = 500;
     public static final double SAVE_GAME_TIME = 4000;
+    public static final int PLAYER_PAUSE_TIME = 45000;
 }

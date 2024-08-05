@@ -46,13 +46,6 @@ public class ServerCLIListener extends Thread {
                 OnlineData.getTCPClient("test").getTcpMessager().sendMessage(ServerMessageType.getPorts);
                 ArrayList<Player> players = new ArrayList<>();
                 players.add(player);
-                game.getModelRequests().addObjectModel(new TrigorathModel(
-                        game,
-                        player,
-                        players,
-                        new Vector(),
-                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-                ));
             }
             else if (command.equals("start test2 player")) {
                 Player player = new Player(OnlineData.getOnlineGame("test") ,"test2");
@@ -62,13 +55,6 @@ public class ServerCLIListener extends Thread {
                 OnlineData.getTCPClient("test2").getTcpMessager().sendMessage(ServerMessageType.getPorts);
                 ArrayList<Player> players = new ArrayList<>();
                 players.add(player);
-                OnlineData.getOnlineGame("test").getModelRequests().addObjectModel(new TrigorathModel(
-                        OnlineData.getOnlineGame("test"),
-                        player,
-                        players,
-                        new Vector(),
-                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-                ));
             }
             else if (command.equals("start game")) {
                 OnlineData.getOnlineGame("test").start();

@@ -3,6 +3,7 @@ package model.skillTreeAbilities;
 import constants.CostConstants;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
@@ -17,7 +18,8 @@ public class Aceso extends SkillTreeAbility{
     private EpsilonModel epsilon;
     private int healAmount;
 
-    public Aceso(){
+    public Aceso(Player player ,boolean isBought){
+        super(player ,isBought);
 //        isBought = Configs.SkillTreeConfigs.acesoBought;
         unlockXpCost = CostConstants.ACESO_UNLOCK_COST;
         type = SkillTreeAbilityType.aceso;

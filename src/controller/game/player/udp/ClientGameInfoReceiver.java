@@ -66,6 +66,9 @@ public class ClientGameInfoReceiver extends Thread{
                         clientGameInfo.releasedKeys
                 );
             }
+            if (!clientGameInfo.typedKeys.isEmpty()) {
+                player.getViewRequestController().keyTypedHandler(clientGameInfo.typedKeys);
+            }
             lastClientGameInfo = clientGameInfo;
         }
 
