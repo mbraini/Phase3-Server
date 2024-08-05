@@ -6,6 +6,7 @@ import controller.game.ObjectController;
 import controller.game.interfaces.ImageChanger;
 import controller.game.interfaces.SizeChanger;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.FrameSticker;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -17,6 +18,7 @@ import utils.Math;
 import utils.Vector;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class BossHelperModel extends EnemyModel implements ImageChanger , MoveAble , FrameSticker , SizeChanger {
     protected FrameModel frame;
@@ -28,8 +30,8 @@ public abstract class BossHelperModel extends EnemyModel implements ImageChanger
     protected boolean dashedInPositiveWay;
     private boolean inDash;
 
-    public BossHelperModel(Game game) {
-        super(game);
+    public BossHelperModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers) {
+        super(game ,chasingPlayer ,targetedPlayers);
     }
 
     protected abstract void initFrame();

@@ -4,6 +4,7 @@ import constants.ImageConstants;
 import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.enums.ModelType;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.animations.BossDeathAnimation;
 import model.interfaces.collisionInterfaces.CollisionDetector;
@@ -15,14 +16,15 @@ import utils.Math;
 import utils.Vector;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class HeadModel extends BossHelperModel implements IsCircle , CollisionDetector {
     private boolean isInPositiveDirection;
     @SkippedByJson
     private Boss boss;
 
-    public HeadModel(Game game ,Vector position , Boss boss, String id){
-        super(game);
+    public HeadModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers , Vector position , Boss boss, String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.position = position;
         this.id = id;
         this.image = ImageConstants.smiley;

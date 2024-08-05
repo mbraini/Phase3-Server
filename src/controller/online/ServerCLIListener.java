@@ -40,28 +40,39 @@ public class ServerCLIListener extends Thread {
                 Game game = new Game();
                 game.setGameType(GameType.monomachia);
                 Player player = new Player(game ,"test");
+                OnlineData.putClientPlayer("test" ,player);
                 game.addPlayer(player);
                 OnlineData.putClientOnlineGame("test" ,game);
                 OnlineData.getTCPClient("test").getTcpMessager().sendMessage(ServerMessageType.getPorts);
+                ArrayList<Player> players = new ArrayList<>();
+                players.add(player);
+                game.getModelRequests().addObjectModel(new TrigorathModel(
+                        game,
+                        player,
+                        players,
+                        new Vector(),
+                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+                ));
+            }
+            else if (command.equals("start test2 player")) {
+                Player player = new Player(OnlineData.getOnlineGame("test") ,"test2");
+                OnlineData.putClientPlayer("test2" ,player);
+                OnlineData.getOnlineGame("test").addPlayer(player);
+                OnlineData.putClientOnlineGame("test2" ,OnlineData.getOnlineGame("test"));
+                OnlineData.getTCPClient("test2").getTcpMessager().sendMessage(ServerMessageType.getPorts);
+                ArrayList<Player> players = new ArrayList<>();
+                players.add(player);
+                OnlineData.getOnlineGame("test").getModelRequests().addObjectModel(new TrigorathModel(
+                        OnlineData.getOnlineGame("test"),
+                        player,
+                        players,
+                        new Vector(),
+                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+                ));
             }
             else if (command.equals("start game")) {
                 OnlineData.getOnlineGame("test").start();
             }
-            else if (command.equals("add archmire")) {
-                OnlineData.getOnlineGame("test").getModelRequests().addObjectModel(new ArchmireModel(
-                        OnlineData.getOnlineGame("test"),
-                        new Vector(-600 ,-600),
-                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-                ));
-            }
-            else if (command.equals("add wyrm")) {
-                WyrmModel wyrmModel =new WyrmModel(
-                        OnlineData.getOnlineGame("test"),
-                        new Vector(SizeConstants.SCREEN_SIZE.width / 2d - 100,SizeConstants.SCREEN_SIZE.height / 2d - 100),
-                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-                );
-                OnlineData.getOnlineGame("test").getModelRequests().addObjectModel(wyrmModel);
-                OnlineData.getOnlineGame("test").getModelRequests().addFrameModel(wyrmModel.getFrameModel());}
         }
     }
 

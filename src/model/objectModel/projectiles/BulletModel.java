@@ -3,14 +3,19 @@ package model.objectModel.projectiles;
 import constants.RefreshRateConstants;
 import controller.game.Game;
 import controller.game.ObjectController;
+import controller.game.player.Player;
 import model.interfaces.movementIntefaces.MoveAble;
+import model.objectModel.fighters.EpsilonModel;
 import utils.Math;
+
+import java.util.ArrayList;
 
 public abstract class BulletModel extends ProjectileModel implements MoveAble {
     protected double hp = 1;
-
-    public BulletModel(Game game) {
+    protected ArrayList<Player> targetedPlayers;
+    public BulletModel(Game game , ArrayList<Player> targetedPlayers) {
         super(game);
+        this.targetedPlayers = targetedPlayers;
     }
 
     @Override
@@ -24,6 +29,16 @@ public abstract class BulletModel extends ProjectileModel implements MoveAble {
     @Override
     public void die() {
         ObjectController.removeObject(this);
+    }
+
+    public boolean isTargeting(EpsilonModel epsilonModel) {
+        synchronized (targetedPlayers) {
+            for (Player player : targetedPlayers) {
+                if (player.getPlayerData().getEpsilon().getId().equals(epsilonModel.getId()))
+                    return true;
+            }
+        }
+        return false;
     }
 
 }

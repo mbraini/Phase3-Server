@@ -4,16 +4,21 @@ import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import utils.Math;
 import utils.Vector;
+
+import java.util.ArrayList;
 
 public class NecropickShooter {
 
     private Vector position;
+    private ArrayList<Player> targetedPlayers;
     private Game game;
 
-    public NecropickShooter(Game game, Vector position) {
+    public NecropickShooter(Game game,ArrayList<Player> targetedPlayers, Vector position) {
         this.position = position;
+        this.targetedPlayers = targetedPlayers;
         this.game = game;
     }
 
@@ -30,6 +35,7 @@ public class NecropickShooter {
             );
             Spawner.addProjectile(
                     game,
+                    targetedPlayers,
                     spawnPosition,
                     direction,
                     ModelType.necropickBullet

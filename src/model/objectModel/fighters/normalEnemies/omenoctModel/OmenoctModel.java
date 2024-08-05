@@ -7,6 +7,7 @@ import constants.VelocityConstants;
 import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.Ability;
 import model.interfaces.movementIntefaces.FrameAttacher;
@@ -32,8 +33,8 @@ public class OmenoctModel extends NormalEnemyModel implements Ability , MoveAble
     private Timer shooter;
     private final OmenoctNavigater navigater;
 
-    public OmenoctModel(Game game ,Vector position , String id){
-        super(game);
+    public OmenoctModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers , Vector position , String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.position = position;
         this.velocity = new Vector(0 ,0);
         this.acceleration = new Vector(0 ,0);

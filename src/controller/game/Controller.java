@@ -1,18 +1,5 @@
 package controller.game;
 
-import constants.ControllerConstants;
-import constants.SizeConstants;
-import controller.game.player.Player;
-import model.inGameAbilities.InGameAbilityHandler;
-import model.objectModel.fighters.EpsilonModel;
-import model.objectModel.fighters.basicEnemies.SquarantineModel;
-import model.objectModel.frameModel.FrameModel;
-import model.skillTreeAbilities.SkillTreeAbilityHandler;
-import utils.Helper;
-import utils.Vector;
-
-import java.awt.*;
-
 public abstract class Controller {
 
     public static void resume() {
@@ -86,40 +73,7 @@ public abstract class Controller {
 
 
     public static void startGame(String username){
-        Game game = new Game();
-        game.getModelRequests().addObjectModel(
-                new EpsilonModel(
-                        game,
-                        new Vector(SizeConstants.SCREEN_SIZE.width / 2d,
-                                SizeConstants.SCREEN_SIZE.height / 2d),
-                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-                )
-        );
-        game.getModelRequests().addObjectModel(
-                new SquarantineModel(
-                        game,
-                        new Vector(),
-                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-                )
-        );
-        game.getModelRequests().addFrameModel(
-                new FrameModel(
-                        game,
-                        new Vector(SizeConstants.SCREEN_SIZE.width / 2d -300 ,SizeConstants.SCREEN_SIZE.height / 2d - 300),
-                        new Dimension(600 ,600),
-                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-                )
-        );
-        game.start();
-//        gameMode = GameMode.inGame;
-//        GameState.reset();
-//        modelStarter();
-//        viewStarter();
-//        addEpsilonAndFrame();
-//        new GameStartAnimation(ModelData.getFrames().getFirst()).StartAnimation();
-//        InGameAbilityHandler.initInGameAbilities();
-//        SkillTreeAbilityHandler.initAbilities();
-//        Controller.threadsStarter();
+
     }
 
     public static void endGame(boolean won) {

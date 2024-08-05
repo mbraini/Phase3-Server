@@ -4,15 +4,18 @@ import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.enums.ModelType;
+import controller.game.player.Player;
 import model.objectModel.frameModel.FrameModel;
 import model.objectModel.frameModel.FrameModelBuilder;
 import utils.Math;
 import utils.Vector;
 
+import java.util.ArrayList;
+
 public class BarricadosSecondModel extends BarricadosModel{
 
-    public BarricadosSecondModel(Game game,Vector position , String id){
-        super(game);
+    public BarricadosSecondModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers, Vector position , String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.position = position;
         this.HP = 10000000;
         this.id = id;

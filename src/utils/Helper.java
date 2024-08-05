@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import constants.DistanceConstants;
 import constants.SizeConstants;
+import controller.game.player.Player;
+import model.objectModel.fighters.EpsilonModel;
 import model.objectModel.frameModel.FrameModel;
 
 import java.awt.*;
@@ -151,6 +153,14 @@ public class Helper {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static byte[] getDataUntil(byte[] data, int length) {
+        byte[] newData = new byte[length];
+        for (int i = 0 ;i < length ;i++) {
+            newData[i] = data[i];
+        }
+        return newData;
     }
 
 }

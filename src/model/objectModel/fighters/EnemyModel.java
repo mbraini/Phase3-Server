@@ -19,12 +19,14 @@ public abstract class EnemyModel extends FighterModel {
     protected boolean vulnerableToEpsilonMelee;
     protected boolean vulnerableToEpsilonBullet;
 
-    public EnemyModel(Game game) {
-        super(game);
+    public EnemyModel(Game game ,Player chasingPlayer ,ArrayList<Player> targetedPlayers) {
+        super(game ,chasingPlayer ,targetedPlayers);
     }
 
     public void meleeAttack(EpsilonModel epsilon){
         if (!hasMeleeAttack)
+            return;
+        if (!isTargeted(epsilon))
             return;
         if (this instanceof IsPolygon){
             for (Vector vertex : ((IsPolygon) this).getVertices()) {

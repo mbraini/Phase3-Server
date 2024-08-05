@@ -33,6 +33,6 @@ public class WyrmShooter {
                 )
         );
 
-        Spawner.addProjectile(wyrmModel.getGame() ,bulletPosition ,direction , ModelType.wyrmBullet);
+        Spawner.addProjectile(wyrmModel.getGame(),wyrmModel.getTargetedPlayers() ,bulletPosition ,direction , ModelType.wyrmBullet);
     }
 }

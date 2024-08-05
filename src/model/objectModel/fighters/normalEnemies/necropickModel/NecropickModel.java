@@ -6,6 +6,7 @@ import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.GameState;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.ModelData;
 import model.interfaces.Ability;
@@ -31,8 +32,8 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
     private ArrayList<Vector> vertices;
     private boolean isArrived;
 
-    public NecropickModel(Game game ,Vector position , String id){
-        super(game);
+    public NecropickModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers , Vector position , String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.position = position;
         this.velocity = new Vector(0 ,0);
         this.acceleration = new Vector(0 ,0);
@@ -81,7 +82,7 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
                 if (abilityTime >= 4000) {
                     abilityTime = 0;
                     isMotionless = false;
-                    new NecropickShooter(game ,position).shoot();
+                    new NecropickShooter(game,targetedPlayers ,position).shoot();
                     setHovering(false);
                     hasAbility = false;
                     velocity = new Vector();

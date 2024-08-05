@@ -33,8 +33,8 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
     private boolean positiveDirection;
     private Vector origin;
 
-    public WyrmModel(Game game, Vector position , String id){
-        super(game);
+    public WyrmModel(Game game ,Player chasingPlayer ,ArrayList<Player> targetedPlayers, Vector position , String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.id = id;
         this.position = position;
         this.velocity = new Vector(0 ,0);

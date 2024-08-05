@@ -4,6 +4,7 @@ import constants.SizeConstants;
 import controller.game.enums.InGameAbilityType;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import model.inGameAbilities.InGameAbilityHandler;
 import model.inGameAbilities.Slaughter;
 import model.objectModel.fighters.EpsilonModel;
@@ -12,12 +13,14 @@ import utils.Vector;
 
 public class ShootRequest {
 
-    private EpsilonModel epsilon;
+    private final Player player;
+    private Vector clickedPoint;
     private static int extraAim;
     private static int slaughterBulletCount;
 
-    public ShootRequest(EpsilonModel epsilon){
-        this.epsilon = epsilon;
+    public ShootRequest(Player player ,Vector clickedPoint){
+        this.player = player;
+        this.clickedPoint = clickedPoint;
     }
 
     public static boolean canShoot() {
@@ -32,7 +35,12 @@ public class ShootRequest {
         ShootRequest.slaughterBulletCount = slaughterBulletCount;
     }
 
-    public void shoot(Vector clickedPoint) {
+    public void shoot() {
+        EpsilonModel epsilon = player.getPlayerData().getEpsilon();
+        System.out.println(epsilon);
+        if (epsilon == null || clickedPoint == null)
+            return;
+        System.out.println("SHOOTING!");
         Vector direction = Math.VectorAdd(Math.ScalarInVector(-1 ,epsilon.getPosition()) ,clickedPoint);
         Vector position = Math.VectorAdd(
                 Math.VectorWithSize(
@@ -43,13 +51,14 @@ public class ShootRequest {
         );
         int constant = -1;
         if (slaughterBulletCount >= 1){
-            Spawner.addProjectile(epsilon.getGame() ,position ,direction ,ModelType.slaughterBullet);
+            Spawner.addProjectile(epsilon.getGame() ,epsilon.getTargetedPlayers() ,position ,direction ,ModelType.slaughterBullet);
             slaughterBulletCount -= 1;
             Slaughter slaughter = (Slaughter) InGameAbilityHandler.getInGameAbility(InGameAbilityType.slaughter);
-            slaughter.setUsed(true);
+            if (slaughter != null)
+                slaughter.setUsed(true);
         }
         else {
-            Spawner.addProjectile(epsilon.getGame() ,position, direction, ModelType.epsilonBullet);
+            Spawner.addProjectile(epsilon.getGame() ,epsilon.getTargetedPlayers(),position, direction, ModelType.epsilonBullet);
         }
         for (int i = 0; i < extraAim ;i++) {
             constant = constant * (-1);
@@ -64,6 +73,7 @@ public class ShootRequest {
             );
             Spawner.addProjectile(
                     epsilon.getGame(),
+                    epsilon.getTargetedPlayers(),
                     spawnPosition,
                     direction2,
                     ModelType.epsilonBullet

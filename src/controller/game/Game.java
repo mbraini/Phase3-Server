@@ -143,6 +143,8 @@ public class Game {
     }
 
     public void start() {
+        for (Player player : players)
+            player.start();
         gameLoop.start();
         frameThread.start();
         gameManager.getGameManagerThread().start();

@@ -4,8 +4,6 @@ package model.logics.collision;
 import constants.DistanceConstants;
 import constants.SoundPathConstants;
 import controller.game.ModelRequestController;
-import controller.game.manager.GameState;
-import model.ModelData;
 import model.inGameAbilities.Dismay.EpsilonProtectorModel;
 import model.interfaces.collisionInterfaces.CollisionDetector;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -125,6 +123,13 @@ public class CollisionHandler {
         if (object.isHovering()){
             return;
         }
+        if (object instanceof EpsilonModel) {
+            System.out.println("two epsilon!");
+            if (object.getId().equals(epsilon.getId()))
+                return;
+            pullOutObject(epsilon ,object);
+            new Impact(epsilon.getGame() , collisionPoint, DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+        }
         if (object instanceof EnemyModel){
             epsilonEnemyMeleeHandler(epsilon ,(EnemyModel)object);
             pullOutObject(epsilon ,object);
@@ -136,9 +141,12 @@ public class CollisionHandler {
             }
         }
         if (object instanceof EnemyBulletModel){
-            epsilon.setHP(epsilon.getHP() - ((BulletModel) object).getDamage());
-            new Impact(object.getGame() ,object.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
-            object.die();
+            EnemyBulletModel enemyBulletModel = (EnemyBulletModel) object;
+            if (enemyBulletModel.isTargeting(epsilon)) {
+            epsilon.setHP(epsilon.getHP() - enemyBulletModel.getDamage());
+            new Impact(enemyBulletModel.getGame() ,enemyBulletModel.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+            enemyBulletModel.die();
+            }
         }
         if (object instanceof CollisionDetector){
             ((CollisionDetector) object).detect();

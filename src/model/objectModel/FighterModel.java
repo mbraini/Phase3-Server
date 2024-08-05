@@ -1,13 +1,21 @@
 package model.objectModel;
 
 import controller.game.Game;
+import controller.game.player.Player;
+import model.objectModel.fighters.EpsilonModel;
+
+import java.util.ArrayList;
 
 public abstract class FighterModel extends ObjectModel{
     protected boolean hasMeleeAttack;
     protected int meleeAttack;
+    protected Player chasingPlayer;
+    protected ArrayList<Player> targetedPlayers;
 
-    public FighterModel(Game game) {
+    public FighterModel(Game game ,Player chasingPlayer ,ArrayList<Player> targetedPlayers) {
         super(game);
+        this.chasingPlayer = chasingPlayer;
+        this.targetedPlayers = targetedPlayers;
     }
 
 
@@ -26,4 +34,31 @@ public abstract class FighterModel extends ObjectModel{
     public void setMeleeAttack(int meleeAttack) {
         this.meleeAttack = meleeAttack;
     }
+
+    public Player getChasingPlayer() {
+        return chasingPlayer;
+    }
+
+    public void setChasingPlayer(Player chasingPlayer) {
+        this.chasingPlayer = chasingPlayer;
+    }
+
+    public ArrayList<Player> getTargetedPlayers() {
+        return targetedPlayers;
+    }
+
+    public void setTargetedPlayers(ArrayList<Player> targetedPlayers) {
+        this.targetedPlayers = targetedPlayers;
+    }
+
+    public boolean isTargeted(EpsilonModel epsilonModel) {
+        synchronized (targetedPlayers) {
+            for (Player player : targetedPlayers) {
+                if (player.getPlayerData().getEpsilon().getId().equals(epsilonModel.getId()))
+                    return true;
+            }
+        }
+        return false;
+    }
+
 }

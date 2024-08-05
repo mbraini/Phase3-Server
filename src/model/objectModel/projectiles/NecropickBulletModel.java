@@ -4,14 +4,17 @@ import constants.DamageConstants;
 import constants.SizeConstants;
 import constants.VelocityConstants;
 import controller.game.Game;
+import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.IsCircle;
 import utils.Math;
 import utils.Vector;
 
+import java.util.ArrayList;
+
 public class NecropickBulletModel extends EnemyBulletModel implements IsCircle {
 
-    public NecropickBulletModel(Game game ,Vector position , Vector direction , String id){
-        super(game);
+    public NecropickBulletModel(Game game, ArrayList<Player> targetedPlayers , Vector position , Vector direction , String id){
+        super(game ,targetedPlayers);
         this.position = position;
         this.velocity = Math.VectorWithSize(direction , VelocityConstants.OMENOCT_BULLET_VELOCITY);
         this.acceleration = new Vector(0 ,0);

@@ -282,11 +282,11 @@ public class WaveSpawner {
 //    }
 
     private void sixthWave() {
-        repeatedCount++;
-        if (repeatedCount == 1) {
-            ModelRequestController.playSound(SoundPathConstants.waveSpawnSound);
-            Spawner.spawnBoss(game);
-        }
+//        repeatedCount++;
+//        if (repeatedCount == 1) {
+//            ModelRequestController.playSound(SoundPathConstants.waveSpawnSound);
+//            Spawner.spawnBoss(game);
+//        }
     }
 
     public Timer getSpawner() {

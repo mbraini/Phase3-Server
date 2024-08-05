@@ -94,7 +94,6 @@ public class TCPServiceListener {
                 case givePorts:
                     new ClientGivePortRequest(tcpClient).checkRequest();
                     break;
-
             }
         }
     }

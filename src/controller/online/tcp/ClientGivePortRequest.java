@@ -4,6 +4,7 @@ import controller.game.Game;
 import controller.game.player.Player;
 import controller.online.OnlineData;
 import controller.online.client.TCPClient;
+import controller.online.tcp.messages.ServerGivePortRequest;
 
 public class ClientGivePortRequest extends TCPClientRequest{
 
@@ -31,6 +32,6 @@ public class ClientGivePortRequest extends TCPClientRequest{
         player.setObjectPort(objectPort);
         player.setVariablesPort(variablesPort);
 
-        System.out.println("done");
+        new ServerGivePortRequest(tcpClient).sendRequest();
     }
 }

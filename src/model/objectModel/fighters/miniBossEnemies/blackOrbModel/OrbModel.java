@@ -4,11 +4,14 @@ import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.collisionInterfaces.IsCircle;
 import model.objectModel.fighters.miniBossEnemies.MiniBossModel;
 import model.objectModel.frameModel.FrameModel;
 import utils.Vector;
+
+import java.util.ArrayList;
 
 public class OrbModel extends MiniBossModel implements IsCircle {
 
@@ -17,8 +20,8 @@ public class OrbModel extends MiniBossModel implements IsCircle {
     private FrameModel frameModel;
     private int number;
 
-    public OrbModel(Game game ,Vector position ,BlackOrbModel blackOrbModel ,int number ,String id){
-        super(game);
+    public OrbModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers , Vector position , BlackOrbModel blackOrbModel , int number , String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.position = position;
         this.id = id;
         this.blackOrbModel = blackOrbModel;

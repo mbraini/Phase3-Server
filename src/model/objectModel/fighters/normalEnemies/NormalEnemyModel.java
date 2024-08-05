@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public abstract class NormalEnemyModel extends EnemyModel implements IsPolygon, HasVertices {
 
-    public NormalEnemyModel(Game game) {
-        super(game);
+    public NormalEnemyModel(Game game ,Player chasingPlayer ,ArrayList<Player> targetedPlayers) {
+        super(game ,chasingPlayer ,targetedPlayers);
     }
 
     public void move() {

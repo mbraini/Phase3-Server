@@ -10,27 +10,24 @@ import utils.Vector;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
-public class EpsilonCirculation extends MouseMotionAdapter {
+public class EpsilonCirculation {
     private EpsilonModel epsilon;
+    private Vector mousePosition;
     private Player player;
-    public EpsilonCirculation(Player player){
+    public EpsilonCirculation(Player player ,Vector mousePosition){
         this.player = player;
+        this.mousePosition = mousePosition;
         this.epsilon = player.getPlayerData().getEpsilon();
     }
 
-    @Override
-    public void mouseMoved(MouseEvent e) {
+    public void rotate() {
+        if (player == null)
+            return;
+        if (player.getPlayerData().getEpsilon() == null)
+            return;
         if (player.getGame().getGameState().isInAnimation())
             return;
-        Vector mousePosition = new Vector(e.getX() ,e.getY());
-        mousePosition = Math.VectorAdd(
-                mousePosition,
-                new Vector(
-                        -SizeConstants.SCREEN_SIZE.width,
-                        -SizeConstants.SCREEN_SIZE.height
-                )
-        );
-        Vector epsilonPosition = epsilon.getPosition();
+        Vector epsilonPosition = player.getPlayerData().getEpsilon().getPosition();
         if (mousePosition.Equals(epsilonPosition))
             return;
         Vector direction = Math.VectorAdd(Math.ScalarInVector(-1 ,epsilonPosition) ,mousePosition);

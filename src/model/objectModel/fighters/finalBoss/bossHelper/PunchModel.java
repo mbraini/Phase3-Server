@@ -4,6 +4,7 @@ import constants.ImageConstants;
 import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.enums.ModelType;
+import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
 import model.logics.MovementManager;
@@ -18,8 +19,8 @@ public class PunchModel extends BossHelperModel implements IsPolygon, HasVertice
 
     private ArrayList<Vector> vertices;
 
-    public PunchModel(Game game ,Vector position , String id){
-        super(game);
+    public PunchModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers , Vector position , String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.position = position;
         this.id = id;
         this.image = ImageConstants.punch;

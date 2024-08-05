@@ -18,6 +18,8 @@ public class TCPClient {
     private final TCPMessager tcpMessager;
     @SkippedByJson
     private final ConnectionChecker connectionChecker;
+    @SkippedByJson
+    private TCPMessager gameConnection;
 
     public TCPClient(Socket socket) {
         tcpMessager = new TCPMessager(socket);
@@ -70,5 +72,13 @@ public class TCPClient {
 
     public ConnectionChecker getConnectionChecker() {
         return connectionChecker;
+    }
+
+    public TCPMessager getGameConnection() {
+        return gameConnection;
+    }
+
+    public void setGameConnection(TCPMessager gameConnection) {
+        this.gameConnection = gameConnection;
     }
 }

@@ -3,15 +3,18 @@ package model.objectModel.fighters.basicEnemies;
 import constants.RefreshRateConstants;
 import controller.game.Game;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
 import model.interfaces.movementIntefaces.MoveAble;
 import model.objectModel.fighters.EnemyModel;
 import utils.Math;
 
+import java.util.ArrayList;
+
 public abstract class BasicEnemyModel extends EnemyModel implements MoveAble ,HasVertices, IsPolygon {
-    public BasicEnemyModel(Game game) {
-        super(game);
+    public BasicEnemyModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers) {
+        super(game ,chasingPlayer ,targetedPlayers);
     }
 
     @Override

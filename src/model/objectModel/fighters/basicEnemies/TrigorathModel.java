@@ -6,6 +6,7 @@ import constants.VelocityConstants;
 import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import model.ModelData;
 import model.interfaces.Ability;
 import model.interfaces.movementIntefaces.ImpactAble;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAble {
     private ArrayList<Vector> vertices;
     private boolean isImpacted = false;
-    public TrigorathModel(Game game ,Vector position , String id){
-        super(game);
+    public TrigorathModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers , Vector position , String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.position = position;
         this.velocity = new Vector(0 ,0);
         this.acceleration = new Vector(0 ,0);
@@ -68,7 +69,7 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
 
     @Override
     public void ability() {
-        Vector epsilonPosition = game.getModelData().getModels().getFirst().getPosition();
+        Vector epsilonPosition = chasingPlayer.getPlayerData().getEpsilon().getPosition();
         velocity = new Vector(epsilonPosition.x - getPosition().x ,epsilonPosition.y - getPosition().y);
         double distance = Math.VectorSize(
                 Math.VectorAdd(

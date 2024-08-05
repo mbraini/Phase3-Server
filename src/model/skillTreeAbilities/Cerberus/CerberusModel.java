@@ -5,6 +5,7 @@ import constants.TimeConstants;
 import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.collisionInterfaces.IsCircle;
 import model.objectModel.FighterModel;
@@ -14,14 +15,15 @@ import utils.Vector;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CerberusModel extends FighterModel implements IsCircle {
     @SkippedByJson
     private Timer timer;
     private int timePassed;
     private int coolDown;
-    public CerberusModel(Game game ,Vector position , String id){
-        super(game);
+    public CerberusModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers , Vector position , String id){
+        super(game ,chasingPlayer ,targetedPlayers);
         this.id = id;
         this.position = position;
         velocity = new Vector();

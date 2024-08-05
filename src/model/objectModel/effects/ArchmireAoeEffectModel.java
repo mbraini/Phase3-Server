@@ -3,6 +3,7 @@ package model.objectModel.effects;
 import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.enums.EffectType;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.Fader;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -22,8 +23,8 @@ public class ArchmireAoeEffectModel extends AoeEffectModel implements Fader , Is
     private ArrayList<Vector> vertices;
 
 
-    public ArchmireAoeEffectModel(Game game ,ArchmireModel archmire , String id){
-        super(game);
+    public ArchmireAoeEffectModel(Game game , ArrayList<Player> targetedPlayers, ArchmireModel archmire , String id){
+        super(game ,targetedPlayers);
         this.id = id;
         this.G = 255;
         this.archmire = archmire;

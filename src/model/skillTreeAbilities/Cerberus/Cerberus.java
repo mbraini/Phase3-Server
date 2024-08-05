@@ -32,6 +32,8 @@ public class Cerberus extends SkillTreeAbility {
         for (int i = 0; i < 3 ;i++) {
             Spawner.spawnObject(
                     player.getGame(),
+                    epsilon.getChasingPlayer(),
+                    epsilon.getTargetedPlayers(),
                     Math.VectorAdd(
                             epsilon.getPosition(),
                             direction

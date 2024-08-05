@@ -20,7 +20,7 @@ public class InfoSender {
 
     public InfoSender(Game game, ArrayList<Player> players) {
         this.game = game;
-        this.players = players;
+        this.players = (ArrayList<Player>) players.clone();
     }
 
 

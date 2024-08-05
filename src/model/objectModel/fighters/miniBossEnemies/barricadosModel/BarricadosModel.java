@@ -4,6 +4,7 @@ import constants.SizeConstants;
 import constants.TimeConstants;
 import controller.game.Game;
 import controller.game.ObjectController;
+import controller.game.player.Player;
 import model.interfaces.Fader;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
@@ -18,8 +19,8 @@ public abstract class BarricadosModel extends MiniBossModel implements Fader , I
     protected double time;
     protected ArrayList<Vector> vertices;
 
-    public BarricadosModel(Game game) {
-        super(game);
+    public BarricadosModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers) {
+        super(game ,chasingPlayer ,targetedPlayers);
     }
 
     @Override

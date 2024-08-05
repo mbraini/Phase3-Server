@@ -53,7 +53,7 @@ public class OmenoctShooter implements ActionListener {
                             SizeConstants.OMENOCT_BULLET_RADIOS + SizeConstants.OMENOCT_RADIOS
                     )
             );
-            Spawner.addProjectile(omenoctModel.getGame() ,bulletPosition, direction, ModelType.omenoctBullet);
+            Spawner.addProjectile(omenoctModel.getGame(),omenoctModel.getTargetedPlayers() ,bulletPosition, direction, ModelType.omenoctBullet);
         }
     }
 

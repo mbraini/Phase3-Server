@@ -48,6 +48,7 @@ public class SizeConstants {
     public static final double OMENOCT_BULLET_RADIOS = 8;
     public static final double WYRM_BULLET_RADIOS = 6;
     public static final double BLACK_ORB_DIAGONAL_SIZE = DistanceConstants.BLACK_ORB_DISTANCE / (2 * Math.sin(Math.toRadians(36)));
+    public static final Dimension ONLINE_GAME_INIT_WINDOW_SIZE = new Dimension(700 ,700);
     public static Dimension EPSILON_DIMENSION = new Dimension(25 ,25);
     public static Dimension TRIGORATH_DIMENTION = new Dimension(50 ,50);
     public static Dimension Squarantine_DIMENTION = new Dimension(50 ,50);

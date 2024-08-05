@@ -8,7 +8,11 @@ import controller.game.PlayerData;
 import controller.game.ViewRequestController;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Helper;
+import utils.Math;
 import utils.Vector;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
 
@@ -27,24 +31,54 @@ public class Player {
         this.game = game;
         this.username = username;
         initData();
-        initEpsilon();
     }
 
     private void initData() {
-        viewRequestController = new ViewRequestController();
+        viewRequestController = new ViewRequestController(this);
         modelRequestController = new ModelRequestController();
         playerData = new PlayerData();
     }
 
+    public void start() {
+        initEpsilon();
+    }
+
     private void initEpsilon() {
-//        playerData.setEpsilon(
-//                new EpsilonModel(
-//                        game ,
-//                        new Vector(SizeConstants.SCREEN_SIZE.width / 2d ,SizeConstants.SCREEN_SIZE.height / 2d),
-//                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
-//                )
-//        );
-//        game.getModelRequests().addObjectModel(playerData.getEpsilon());
+        Vector randomPosition;
+        synchronized (game.getModelData().getFrames()) {
+            if (game.getModelData().getFrames().isEmpty()) {
+                Random random = new Random();
+                int x = random.nextInt(
+                        SizeConstants.SCREEN_SIZE.width / 2 - SizeConstants.ONLINE_GAME_INIT_WINDOW_SIZE.width / 2,
+                        SizeConstants.SCREEN_SIZE.width / 2 + SizeConstants.ONLINE_GAME_INIT_WINDOW_SIZE.width / 2
+                );
+                int y = random.nextInt(
+                        SizeConstants.SCREEN_SIZE.height / 2 - SizeConstants.ONLINE_GAME_INIT_WINDOW_SIZE.height / 2,
+                        SizeConstants.SCREEN_SIZE.height / 2 + SizeConstants.ONLINE_GAME_INIT_WINDOW_SIZE.height / 2
+                );
+                randomPosition = new Vector(x ,y);
+            }
+            else {
+                randomPosition = game.getModelData().getFrames().getFirst().getPosition();
+                randomPosition = Math.VectorAdd(
+                        randomPosition,
+                        new Vector(
+                                game.getModelData().getFrames().getFirst().getSize().width / 2d,
+                                game.getModelData().getFrames().getFirst().getSize().height / 2d
+                        )
+                );
+            }
+        }
+        playerData.setEpsilon( ////todo ///////////////////
+                new EpsilonModel(
+                        game ,
+                        this,
+                        new ArrayList<>(),
+                        randomPosition,
+                        Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+                )
+        );
+        game.getModelRequests().addObjectModel(playerData.getEpsilon());
     }
 
 

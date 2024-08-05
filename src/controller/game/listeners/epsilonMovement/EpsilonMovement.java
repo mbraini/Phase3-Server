@@ -7,8 +7,9 @@ import model.objectModel.fighters.EpsilonModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
-public class EpsilonMovement extends KeyAdapter {
+public class EpsilonMovement {
     private EpsilonModel epsilon;
     private boolean LEFT_PRESSED;
     private boolean RIGHT_PRESSED;
@@ -22,27 +23,31 @@ public class EpsilonMovement extends KeyAdapter {
     public static int UP_KEY = 38;
     public static int RIGHT_KEY = 39;
     public static int DOWN_KEY = 40;
+    private ArrayList<Integer> pressed;
+    private ArrayList<Integer> released;
     private Player player;
 
 
-    public EpsilonMovement(Player player){
+    public EpsilonMovement(Player player , ArrayList<Integer> pressed ,ArrayList<Integer> released){
         this.player = player;
-        this.epsilon = (EpsilonModel) (player.getPlayerData().getEpsilon());
+        this.pressed = pressed;
+        this.released = released;
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (player.getGame().getGameState().isInAnimation())
+    public void applyMovement() {
+        if (player == null)
             return;
-        detectKeyPressed(e.getKeyCode());
+        epsilon = player.getPlayerData().getEpsilon();
+        if (epsilon == null)
+            return;
+        for (int i = 0 ;i < pressed.size() ;i++) {
+            detectKeyPressed(pressed.get(i));
+        }
+        for (int i = 0 ;i < released.size() ;i++) {
+            detectKeyReleased(released.get(i));
+        }
+
         addAcc();
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (player.getGame().getGameState().isInAnimation())
-            return;
-        detectKeyReleased(e.getKeyCode());
         addDec();
     }
 
