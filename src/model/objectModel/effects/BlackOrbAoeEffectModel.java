@@ -3,6 +3,7 @@ package model.objectModel.effects;
 import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.ObjectController;
+import controller.game.enums.EffectType;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -32,6 +33,7 @@ public class BlackOrbAoeEffectModel extends AoeEffectModel implements IsPolygon 
         this.orbOrigin = orbOrigin;
         this.orbDestination = orbDestination;
         this.blackOrbModel = blackOrbModel;
+        effectType = EffectType.BlackOrbEffect;
         initVertices();
         setUpArea();
     }

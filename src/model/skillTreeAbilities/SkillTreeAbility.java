@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public abstract class SkillTreeAbility {
-
+    @SkippedByJson
     protected Player player;
     protected boolean isBought;
     protected int inGameXpCost = 100;

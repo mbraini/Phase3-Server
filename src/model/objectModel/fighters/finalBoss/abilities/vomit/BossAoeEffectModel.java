@@ -4,6 +4,7 @@ import constants.DistanceConstants;
 import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.ObjectController;
+import controller.game.enums.EffectType;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.Fader;
@@ -27,6 +28,7 @@ public class BossAoeEffectModel extends AoeEffectModel implements Fader , IsCirc
         this.id = id;
         this.vomit = vomit;
         this.thread = thread;
+        effectType = EffectType.VomitEffect;
         area = new Circle(SizeConstants.VOMIT_RADIOS ,center);
     }
 

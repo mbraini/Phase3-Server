@@ -138,6 +138,13 @@ public class FrameThread extends Thread{
                 }
             }
         }
+        for (ObjectModel model : models) {
+            if (model instanceof EpsilonModel) {
+                ((EpsilonModel) model).getBelongingPlayer().getPlayerData().setEpsilonFrame(
+                        newLocals.get(model)
+                );
+            }
+        }
         game.getModelData().setLocalFrames(newLocals);
     }
 

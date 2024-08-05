@@ -2,6 +2,7 @@ package model.inGameAbilities;
 
 import controller.game.player.Player;
 import controller.game.enums.InGameAbilityType;
+import controller.online.annotations.SkippedByJson;
 
 public abstract class InGameAbility {
 
@@ -9,6 +10,7 @@ public abstract class InGameAbility {
     protected boolean isAvailable = true;
     protected boolean isActive = false;
     protected int xpCost;
+    @SkippedByJson
     protected Player player;
 
     public InGameAbility(Player player) {

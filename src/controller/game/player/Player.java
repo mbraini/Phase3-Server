@@ -81,6 +81,7 @@ public class Player {
                 new EpsilonModel(
                         game ,
                         this,
+                        this,
                         new ArrayList<>(),
                         randomPosition,
                         Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)

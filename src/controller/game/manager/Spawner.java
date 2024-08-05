@@ -53,9 +53,6 @@ public abstract class Spawner {
             Vector position, ModelType modelType, String id)
     {
         switch (modelType) {
-            case epsilon:
-                game.getModelRequests().addObjectModel(new EpsilonModel(game ,chasingPlayer ,targetedPlayers ,position, id));
-                break;
             case trigorath:
                 game.getModelRequests().addObjectModel(new TrigorathModel(game ,chasingPlayer ,targetedPlayers ,position, id));
                 break;

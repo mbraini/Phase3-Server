@@ -3,6 +3,7 @@ package model.objectModel.fighters.miniBossEnemies.blackOrbModel;
 import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.ObjectController;
+import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
@@ -28,6 +29,7 @@ public class OrbModel extends MiniBossModel implements IsCircle {
         this.HP = 30;
         this.number = number;
         this.frameModel = blackOrbModel.getFrameModels().get(number);
+        type = ModelType.orb;
         isMotionless = true;
         vulnerableToEpsilonMelee = true;
         vulnerableToEpsilonBullet = true;

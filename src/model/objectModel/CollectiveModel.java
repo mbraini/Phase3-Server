@@ -7,6 +7,7 @@ import constants.TimeConstants;
 import constants.VelocityConstants;
 import controller.game.Game;
 import controller.game.ObjectController;
+import controller.game.enums.ModelType;
 import controller.game.manager.GameState;
 import model.ModelData;
 import model.interfaces.Ability;
@@ -29,6 +30,7 @@ public class CollectiveModel extends ObjectModel implements IsCircle, Ability, M
         this.acceleration = new Vector(0 ,0);
         this.id = id;
         this.HP = 1;
+        type = ModelType.collective;
         this.value = value;
     }
 

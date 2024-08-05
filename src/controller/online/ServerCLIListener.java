@@ -4,6 +4,8 @@ import constants.ControllerConstants;
 import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.GameType;
+import controller.game.enums.ModelType;
+import controller.game.manager.Spawner;
 import controller.game.player.Player;
 import controller.online.squad.Squad;
 import controller.online.tcp.ServerMessageType;
@@ -57,7 +59,16 @@ public class ServerCLIListener extends Thread {
                 players.add(player);
             }
             else if (command.equals("start game")) {
+                Game game = OnlineData.getOnlineGame("test");
+
                 OnlineData.getOnlineGame("test").start();
+                Spawner.spawnObject(
+                        game,
+                        OnlineData.getPlayer("test"),
+                        new ArrayList<>(),
+                        new Vector(600 ,600),
+                        ModelType.blackOrb
+                );
             }
         }
     }

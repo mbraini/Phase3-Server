@@ -4,6 +4,7 @@ import constants.DamageConstants;
 import constants.SizeConstants;
 import constants.VelocityConstants;
 import controller.game.Game;
+import controller.game.enums.ModelType;
 import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.IsCircle;
 import utils.Math;
@@ -20,6 +21,7 @@ public class NecropickBulletModel extends EnemyBulletModel implements IsCircle {
         this.acceleration = new Vector(0 ,0);
 
         setSolid(false);
+        type = ModelType.necropickBullet;
         damage = DamageConstants.NECROPICK_BULLET_DAMAGE;
         this.id = id;
         this.HP = 1;
