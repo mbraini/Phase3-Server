@@ -4,6 +4,7 @@ import constants.RefreshRateConstants;
 import constants.TimeConstants;
 import controller.game.enums.InGameAbilityType;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 
 import javax.swing.*;
@@ -16,7 +17,8 @@ public class Slumber extends InGameAbility{
     @SkippedByJson
     private Timer timer;
 
-    public Slumber(){
+    public Slumber(Player player){
+        super(player);
         type = InGameAbilityType.slumber;
         xpCost = 150;
         initTimer();
@@ -34,7 +36,7 @@ public class Slumber extends InGameAbility{
                     isActive = false;
                     timePassed = 0;
                     player.getGame().getGameState().setDizzy(false);
-                    InGameAbilityHandler.permitAll();
+                    InGameAbilityHandler.permitAll(player);
                     timer.stop();
                 }
             }
@@ -47,7 +49,7 @@ public class Slumber extends InGameAbility{
         isActive = true;
         isAvailable = false;
         player.getGame().getGameState().setDizzy(true);
-        InGameAbilityHandler.disableAll();
+        InGameAbilityHandler.disableAll(player);
         timer.start();
     }
 

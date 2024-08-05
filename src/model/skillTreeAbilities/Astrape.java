@@ -10,7 +10,6 @@ public class Astrape extends SkillTreeAbility{
 
     public Astrape(Player player ,boolean isBought){
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.astrapeBought;
         unlockXpCost = CostConstants.ASTRAPE_UNLOCK_COST;
         type = SkillTreeAbilityType.astrape;
         initTimer();

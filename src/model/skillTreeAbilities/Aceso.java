@@ -20,7 +20,6 @@ public class Aceso extends SkillTreeAbility{
 
     public Aceso(Player player ,boolean isBought){
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.acesoBought;
         unlockXpCost = CostConstants.ACESO_UNLOCK_COST;
         type = SkillTreeAbilityType.aceso;
         initTimer();

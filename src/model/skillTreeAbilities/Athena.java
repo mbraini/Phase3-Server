@@ -9,7 +9,6 @@ public class Athena extends SkillTreeAbility{
 
     public Athena(Player player ,boolean isBought){
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.athenaBought;
         unlockXpCost = CostConstants.ATHENA_UNLOCK_COST;
         type = SkillTreeAbilityType.athena;
         initTimer();

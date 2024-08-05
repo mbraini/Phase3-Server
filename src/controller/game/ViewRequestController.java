@@ -9,6 +9,7 @@ import controller.game.manager.GameState;
 import controller.game.player.Player;
 import model.ModelData;
 import model.inGameAbilities.InGameAbility;
+import model.inGameAbilities.InGameAbilityHandler;
 import model.skillTreeAbilities.SkillTreeAbility;
 import model.skillTreeAbilities.SkillTreeAbilityHandler;
 import model.viewRequests.InGameAbilityRequests;
@@ -25,6 +26,7 @@ public class ViewRequestController {
     public ViewRequestController(Player player) {
         this.player = player;
         SkillTreeAbilityHandler.initAbilities(player);
+        InGameAbilityHandler.initInGameAbilities(player);
     }
 
     public void shootRequest(Vector clickedPoint){
@@ -34,8 +36,8 @@ public class ViewRequestController {
         new EpsilonCirculation(player ,mousePosition).rotate();
     }
 
-    public void inGameAbilityRequest(InGameAbilityType type){
-        InGameAbilityRequests.abilityRequest(type);
+    public void inGameAbilityRequest(InGameAbilityType type ,Player player){
+        InGameAbilityRequests.abilityRequest(type ,player);
     }
 
     public void skillTreeAbilityRequest(SkillTreeAbilityType type ,Player player) {

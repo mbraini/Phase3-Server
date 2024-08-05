@@ -11,7 +11,6 @@ public class Chiron extends SkillTreeAbility{
 
     public Chiron(Player player ,boolean isBought){
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.chironBought;
         unlockXpCost = CostConstants.CHIRON_UNLOCK_COST;
         type = SkillTreeAbilityType.chiron;
         initTimer();

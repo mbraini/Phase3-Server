@@ -12,7 +12,6 @@ public class Melapmus extends SkillTreeAbility{
 
     public Melapmus(Player player ,boolean isBought){
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.melampusBought;
         unlockXpCost = CostConstants.MELAMPUS_UNLOCK_COST;
         type = SkillTreeAbilityType.melampus;
         initTimer();

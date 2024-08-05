@@ -16,7 +16,6 @@ public class Cerberus extends SkillTreeAbility {
 
     public Cerberus(Player player ,boolean isBought){
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.cerberusBought;
         unlockXpCost = CostConstants.CERBERUS_UNLOCK_COST;
         type = SkillTreeAbilityType.cerberus;
         initTimer();

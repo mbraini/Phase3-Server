@@ -9,7 +9,6 @@ public class Ares extends SkillTreeAbility{
 
     public Ares(Player player ,boolean isBought){
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.aresBought;
         unlockXpCost = 750;
         type = SkillTreeAbilityType.ares;
         initTimer();

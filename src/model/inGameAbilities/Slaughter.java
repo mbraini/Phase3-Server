@@ -4,6 +4,7 @@ import constants.RefreshRateConstants;
 import constants.TimeConstants;
 import controller.game.enums.InGameAbilityType;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.viewRequests.ShootRequest;
 
@@ -18,7 +19,8 @@ public class Slaughter extends InGameAbility{
     @SkippedByJson
     private Timer timer;
 
-    public Slaughter(){
+    public Slaughter(Player player){
+        super(player);
         type = InGameAbilityType.slaughter;
         xpCost = 200;
         initTimer();
@@ -47,7 +49,9 @@ public class Slaughter extends InGameAbility{
         isActive = true;
         isAvailable = false;
         isUsed = false;
-        ShootRequest.setSlaughterBulletCount(1);
+        player.getPlayerData().setSlaughterBulletCount(
+                player.getPlayerData().getSlaughterBulletCount() + 1
+        );
         timer.start();
     }
 
@@ -56,8 +60,8 @@ public class Slaughter extends InGameAbility{
         initTimer();
         if (timePassed <= TimeConstants.SLAUGHTER_COOLDOWN && isActive){
             if (!isUsed){
-                ShootRequest.setSlaughterBulletCount(
-                        ShootRequest.getSlaughterBulletCount() + 1
+                player.getPlayerData().setSlaughterBulletCount(
+                        player.getPlayerData().getSlaughterBulletCount() + 1
                 );
             }
             timer.start();

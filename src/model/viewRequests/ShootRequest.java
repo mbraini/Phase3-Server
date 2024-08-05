@@ -15,25 +15,13 @@ public class ShootRequest {
 
     private final Player player;
     private Vector clickedPoint;
-    private static int extraAim;
-    private static int slaughterBulletCount;
 
     public ShootRequest(Player player ,Vector clickedPoint){
         this.player = player;
         this.clickedPoint = clickedPoint;
     }
 
-    public static boolean canShoot() {
-        return true;
-    }
 
-    public static void setExtraAim(int extraAim) {
-        ShootRequest.extraAim = extraAim;
-    }
-
-    public static void setSlaughterBulletCount(int slaughterBulletCount) {
-        ShootRequest.slaughterBulletCount = slaughterBulletCount;
-    }
 
     public void shoot() {
         EpsilonModel epsilon = player.getPlayerData().getEpsilon();
@@ -48,17 +36,19 @@ public class ShootRequest {
                 ,epsilon.getPosition()
         );
         int constant = -1;
-        if (slaughterBulletCount >= 1){
+        if (player.getPlayerData().getSlaughterBulletCount() >= 1){
             Spawner.addProjectile(epsilon.getGame() ,epsilon.getTargetedPlayers() ,position ,direction ,ModelType.slaughterBullet);
-            slaughterBulletCount -= 1;
-            Slaughter slaughter = (Slaughter) InGameAbilityHandler.getInGameAbility(InGameAbilityType.slaughter);
+            player.getPlayerData().setSlaughterBulletCount(
+                    player.getPlayerData().getSlaughterBulletCount() - 1
+            );
+            Slaughter slaughter = (Slaughter) InGameAbilityHandler.getInGameAbility(InGameAbilityType.slaughter ,player);
             if (slaughter != null)
                 slaughter.setUsed(true);
         }
         else {
             Spawner.addProjectile(epsilon.getGame() ,epsilon.getTargetedPlayers(),position, direction, ModelType.epsilonBullet);
         }
-        for (int i = 0; i < extraAim ;i++) {
+        for (int i = 0; i < player.getPlayerData().getExtraBullet() ;i++) {
             constant = constant * (-1);
             Vector direction2 = Math.RotateByTheta(
                     direction,
@@ -79,7 +69,4 @@ public class ShootRequest {
         }
     }
 
-    public static int getSlaughterBulletCount() {
-        return slaughterBulletCount;
-    }
 }

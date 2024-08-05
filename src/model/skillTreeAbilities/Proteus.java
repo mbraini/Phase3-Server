@@ -12,7 +12,6 @@ public class Proteus extends SkillTreeAbility{
 
     public Proteus(Player player ,boolean isBought){
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.proteusBought;
         unlockXpCost = CostConstants.PROTEUS_UNLOCK_COST;
         type = SkillTreeAbilityType.proteus;
         initTimer();

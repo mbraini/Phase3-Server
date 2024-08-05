@@ -15,6 +15,8 @@ public class PlayerData {
     private ArrayList<SkillTreeAbility> skillTreeAbilities;
     private EpsilonModel epsilon;
     private FrameModel epsilonFrame;
+    private int slaughterBulletCount;
+    private int extraBullet;
     private int xp;
     private double hp;
     private int enemyKilled;
@@ -106,5 +108,21 @@ public class PlayerData {
 
     public void setPauseTimeLeft(int pauseTimeLeft) {
         this.pauseTimeLeft = pauseTimeLeft;
+    }
+
+    public int getSlaughterBulletCount() {
+        return slaughterBulletCount;
+    }
+
+    public void setSlaughterBulletCount(int slaughterBulletCount) {
+        this.slaughterBulletCount = slaughterBulletCount;
+    }
+
+    public int getExtraBullet() {
+        return extraBullet;
+    }
+
+    public void setExtraBullet(int extraBullet) {
+        this.extraBullet = extraBullet;
     }
 }

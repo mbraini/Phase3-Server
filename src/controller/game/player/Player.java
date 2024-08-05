@@ -6,6 +6,7 @@ import controller.game.Game;
 import controller.game.ModelRequestController;
 import controller.game.PlayerData;
 import controller.game.ViewRequestController;
+import controller.online.OnlineData;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Helper;
 import utils.Math;
@@ -45,7 +46,9 @@ public class Player {
     }
 
     public void start() {
-        ///todo
+
+        playerData.setXp(OnlineData.getGameClient(username).getXp());
+
     }
 
     private void initEpsilon() {

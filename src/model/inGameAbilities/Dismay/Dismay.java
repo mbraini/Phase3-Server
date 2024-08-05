@@ -6,6 +6,7 @@ import constants.TimeConstants;
 import controller.game.enums.InGameAbilityType;
 import controller.game.manager.GameState;
 import controller.game.manager.Spawner;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.ModelData;
 import model.inGameAbilities.InGameAbility;
@@ -24,8 +25,9 @@ public class Dismay extends InGameAbility {
     @SkippedByJson
     private Timer timer;
 
-    public Dismay(EpsilonModel epsilon){
-        this.epsilon = epsilon;
+    public Dismay(Player player){
+        super(player);
+        this.epsilon = player.getPlayerData().getEpsilon();
         type = InGameAbilityType.dismay;
         xpCost = 120;
         initTimer();
@@ -69,7 +71,7 @@ public class Dismay extends InGameAbility {
     @Override
     public void setUp() {
         initTimer();
-//        this.epsilon =ModelData.getEpsilon();
+        this.epsilon =player.getPlayerData().getEpsilon();
         protectorModel.setEpsilon(epsilon);
         if (timePassed <= TimeConstants.DISMAY_DURATION && isActive) {
             Spawner.spawnProtector(protectorModel);

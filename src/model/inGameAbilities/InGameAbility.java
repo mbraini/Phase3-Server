@@ -10,6 +10,11 @@ public abstract class InGameAbility {
     protected boolean isActive = false;
     protected int xpCost;
     protected Player player;
+
+    public InGameAbility(Player player) {
+        this.player = player;
+    }
+
     public abstract void performAbility();
     public abstract void setUp();
 

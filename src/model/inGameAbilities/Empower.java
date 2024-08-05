@@ -4,6 +4,7 @@ import constants.RefreshRateConstants;
 import constants.TimeConstants;
 import controller.game.enums.InGameAbilityType;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.viewRequests.ShootRequest;
 
@@ -16,7 +17,8 @@ public class Empower extends InGameAbility{
     private Timer timer;
     private int timePassed;
 
-    public Empower(){
+    public Empower(Player player){
+        super(player);
         type = InGameAbilityType.empower;
         xpCost = 75;
         initTimer();
@@ -32,7 +34,7 @@ public class Empower extends InGameAbility{
                 if (timePassed >= TimeConstants.EMPOWER_DURATION) {
                     isAvailable = true;
                     isActive = false;
-                    ShootRequest.setExtraAim(0);
+                    player.getPlayerData().setExtraBullet(0);
                     timePassed = 0;
                     timer.stop();
                 }
@@ -42,7 +44,7 @@ public class Empower extends InGameAbility{
 
     @Override
     public void performAbility() {
-        ShootRequest.setExtraAim(2);
+        player.getPlayerData().setExtraBullet(2);
         isActive = true;
         isAvailable = false;
         timer.start();
@@ -52,7 +54,7 @@ public class Empower extends InGameAbility{
     public void setUp() {
         initTimer();
         if (timePassed <= TimeConstants.EMPOWER_DURATION && isActive) {
-            ShootRequest.setExtraAim(2);
+            player.getPlayerData().setExtraBullet(2);
             timer.start();
         }
     }

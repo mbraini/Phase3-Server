@@ -15,7 +15,6 @@ public class Dolus extends SkillTreeAbility{
 
     public Dolus(Player player ,boolean isBought) {
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.dolusBought;
         unlockXpCost = CostConstants.DOLUS_UNLOCK_COST;
         type = SkillTreeAbilityType.dolus;
         initTimer();

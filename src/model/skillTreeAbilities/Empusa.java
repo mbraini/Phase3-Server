@@ -13,7 +13,6 @@ public class Empusa extends SkillTreeAbility{
 
     public Empusa(Player player ,boolean isBought) {
         super(player ,isBought);
-//        isBought = Configs.SkillTreeConfigs.empusaBought;
         unlockXpCost = CostConstants.EMPUSA_UNLOCK_COST;
         type = SkillTreeAbilityType.empusa;
         initTimer();
