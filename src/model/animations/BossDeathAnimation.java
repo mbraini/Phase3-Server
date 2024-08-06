@@ -36,7 +36,6 @@ public class BossDeathAnimation extends TimerAnimation {
             @Override
             public void actionPerformed(ActionEvent e) {
                 killEveryOne();
-                System.out.println("BOSS DIED");
                 new EpsilonGetBigAnimation().StartAnimation();
                 wait.stop();
             }

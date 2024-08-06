@@ -42,7 +42,6 @@ public class GameState {
         forthWavePR = 0;
         fifthWavePR = 0;
         shrinkageVelocity = VelocityConstants.FRAME_SHRINKAGE_VELOCITY;
-        WaveSpawner.repeatedCount = 0;
         time = 0;
         wave = 1;
         isPause = false;

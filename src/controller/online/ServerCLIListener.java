@@ -10,6 +10,7 @@ import controller.game.player.Player;
 import controller.online.squad.Squad;
 import controller.online.tcp.ServerMessageType;
 import model.objectModel.fighters.basicEnemies.TrigorathModel;
+import model.objectModel.fighters.miniBossEnemies.blackOrbModel.BlackOrbModel;
 import model.objectModel.fighters.normalEnemies.archmireModel.ArchmireModel;
 import model.objectModel.fighters.normalEnemies.wyrmModel.WyrmModel;
 import model.objectModel.frameModel.FrameModel;
@@ -35,12 +36,10 @@ public class ServerCLIListener extends Thread {
                 startSquadBattle();
             }
             else if (command.equals("terminateSquadBattle")) {
-                System.out.println("WHO WON?");
                 ///todo
             }
             else if (command.equals("start test player")) {
-                Game game = new Game();
-                game.setGameType(GameType.monomachia);
+                Game game = new Game(GameType.monomachia);
                 Player player = new Player(game ,"test");
                 OnlineData.putClientPlayer("test" ,player);
                 game.addPlayer(player);
@@ -63,13 +62,6 @@ public class ServerCLIListener extends Thread {
                 ArrayList<Player> players = new ArrayList<>();
                 players.add(OnlineData.getPlayer("test"));
                 OnlineData.getOnlineGame("test").start();
-                Spawner.spawnObject(
-                        game,
-                        OnlineData.getPlayer("test"),
-                        players,
-                        new Vector(600 ,600),
-                        ModelType.blackOrb
-                );
             }
         }
     }

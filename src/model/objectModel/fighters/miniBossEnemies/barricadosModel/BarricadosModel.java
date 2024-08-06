@@ -13,6 +13,7 @@ import utils.Math;
 import utils.Vector;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class BarricadosModel extends MiniBossModel implements Fader , IsPolygon , HasVertices {
 

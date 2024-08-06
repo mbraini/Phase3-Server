@@ -21,6 +21,7 @@ import model.objectModel.fighters.finalBoss.bossHelper.HandModel;
 import model.objectModel.fighters.finalBoss.bossHelper.HeadModel;
 import model.objectModel.fighters.finalBoss.bossHelper.PunchModel;
 import model.objectModel.fighters.miniBossEnemies.barricadosModel.BarricadosFirstModel;
+import model.objectModel.fighters.miniBossEnemies.barricadosModel.BarricadosModel;
 import model.objectModel.fighters.miniBossEnemies.barricadosModel.BarricadosSecondModel;
 import model.objectModel.frameModel.FrameModel;
 import model.objectModel.fighters.basicEnemies.SquarantineModel;
@@ -71,7 +72,6 @@ public abstract class Spawner {
             case wyrm:
                 WyrmModel wyrmModel = new WyrmModel(game ,chasingPlayer ,targetedPlayers, position ,id);
                 game.getModelRequests().addObjectModel(wyrmModel);
-                addFrame(wyrmModel.getFrameModel());
                 break;
             case blackOrb :
                 BlackOrbModel blackOrbModel = new BlackOrbModel(
@@ -82,18 +82,31 @@ public abstract class Spawner {
                         id
                 );
                 game.getModelRequests().addAbstractEnemy(blackOrbModel);
-                blackOrbModel.spawn();
                 break;
             case barricados:
-                int randomInteger = (new Random()).nextInt(0 ,2);
-                if (randomInteger == 0){
-                    BarricadosFirstModel barricadosModel = new BarricadosFirstModel(game ,chasingPlayer ,targetedPlayers, position ,id);
-                    game.getModelRequests().addObjectModel(barricadosModel);
+                Random random = new Random();
+                int rand = random.nextInt(2);
+                if (rand == 0) {
+                    game.getModelRequests().addObjectModel(
+                            new BarricadosFirstModel(
+                                    game,
+                                    chasingPlayer,
+                                    targetedPlayers,
+                                    position,
+                                    id
+                            )
+                    );
                 }
                 else {
-                    BarricadosSecondModel barricadosModel = new BarricadosSecondModel(game ,chasingPlayer ,targetedPlayers ,position ,id);
-                    game.getModelRequests().addObjectModel(barricadosModel);
-                    addFrame(barricadosModel.getFrameModel());
+                    game.getModelRequests().addObjectModel(
+                            new BarricadosSecondModel(
+                                    game,
+                                    chasingPlayer,
+                                    targetedPlayers,
+                                    position,
+                                    id
+                            )
+                    );
                 }
                 break;
             case cerberus:

@@ -4,7 +4,7 @@ public class TimeConstants {
 
 
     public static final int OMENOCT_FIRING_TIME = 2000;
-    public static final int ARCHMIRE_THREAD_REFRESH_RATE = SizeConstants.ARCHMIRE_AOE_TIME_LIMIT / 50;
+    public static final int ARCHMIRE_THREAD_REFRESH_RATE = SizeConstants.ARCHMIRE_AOE_TIME_LIMIT / 25;
     public static final int WYRM_SHOOTING_TIME = 1000;
     public static final double MANAGER_THREAD_REFRESH_TIME = 100;
     public static final double COLLECTIVE_FADE_TIME = 7000;
@@ -26,4 +26,6 @@ public class TimeConstants {
     public static final int EPSILON_SHOOTIN_TIME = 500;
     public static final double SAVE_GAME_TIME = 4000;
     public static final int PLAYER_PAUSE_TIME = 45000;
+    public static final int INITIAL_MONOMACHIA_SPAWNER_DELAY = 4000;
+    public static final int INITIAL_COLOSSEUM_SPAWNER_DELAY = 3000;
 }

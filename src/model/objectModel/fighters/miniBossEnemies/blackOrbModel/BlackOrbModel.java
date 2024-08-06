@@ -32,6 +32,7 @@ public class BlackOrbModel extends AbstractEnemy {
         blackOrbThread = new BlackOrbThread(this);
         type = AbstractEnemyType.blackOrb;
         this.center = center;
+        spawn();
     }
 
     public ArrayList<OrbModel> getOrbModels() {

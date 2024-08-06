@@ -31,7 +31,6 @@ public class OmenoctShooter implements ActionListener {
         if (omenoctModel.getGame().getGameState().isDizzy() || omenoctModel.getGame().getGameState().isPause())
             return;
         if (omenoctModel.getGame().getGameState().isOver()) {
-            System.out.println("OMENOCT OUT");
             omenoctModel.getShooter().stop();
             omenoctModel.getShooter().removeActionListener(this);
             return;

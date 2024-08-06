@@ -116,7 +116,6 @@ public class CollectiveModel extends ObjectModel implements IsCircle, Ability, M
     @Override
     public void addTime(double time) {
         this.time += time;
-        System.out.println(time);
     }
 
     @Override

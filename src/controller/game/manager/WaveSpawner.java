@@ -1,11 +1,26 @@
 package controller.game.manager;
 
-import constants.SizeConstants;
-import constants.SoundPathConstants;
+import constants.ControllerConstants;
+import constants.TimeConstants;
 import controller.game.Game;
-import controller.game.ModelRequestController;
-import controller.game.enums.ModelType;
-import model.ModelData;
+import controller.game.GameType;
+import controller.game.player.Player;
+import model.objectModel.ObjectModel;
+import model.objectModel.fighters.AbstractEnemy;
+import model.objectModel.fighters.EnemyModel;
+import model.objectModel.fighters.basicEnemies.BasicEnemyModel;
+import model.objectModel.fighters.basicEnemies.SquarantineModel;
+import model.objectModel.fighters.basicEnemies.TrigorathModel;
+import model.objectModel.fighters.finalBoss.Boss;
+import model.objectModel.fighters.miniBossEnemies.MiniBossModel;
+import model.objectModel.fighters.miniBossEnemies.barricadosModel.BarricadosFirstModel;
+import model.objectModel.fighters.miniBossEnemies.barricadosModel.BarricadosSecondModel;
+import model.objectModel.fighters.miniBossEnemies.blackOrbModel.BlackOrbModel;
+import model.objectModel.fighters.normalEnemies.NormalEnemyModel;
+import model.objectModel.fighters.normalEnemies.archmireModel.ArchmireModel;
+import model.objectModel.fighters.normalEnemies.necropickModel.NecropickModel;
+import model.objectModel.fighters.normalEnemies.omenoctModel.OmenoctModel;
+import model.objectModel.fighters.normalEnemies.wyrmModel.WyrmModel;
 import model.objectModel.frameModel.FrameModel;
 import utils.Helper;
 import utils.Vector;
@@ -13,6 +28,10 @@ import utils.Vector;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 public class WaveSpawner {
 
@@ -20,274 +39,317 @@ public class WaveSpawner {
     private FrameModel epsilonFrame;
     private int timePassed;
     private int spawnDelay;
-    public static int repeatedCount;
     private int lastWaveKilled;
+    private final ArrayList<Class<?>> enemies = new ArrayList<>(Arrays.asList(
+            SquarantineModel.class,
+            TrigorathModel.class,
+            OmenoctModel.class,
+            NecropickModel.class,
+            ArchmireModel.class,
+            WyrmModel.class,
+            BlackOrbModel.class,
+            BarricadosFirstModel.class,
+            BarricadosSecondModel.class,
+            Boss.class
+    ));
+    private final Random random;
+    private int maximumMiniBossCount;
+    private int maximumNormalEnemyCount;
+    private int maximumBasicEnemyCount;
+    private static final int BASICS_ENDING_INDEX = 1;
+    private static final int NORMALS_ENDING_INDEX = 5;
+    private static final int MINI_ENDING_INDEX = 8;
+    private boolean isBasicEnemyUnlocked = true;
+    private boolean isNormalEnemyUnlocked;
+    private boolean isMiniBossUnlocked;
+    private int basicEnemyCount;
+    private int normalEnemyCount;
+    private int miniBossEnemyCount;
+    private int basicEnemySpawnCount = 1;
+    private int normalEnemySpawnCount = 1;
+    private int miniBossEnemySpawnCount;
+    private int enemyKilled;
+    private int enemySpawned;
+    private boolean canSpawn = true;
+    private int repeatedCount;
+    private int miniBossSpawnedAtCount;
+    private int chasingTurn;
     private Game game;
 
     public WaveSpawner(Game game) {
         this.game = game;
-        spawnDelay = 3000;
-        spawner = new Timer(1000, new ActionListener() {
+        random = new Random();
+        synchronized (game.getModelData().getFrames()) {
+            epsilonFrame = game.getModelData().getFrames().getFirst();
+        }
+        int delay;
+        if (game.getGameType().equals(GameType.monomachia)) {
+            delay = TimeConstants.INITIAL_MONOMACHIA_SPAWNER_DELAY;
+            maximumMiniBossCount = 1;
+            maximumNormalEnemyCount = 4;
+            maximumBasicEnemyCount = 6;
+        }
+        else {
+            delay = TimeConstants.INITIAL_COLOSSEUM_SPAWNER_DELAY;
+            maximumMiniBossCount = 6;
+            maximumNormalEnemyCount = 16;
+            maximumBasicEnemyCount = 30;
+        }
+
+        spawner = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (game.getGameState().isPause() || game.getGameState().isDizzy())
-                    return;
-                if (game.getGameState().isOver()) {
-                    spawner.stop();
-                    return;
-                }
-                timePassed += 1000;
-                if (timePassed >= spawnDelay) {
-                    timePassed = 0;
-                    int enemyKilled = game.getGameState().getEnemyKilled();
-                    int wave = game.getGameState().getWave();
-//                    epsilonFrame = game.getModelData().getEpsilonFrame();
-                    spawnEnemies(enemyKilled ,wave);
-                }
+                getEnemiesCounts();
+                enemyKilled = game.getGameState().getEnemyKilled();
+                updateVariables();
+                spawnEnemies();
+                repeatedCount++;
+                System.out.println(miniBossEnemyCount);
             }
+
         });
-        spawner.start();
+
     }
 
-    private void spawnEnemies(int enemyKilled ,int wave) {
+    private void updateVariables() {
+        if (game.getGameType().equals(GameType.monomachia)) {
+            updateMonomachiaVariables();
+        }
+        else {
+            updateColosseumVariables();
+        }
+        unlockEnemies();
+    }
 
-        switch (wave) {
-            case 1 :
-//                firstWave(enemyKilled);
-                break;
-            case 2 :
-//                secondWave(enemyKilled);
-                break;
-            case 3 :
-//                thirdWave(enemyKilled);
-                break;
-            case 4 :
-//                forthWave(enemyKilled);
-                break;
-            case 5 :
-//                fifthWave(enemyKilled);
-                break;
-            case 6 :
-                sixthWave();
-                spawner.stop();
-                break;
+    private void unlockEnemies() {
+        if (game.getGameState().getWave() >= 2) {
+            isNormalEnemyUnlocked = true;
+        }
+        if (game.getGameState().getWave() >= 3) {
+            isMiniBossUnlocked = true;
         }
     }
-//
-//    private void firstWave(int enemyKilled) {
-//        repeatedCount++;
-//        spawnDelay = 5000;
-//        if (repeatedCount == 1) {
-//            ModelRequestController.playSound(SoundPathConstants.waveSpawnSound);
-//            Spawner.spawnPortal(
-//                    new Vector(
-//                            epsilonFrame.getPosition().x + epsilonFrame.getSize().width / 2d,
-//                            epsilonFrame.getPosition().y + epsilonFrame.getSize().height / 2d
-//                    ),
-//                    game.getModelData().getEpsilonFrame()
-//            );
-//        }
-//        if (enemyKilled >= 0 && enemyKilled <= 5) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.trigorath);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.squarantine);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 2);
-//        }
-//        if (enemyKilled > 5  && GameState.getEnemyCount() == 0) {
-//            GameState.setWave(2);
-//            lastWaveKilled = GameState.getEnemyKilled();
-//            repeatedCount = 0;
-//            spawnDelay = 4000;
-//            GameState.setLastWaveTime(GameState.getTime());
-//        }
-//    }
-//
-//    private void secondWave(int enemyKilled) {
-//        repeatedCount++;
-//        if (repeatedCount == 1) {
-//            ModelRequestController.playSound(SoundPathConstants.waveSpawnSound);
-//            Spawner.spawnPortal(
-//                    new Vector(
-//                            epsilonFrame.getPosition().x + epsilonFrame.getSize().width / 2d,
-//                            epsilonFrame.getPosition().y + epsilonFrame.getSize().height / 2d
-//                    ),
-//                    ModelData.getEpsilonFrame()
-//            );
-//        }
-//        if (enemyKilled >= lastWaveKilled && enemyKilled <= lastWaveKilled + 2) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.trigorath);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.squarantine);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 2);
-//        }
-//
-//        if (enemyKilled > lastWaveKilled + 2 && enemyKilled <= lastWaveKilled + 4) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.omenoct);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.necropick);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 2);
-//        }
-//
-//        if (enemyKilled > lastWaveKilled + 6 && GameState.getWave() == 2 && GameState.getEnemyCount() == 0) {
-//            GameState.setWave(3);
-//            repeatedCount = 0;
-//            lastWaveKilled = GameState.getEnemyKilled();
-//            GameState.setLastWaveTime(GameState.getTime());
-//        }
-//    }
-//
-//    private void thirdWave(int enemyKilled) {
-//        repeatedCount++;
-//        if (enemyKilled >= lastWaveKilled && enemyKilled <= lastWaveKilled + 1) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.wyrm);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 1);
-//        }
-//        if (repeatedCount == 1) {
-//            ModelRequestController.playSound(SoundPathConstants.waveSpawnSound);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.archmire);
-//            Spawner.spawnPortal(
-//                    new Vector(
-//                            epsilonFrame.getPosition().x + epsilonFrame.getSize().width / 2d,
-//                            epsilonFrame.getPosition().y + epsilonFrame.getSize().height / 2d
-//                    ),
-//                    ModelData.getEpsilonFrame()
-//            );
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 1);
-//        }
-//
-//        if (enemyKilled > lastWaveKilled + 1 && enemyKilled <= lastWaveKilled + 4 ) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.trigorath);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 1);
-//        }
-//
-//        if (enemyKilled > lastWaveKilled + 4 && GameState.getWave() == 3 && GameState.getEnemyCount() == 0) {
-//            GameState.setWave(4);
-//            repeatedCount = 0;
-//            lastWaveKilled = GameState.getEnemyKilled();
-//            GameState.setLastWaveTime(GameState.getTime());
-//        }
-//    }
-//
-//    private void forthWave(int enemyKilled) {
-//        repeatedCount++;
-//        if (repeatedCount == 1) {
-//            ModelRequestController.playSound(SoundPathConstants.waveSpawnSound);
-//            Spawner.spawnObject(
-//                    new Vector(
-//                            SizeConstants.SCREEN_SIZE.width / 2d,
-//                            SizeConstants.SCREEN_SIZE.height / 2d
-//                    ),
-//                    ModelType.blackOrb
-//            );
-//            Spawner.spawnPortal(
-//                    new Vector(
-//                            epsilonFrame.getPosition().x + epsilonFrame.getSize().width / 2d,
-//                            epsilonFrame.getPosition().y + epsilonFrame.getSize().height / 2d
-//                    ),
-//                    ModelData.getEpsilonFrame()
-//            );
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 5);
-//        }
-//
-//        if (enemyKilled >= lastWaveKilled && enemyKilled < lastWaveKilled + 2) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.trigorath);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 1);
-//        }
-//        if (enemyKilled > lastWaveKilled + 2 && enemyKilled < lastWaveKilled + 4) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.omenoct);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.necropick);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.wyrm);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 3);
-//        }
-//        if (repeatedCount == 2) {
-//            Spawner.spawnObject(
-//                    Helper.createRandomPositionSeparately(
-//                            epsilonFrame ,
-//                            SizeConstants.BARRICADOS_DIMENSION
-//                    ),
-//                    ModelType.barricados
-//            );
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.archmire);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 2);
-//        }
-//        if (enemyKilled > lastWaveKilled + 5 && GameState.getWave() == 4 && GameState.getEnemyCount() <= 1) {
-//            GameState.setWave(5);
-//            repeatedCount = 0;
-//            lastWaveKilled = GameState.getEnemyKilled();
-//            GameState.setLastWaveTime(GameState.getTime());
-//        }
-//    }
-//
-//    private void fifthWave(int enemyKilled) {
-//        repeatedCount++;
-//        if (repeatedCount == 1) {
-//            ModelRequestController.playSound(SoundPathConstants.waveSpawnSound);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.archmire);
-//            Spawner.spawnPortal(
-//                    new Vector(
-//                            epsilonFrame.getPosition().x + epsilonFrame.getSize().width / 2d,
-//                            epsilonFrame.getPosition().y + epsilonFrame.getSize().height / 2d
-//                    ),
-//                    ModelData.getEpsilonFrame()
-//            );
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 1);
-//        }
-//
-//        if (repeatedCount == 2) {
-//            Spawner.spawnObject(
-//                    Helper.createRandomPositionSeparately(
-//                        epsilonFrame ,
-//                        SizeConstants.BARRICADOS_DIMENSION
-//                    ),
-//                    ModelType.barricados
-//            );
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 1);
-//        }
-//
-//        if (repeatedCount == 3) {
-//            Spawner.spawnObject(
-//                    new Vector(
-//                            SizeConstants.SCREEN_SIZE.width / 2d,
-//                            SizeConstants.SCREEN_SIZE.height / 2d
-//                    )
-//                    ,ModelType.blackOrb
-//            );
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 5);
-//        }
-//
-//        if (enemyKilled >= lastWaveKilled && enemyKilled < lastWaveKilled + 4) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.squarantine);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.trigorath);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 2);
-//        }
-//
-//        if (enemyKilled >= lastWaveKilled + 4 && enemyKilled < lastWaveKilled + 6) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.omenoct);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.necropick);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.wyrm);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 3);
-//        }
-//
-//        if (enemyKilled >= lastWaveKilled + 7 && enemyKilled < lastWaveKilled +10) {
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.trigorath);
-//            Spawner.spawnObject(Helper.createRandomPosition(epsilonFrame ,false) ,ModelType.squarantine);
-//            GameState.setEnemyCount(GameState.getEnemyCount() + 2);
-//        }
-//
-//
-//        if (enemyKilled > lastWaveKilled + 5 && GameState.getWave() == 5 && GameState.getEnemyCount() <= 2) {
-//            GameState.setWave(6);
-//            repeatedCount = 0;
-//            lastWaveKilled = GameState.getEnemyKilled();
-//            GameState.setLastWaveTime(GameState.getTime());
-//        }
 
-//    }
+    private void updateColosseumVariables() {
 
-    private void sixthWave() {
-//        repeatedCount++;
-//        if (repeatedCount == 1) {
-//            ModelRequestController.playSound(SoundPathConstants.waveSpawnSound);
-//            Spawner.spawnBoss(game);
-//        }
     }
+
+    private void updateMonomachiaVariables() {
+        if (game.getGameState().getWave() == 1) {
+            spawner.setDelay(4000);
+
+            basicEnemySpawnCount = 1;
+            normalEnemySpawnCount = 1;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 10;
+            maximumNormalEnemyCount = 4;
+            maximumMiniBossCount = 1;
+        }
+        if (game.getGameState().getWave() == 2) {
+            spawner.setDelay(4000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 1;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 14;
+            maximumNormalEnemyCount = 5;
+            maximumMiniBossCount = 1;
+        }
+        if (game.getGameState().getWave() == 3) {
+            spawner.setDelay(3000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 1;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 18;
+            maximumNormalEnemyCount = 6;
+            maximumMiniBossCount = 1;
+        }
+        if (game.getGameState().getWave() == 4) {
+            spawner.setDelay(3000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 1;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 20;
+            maximumNormalEnemyCount = 7;
+            maximumMiniBossCount = 1;
+        }
+        if (game.getGameState().getWave() == 5) {
+            spawner.setDelay(2000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 2;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 24;
+            maximumNormalEnemyCount = 8;
+            maximumMiniBossCount = 1;
+        }
+        checkMonomachiaNextWave();
+        allowMonomachiaSpawnCheck();
+    }
+
+    private void allowMonomachiaSpawnCheck() {
+        if (enemySpawned >= 20 && game.getGameState().getWave() == 1) {
+            canSpawn = false;
+        }
+        if (enemySpawned >= 45 && game.getGameState().getWave() == 2) {
+            canSpawn = false;
+        }
+        if (enemySpawned >= 70 && game.getGameState().getWave() == 3) {
+            canSpawn = false;
+        }
+        if (enemySpawned >= 100 && game.getGameState().getWave() == 4) {
+            canSpawn = false;
+        }
+        if (enemySpawned >= 130 && game.getGameState().getWave() == 5) {
+            canSpawn = false;
+        }
+
+    }
+
+    private void checkMonomachiaNextWave() {
+        if (enemyKilled >= 20 && game.getGameState().getWave() == 1) {
+            game.getGameState().setWave(2);
+            canSpawn = true;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -6;
+        }
+        if (enemyKilled >= 45 && game.getGameState().getWave() == 2) {
+            game.getGameState().setWave(3);
+            canSpawn = true;
+            repeatedCount =0;
+            miniBossSpawnedAtCount = -6;
+        }
+        if (enemyKilled >= 70 && game.getGameState().getWave() == 3) {
+            game.getGameState().setWave(4);
+            canSpawn = true;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -6;
+        }
+        if (enemyKilled >= 100 && game.getGameState().getWave() == 4) {
+            game.getGameState().setWave(5);
+            canSpawn = true;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -6;
+        }
+        if (enemyKilled >= 130 && game.getGameState().getWave() == 5) {
+            game.getGameState().setWave(6);
+            canSpawn = true;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -6;
+        }
+    }
+
+
+    private void spawnEnemies() {
+        if (basicEnemyCount < maximumBasicEnemyCount && isBasicEnemyUnlocked) {
+            spawnBasicEnemy();
+        }
+        if (normalEnemyCount < maximumNormalEnemyCount && isNormalEnemyUnlocked) {
+            spawnNormalEnemy();
+        }
+        if (miniBossEnemyCount == 0 && isMiniBossUnlocked && repeatedCount - miniBossSpawnedAtCount > 5) {
+            spawnMiniBoss();
+        }
+    }
+
+    private void getEnemiesCounts() {
+        basicEnemyCount = 0;
+        normalEnemyCount = 0;
+        miniBossEnemyCount = 0;
+        ArrayList<ObjectModel> models;
+        synchronized (game.getModelData().getModels()) {
+            models = (ArrayList<ObjectModel>) game.getModelData().getModels().clone();
+        }
+        for (ObjectModel model : models) {
+            if (model instanceof BasicEnemyModel)
+                basicEnemyCount++;
+            if (model instanceof NormalEnemyModel)
+                normalEnemyCount++;
+            if (model instanceof MiniBossModel)
+                miniBossEnemyCount++;
+        }
+
+    }
+
+
+    private void spawnBasicEnemy() {
+        for (int i = 0 ;i < basicEnemySpawnCount ;i++) {
+            int index = random.nextInt(0 ,BASICS_ENDING_INDEX + 1);
+            spawnEnemy(index);
+        }
+    }
+
+    private void spawnNormalEnemy() {
+        for (int i = 0 ;i < normalEnemySpawnCount ;i++) {
+            int index = random.nextInt(BASICS_ENDING_INDEX + 1 ,NORMALS_ENDING_INDEX + 1);
+            spawnEnemy(index);
+        }
+    }
+
+    private void spawnMiniBoss() {
+        for (int i = 0 ;i < miniBossEnemySpawnCount ;i++) {
+            int index = random.nextInt(NORMALS_ENDING_INDEX + 1 ,MINI_ENDING_INDEX + 1);
+            spawnEnemy(index);
+        }
+    }
+
+    private ArrayList<Player> getTargetedPlayers() {
+        synchronized (game.getPlayers()) {
+            return (ArrayList<Player>) game.getPlayers().clone();
+        }
+    }
+
+    private Player getChasingPlayer() {
+        Player player;
+        synchronized (game.getPlayers()) {
+            if (chasingTurn >= game.getPlayers().size()) {
+                chasingTurn = 0;
+            }
+            player = game.getPlayers().get(chasingTurn);
+        }
+        chasingTurn++;
+        return player;
+    }
+
+    private void spawnEnemy(int index) {
+        if (!canSpawn)
+            return;
+        enemySpawned++;
+        miniBossSpawnedAtCount = repeatedCount;
+        String id = Helper.RandomStringGenerator(ControllerConstants.ID_SIZE);
+        Vector position = Helper.createRandomPosition(
+                epsilonFrame,
+                false
+        );
+        Player chasingPlayer = getChasingPlayer();
+        ArrayList<Player> targetedPlayers = getTargetedPlayers();
+        try {
+            Object enemyModel = enemies.get(index).getConstructors()[0].newInstance(
+                    game ,chasingPlayer ,targetedPlayers ,position, id
+            );
+            if (enemyModel instanceof AbstractEnemy) {
+                game.getModelRequests().addAbstractEnemy((AbstractEnemy) enemyModel);
+                System.out.println("SPAWNING : " + ((AbstractEnemy) enemyModel).getType());
+            }
+            else {
+                game.getModelRequests().addObjectModel((EnemyModel)enemyModel);
+            }
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public Timer getSpawner() {
         return spawner;

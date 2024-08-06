@@ -67,6 +67,7 @@ public class Player {
                 randomPosition = new Vector(x ,y);
             }
             else {
+                Random random = new Random();
                 randomPosition = game.getModelData().getFrames().getFirst().getPosition();
                 randomPosition = Math.VectorAdd(
                         randomPosition,
@@ -75,9 +76,15 @@ public class Player {
                                 game.getModelData().getFrames().getFirst().getSize().height / 2d
                         )
                 );
+                int randomX = random.nextInt(-100 ,100);
+                int randomY = random.nextInt(-100 ,100);
+                randomPosition = Math.VectorAdd(
+                        randomPosition,
+                        new Vector(randomX / 100d ,randomY / 100d)
+                );
             }
         }
-        playerData.setEpsilon( ////todo ///////////////////
+        playerData.setEpsilon(
                 new EpsilonModel(
                         game ,
                         this,

@@ -25,6 +25,7 @@ public class BarricadosSecondModel extends BarricadosModel{
         type = ModelType.barricadosTheSecond;
         initVertices();
         initFrame();
+        game.getModelRequests().addFrameModel(frameModel);
     }
 
     private void initFrame() {

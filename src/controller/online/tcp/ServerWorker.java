@@ -37,7 +37,6 @@ public class ServerWorker extends Thread{
                 TCP_CLIENTS.add(TCPClient);
                 TCP_CLIENTS.notifyAll();
             }
-            System.out.println("A CLIENT!");
         }
     }
 

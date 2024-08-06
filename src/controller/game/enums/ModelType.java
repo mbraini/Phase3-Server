@@ -23,5 +23,5 @@ public enum ModelType {
     slaughterBullet,
     epsilonVertex,
     portal,
-    hand, head, punch, cerberus
+    hand, head, punch, boss, cerberus
 }

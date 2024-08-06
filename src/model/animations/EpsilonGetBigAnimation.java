@@ -29,7 +29,6 @@ public class EpsilonGetBigAnimation extends TimerAnimation {
 //                        || ModelData.getEpsilon().getSize().height >= ModelData.getEpsilonFrame().getSize().height)
 //                {
 //                    Controller.endGame(true);
-//                    System.out.println("EPSILON GOT BIG!");
 //                    ModelRequestController.playSound(SoundPathConstants.endSound);
 //                    timer.stop();
 //                }

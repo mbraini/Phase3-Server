@@ -49,7 +49,6 @@ public class PauseWatcher {
                     player.getGame().getGameController().unpause();
                     break;
                 }
-                System.out.println("IM WATCHING!");
             }
         }
     }

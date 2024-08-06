@@ -46,7 +46,7 @@ public class OmenoctModel extends NormalEnemyModel implements Ability , MoveAble
         hasMeleeAttack = true;
         meleeAttack = DamageConstants.OMENOCT_MELEE_ATTACK;
         omega = VelocityConstants.ENEMY_ROTATION_SPEED;
-        navigater = new OmenoctNavigater(position);
+        navigater = new OmenoctNavigater(position ,chasingPlayer);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {

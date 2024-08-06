@@ -4,6 +4,7 @@ package model.logics.collision;
 import constants.DistanceConstants;
 import constants.SoundPathConstants;
 import controller.game.ModelRequestController;
+import controller.game.PlayerData;
 import model.inGameAbilities.Dismay.EpsilonProtectorModel;
 import model.interfaces.collisionInterfaces.CollisionDetector;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -95,10 +96,11 @@ public class CollisionHandler {
     private void BulletToEnemyHandler(EnemyModel enemy, EpsilonBulletModel epsilonBullet) {
         if (enemy.isVulnerableToEpsilonBullet())
             enemy.setHP(enemy.getHP() - epsilonBullet.getDamage());
-//        GameState.setSuccessfulBullets(GameState.getSuccessfulBullets() + 1);
-//        EpsilonModel epsilonModel = ModelData.getEpsilon();
-//        epsilonModel.setHP(epsilonModel.getHP() + epsilonModel.getLifeSteal());
-//        epsilonModel.checkHP();
+        PlayerData playerData = epsilonBullet.getBelongingPlayer().getPlayerData();
+        playerData.setSuccessfulBullets(playerData.getSuccessfulBullets() + 1);
+        EpsilonModel epsilonModel = epsilonBullet.getBelongingPlayer().getPlayerData().getEpsilon();
+        epsilonModel.setHP(epsilonModel.getHP() + epsilonModel.getLifeSteal());
+        epsilonModel.checkHP();
         new Impact(enemy.getGame() ,epsilonBullet.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
         epsilonBullet.die();
     }
@@ -124,7 +126,6 @@ public class CollisionHandler {
             return;
         }
         if (object instanceof EpsilonModel) {
-            System.out.println("two epsilon!");
             if (object.getId().equals(epsilon.getId()))
                 return;
             pullOutObject(epsilon ,object);

@@ -1,5 +1,6 @@
 package model.objectModel.fighters.normalEnemies.omenoctModel;
 
+import controller.game.player.Player;
 import model.ModelData;
 import model.logics.collision.Collision;
 import model.objectModel.frameModel.FrameLocations;
@@ -13,10 +14,12 @@ public class OmenoctNavigater {
     private Vector position;
     private Vector destination;
     private FrameLocations willAttachTo;
+    private Player chasingPlayer;
 
-    public OmenoctNavigater(Vector position){
+    public OmenoctNavigater(Vector position , Player chasingPlayer){
         this.position = position;
         destination = position.clone();
+        this.chasingPlayer = chasingPlayer;
     }
 
     public void reset(Vector position){
@@ -26,8 +29,7 @@ public class OmenoctNavigater {
 
 
     public void navigateFrame() {
-        FrameModel epsilonFrame = null;        ////todo
-//        FrameModel epsilonFrame = ModelData.getLocalFrames().get(ModelData.getModels().getFirst());
+        FrameModel epsilonFrame = chasingPlayer.getPlayerData().getEpsilonFrame();
         if (epsilonFrame == null)
             return;
 

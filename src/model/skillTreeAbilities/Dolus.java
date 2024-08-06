@@ -38,8 +38,6 @@ public class Dolus extends SkillTreeAbility{
         }
         SkillTreeAbilityHandler.activateSkillTreeAbility(secondAbility ,player);
 
-        System.out.println(firstAbility);
-        System.out.println(secondAbility);
 
         coolDownTimer.start();
     }

@@ -114,7 +114,7 @@ public class FrameHit {
 
     private void bottomHitIf() {
         Vector framePosition = frame.getPosition();
-        if (framePosition.y >= SizeConstants.SCREEN_SIZE.height)
+        if (framePosition.y + frame.getSize().height >= SizeConstants.SCREEN_SIZE.height)
             return;
         new FrameHitPerformer(
                 frame,
@@ -142,7 +142,7 @@ public class FrameHit {
 
     private void rightHitIf() {
         Vector framePosition = frame.getPosition();
-        if (framePosition.x >= SizeConstants.SCREEN_SIZE.width)
+        if (framePosition.x + frame.getSize().width >= SizeConstants.SCREEN_SIZE.width)
             return;
         new FrameHitPerformer(
                 frame,

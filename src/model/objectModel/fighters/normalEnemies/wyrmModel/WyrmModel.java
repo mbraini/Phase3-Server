@@ -60,6 +60,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
         builder.setIsometric(true);
         builder.setSolid(false);
         frameModel = builder.create();
+        game.getModelRequests().addFrameModel(frameModel);
     }
 
 

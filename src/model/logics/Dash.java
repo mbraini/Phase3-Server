@@ -47,6 +47,9 @@ public class Dash {
         oigModel.getMovementManager().setUpDownAccTime(time);
         oigModel.getMovementManager().setLeftRightAccTime(time);
         oigModel.getMovementManager().setRotateAccTime(time);
+        oigModel.getMovementManager().setLeftRightAccTimePassed(0);
+        oigModel.getMovementManager().setUpDownAccTimePassed(0);
+        oigModel.getMovementManager().setRotateAccTimePassed(0);
 
     }
 }

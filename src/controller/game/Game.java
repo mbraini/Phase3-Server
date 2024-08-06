@@ -33,7 +33,8 @@ public class Game {
     private GameController gameController;
     private PauseWatcher pauseWatcher;
 
-    public Game() {
+    public Game(GameType gameType) {
+        this.gameType = gameType;
         players = new ArrayList<>();
         initControllers();
         initDataBase();
@@ -50,7 +51,7 @@ public class Game {
                 Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
         );
         builder.setSolid(true);
-        modelRequests.addFrameModel(builder.create());
+        modelData.addFrame(builder.create());
     }
 
     private void initInfoSender() {
@@ -153,7 +154,7 @@ public class Game {
         frameThread.start();
         gameManager.getGameManagerThread().start();
         infoSender.start();
-//        gameManager.getWaveSpawner().getSpawner().start();
+        gameManager.getWaveSpawner().getSpawner().start();
     }
 
     public void addPlayer(Player player) {

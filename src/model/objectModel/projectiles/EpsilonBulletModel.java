@@ -40,5 +40,11 @@ public class EpsilonBulletModel extends BulletModel implements IsCircle {
         return position;
     }
 
+    public Player getBelongingPlayer() {
+        return belongingPlayer;
+    }
 
+    public void setBelongingPlayer(Player belongingPlayer) {
+        this.belongingPlayer = belongingPlayer;
+    }
 }
