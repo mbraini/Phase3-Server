@@ -69,7 +69,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
         game.getModelRequests().removeFrameModel(frameModel.getId());
         if (shooter != null)
             shooter.setInterrupt(true);
-        Spawner.addCollectives(game ,position ,2 ,8);
+        Spawner.addCollectives(game ,targetedPlayers ,position ,2 ,8);
     }
 
     public FrameModel getFrameModel() {

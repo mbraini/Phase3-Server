@@ -15,13 +15,16 @@ import java.util.ArrayList;
 
 public class EpsilonBulletModel extends BulletModel implements IsCircle {
 
-    public EpsilonBulletModel(Game game, ArrayList<Player> targetedPlayers , Vector position , Vector direction , String id){
+    private Player belongingPlayer;
+
+    public EpsilonBulletModel(Game game,Player belongingPlayer , ArrayList<Player> targetedPlayers , Vector position , Vector direction , String id){
         super(game ,targetedPlayers);
         this.position = position;
         this.velocity = Math.VectorWithSize(direction , VelocityConstants.EPSILON_BULLET_VELOCITY);
         this.acceleration = new Vector(0 ,0);
+        this.belongingPlayer = belongingPlayer;
         type = ModelType.epsilonBullet;
-//        damage = ModelData.getEpsilon().getEpsilonBulletDamage();
+        damage = belongingPlayer.getPlayerData().getEpsilon().getEpsilonBulletDamage();
         setSolid(true);
         this.id = id;
         this.HP = 1;

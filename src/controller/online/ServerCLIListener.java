@@ -60,12 +60,13 @@ public class ServerCLIListener extends Thread {
             }
             else if (command.equals("start game")) {
                 Game game = OnlineData.getOnlineGame("test");
-
+                ArrayList<Player> players = new ArrayList<>();
+                players.add(OnlineData.getPlayer("test"));
                 OnlineData.getOnlineGame("test").start();
                 Spawner.spawnObject(
                         game,
                         OnlineData.getPlayer("test"),
-                        new ArrayList<>(),
+                        players,
                         new Vector(600 ,600),
                         ModelType.blackOrb
                 );

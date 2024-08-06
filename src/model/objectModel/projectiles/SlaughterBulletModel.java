@@ -10,8 +10,8 @@ import utils.Vector;
 import java.util.ArrayList;
 
 public class SlaughterBulletModel extends EpsilonBulletModel {
-    public SlaughterBulletModel(Game game, ArrayList<Player> targetedPlayers , Vector position, Vector direction, String id) {
-        super(game, targetedPlayers ,position, direction, id);
+    public SlaughterBulletModel(Game game,Player belongingPlayer , ArrayList<Player> targetedPlayers , Vector position, Vector direction, String id) {
+        super(game,belongingPlayer , targetedPlayers ,position, direction, id);
         damage = DamageConstants.SLAUGHTER_DAMAGE;
         type = ModelType.slaughterBullet;
     }

@@ -37,7 +37,14 @@ public class ShootRequest {
         );
         int constant = -1;
         if (player.getPlayerData().getSlaughterBulletCount() >= 1){
-            Spawner.addProjectile(epsilon.getGame() ,epsilon.getTargetedPlayers() ,position ,direction ,ModelType.slaughterBullet);
+            Spawner.addEpsilonBullet(
+                    epsilon.getGame() ,
+                    player,
+                    epsilon.getTargetedPlayers() ,
+                    position ,
+                    direction ,
+                    ModelType.slaughterBullet
+            );
             player.getPlayerData().setSlaughterBulletCount(
                     player.getPlayerData().getSlaughterBulletCount() - 1
             );
@@ -46,7 +53,14 @@ public class ShootRequest {
                 slaughter.setUsed(true);
         }
         else {
-            Spawner.addProjectile(epsilon.getGame() ,epsilon.getTargetedPlayers(),position, direction, ModelType.epsilonBullet);
+            Spawner.addEpsilonBullet(
+                    epsilon.getGame() ,
+                    player,
+                    epsilon.getTargetedPlayers(),
+                    position,
+                    direction,
+                    ModelType.epsilonBullet
+            );
         }
         for (int i = 0; i < player.getPlayerData().getExtraBullet() ;i++) {
             constant = constant * (-1);
@@ -59,8 +73,9 @@ public class ShootRequest {
                     Math.VectorWithSize(direction2 , SizeConstants.EPSILON_BULLET_RADIOS + 1),
                     position
             );
-            Spawner.addProjectile(
+            Spawner.addEpsilonBullet(
                     epsilon.getGame(),
+                    player,
                     epsilon.getTargetedPlayers(),
                     spawnPosition,
                     direction2,

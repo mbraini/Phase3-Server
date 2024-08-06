@@ -19,6 +19,7 @@ public class PlayerData {
     private int extraBullet;
     private int xp;
     private double hp;
+    private int xpGained;
     private int enemyKilled;
     private int totalBullets;
     private int successfulBullets;
@@ -124,5 +125,13 @@ public class PlayerData {
 
     public void setExtraBullet(int extraBullet) {
         this.extraBullet = extraBullet;
+    }
+
+    public int getXpGained() {
+        return xpGained;
+    }
+
+    public void setXpGained(int xpGained) {
+        this.xpGained = xpGained;
     }
 }

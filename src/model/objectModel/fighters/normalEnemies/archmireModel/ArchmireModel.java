@@ -119,7 +119,7 @@ public class ArchmireModel extends NormalEnemyModel implements MoveAble , Abilit
     @Override
     public void die() {
         super.die();
-        Spawner.addCollectives(game ,position ,5 ,6);
+        Spawner.addCollectives(game ,targetedPlayers ,position ,5 ,6);
         thread.interrupt();
     }
 

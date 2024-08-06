@@ -113,18 +113,36 @@ public abstract class Spawner {
         addProjectileWithId(game ,targetedPlayers,position ,direction , modelType,id);
     }
 
-    public synchronized static void addProjectileWithId(Game game, ArrayList<Player> targetedPlayers ,Vector position , Vector direction , ModelType modelType, String id){
+    public synchronized static void addEpsilonBullet(Game game ,Player belongingPlayer ,ArrayList<Player> targetedPlayers , Vector position ,Vector direction ,ModelType modelType) {
+        String id = Helper.RandomStringGenerator(ControllerConstants.ID_SIZE);
         switch (modelType) {
-            case epsilonBullet:
+            case epsilonBullet :
                 game.getModelRequests().addObjectModel(new EpsilonBulletModel(
-                        game,
-                        targetedPlayers,
-                        position,
-                        direction,
-                        id
+                                game,
+                                belongingPlayer,
+                                targetedPlayers,
+                                position,
+                                direction,
+                                id
                         )
                 );
                 break;
+            case slaughterBullet:
+                game.getModelRequests().addObjectModel(new SlaughterBulletModel(
+                                game,
+                                belongingPlayer,
+                                targetedPlayers,
+                                position,
+                                direction,
+                                id
+                        )
+                );
+                break;
+        }
+    }
+
+    public synchronized static void addProjectileWithId(Game game, ArrayList<Player> targetedPlayers ,Vector position , Vector direction , ModelType modelType, String id){
+        switch (modelType) {
             case omenoctBullet:
                 game.getModelRequests().addObjectModel(new OmenoctBulletModel(
                         game,
@@ -144,9 +162,6 @@ public abstract class Spawner {
             case bossBullet:
                 game.getModelRequests().addObjectModel(new BossBulletModel(game ,targetedPlayers,position ,direction ,id));
                 break;
-            case slaughterBullet:
-                game.getModelRequests().addObjectModel(new SlaughterBulletModel(game ,targetedPlayers,position, direction ,id));
-                break;
         }
     }
 
@@ -159,7 +174,7 @@ public abstract class Spawner {
         game.getModelRequests().addEffectModel(effectModel);
     }
 
-    public static void addCollectives(Game game ,Vector position ,int count ,int value){
+    public static void addCollectives(Game game ,ArrayList<Player> pickers ,Vector position ,int count ,int value){
         Random random = new Random();
         for (int i = 0; i < count; i++){
             int x = random.nextInt(
@@ -170,13 +185,13 @@ public abstract class Spawner {
                     (int) position.y - SizeConstants.COLLECTIVE_BOX_DIMENSION.height ,
                     (int) position.y + SizeConstants.COLLECTIVE_BOX_DIMENSION.height
             );
-            addCollective(game ,new Vector(x ,y) ,value);
+            addCollective(game ,pickers ,new Vector(x ,y) ,value);
         }
     }
 
-    private static void addCollective(Game game ,Vector position, int value) {
+    private static void addCollective(Game game ,ArrayList<Player> pickers ,Vector position, int value) {
         String id = Helper.RandomStringGenerator(ControllerConstants.ID_SIZE);
-        game.getModelRequests().addObjectModel(new CollectiveModel(game ,position,id ,value));
+        game.getModelRequests().addObjectModel(new CollectiveModel(game ,pickers,position,id ,value));
     }
 
     public static void spawnBoss(Game game ,Player chasingPlayer ,ArrayList<Player> targetedPlayes){

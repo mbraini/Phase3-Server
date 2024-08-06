@@ -103,7 +103,7 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
         super.die();
         abilityTimer.stop();
         hoveringTimer.stop();
-        Spawner.addCollectives(game ,position ,4 ,2);
+        Spawner.addCollectives(game ,targetedPlayers, position ,4 ,2);
     }
 
 

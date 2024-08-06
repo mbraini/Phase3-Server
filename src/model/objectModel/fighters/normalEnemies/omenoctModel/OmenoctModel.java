@@ -165,7 +165,7 @@ public class OmenoctModel extends NormalEnemyModel implements Ability , MoveAble
         if (shooter != null) {
             shooter.stop();
         }
-        Spawner.addCollectives(game ,position ,8 ,4);
+        Spawner.addCollectives(game ,targetedPlayers ,position ,8 ,4);
     }
 
     @Override

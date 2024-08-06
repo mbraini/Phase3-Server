@@ -135,6 +135,6 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
     @Override
     public void die() {
         super.die();
-        Spawner.addCollectives(game ,position ,2 ,5);
+        Spawner.addCollectives(game ,targetedPlayers ,position ,2 ,5);
     }
 }

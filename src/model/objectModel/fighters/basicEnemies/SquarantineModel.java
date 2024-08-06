@@ -109,6 +109,6 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
     @Override
     public void die() {
         super.die();
-        Spawner.addCollectives(game ,position ,1 ,5);
+        Spawner.addCollectives(game ,targetedPlayers ,position ,1 ,5);
     }
 }

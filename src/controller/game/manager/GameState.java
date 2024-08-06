@@ -15,7 +15,6 @@ public class GameState {
     private double shrinkageVelocity;
     private int enemyCount;
     private double lastWaveTime;
-    private int xpGained;
     private int firstWavePR;
     private int secondWavePR;
     private int thirdWavePR;
@@ -37,7 +36,6 @@ public class GameState {
         enemyKilled = 0;
         enemyCount = 0;
         lastWaveTime = 0;
-        xpGained = 0;
         firstWavePR = 0;
         secondWavePR = 0;
         thirdWavePR = 0;
@@ -129,13 +127,7 @@ public class GameState {
         this.enemyCount = enemyCount;
     }
 
-    public int getXpGained() {
-        return xpGained;
-    }
 
-    public void setXpGained(int xpGained) {
-        this.xpGained = xpGained;
-    }
 
     public int getFirstWavePR() {
         return firstWavePR;

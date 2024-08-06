@@ -1,15 +1,11 @@
 package model.objectModel;
 
 
-import constants.RefreshRateConstants;
-import constants.SizeConstants;
-import constants.TimeConstants;
-import constants.VelocityConstants;
+import constants.*;
 import controller.game.Game;
 import controller.game.ObjectController;
 import controller.game.enums.ModelType;
-import controller.game.manager.GameState;
-import model.ModelData;
+import controller.game.player.Player;
 import model.interfaces.Ability;
 import model.interfaces.Fader;
 import model.interfaces.collisionInterfaces.CollisionDetector;
@@ -18,16 +14,22 @@ import model.interfaces.movementIntefaces.MoveAble;
 import utils.Math;
 import utils.Vector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class CollectiveModel extends ObjectModel implements IsCircle, Ability, MoveAble, CollisionDetector, Fader {
     int value;
     double time;
     boolean hasAbility = false;
+    private ArrayList<Player> pickers;
+    private Player picker;
 
-    public CollectiveModel(Game game ,Vector position , String id , int value){
+    public CollectiveModel(Game game , ArrayList<Player> pickers, Vector position , String id , int value){
         super(game);
         this.position = position;
         this.velocity = new Vector(0 ,0);
         this.acceleration = new Vector(0 ,0);
+        this.pickers = pickers;
         this.id = id;
         this.HP = 1;
         type = ModelType.collective;
@@ -54,18 +56,18 @@ public class CollectiveModel extends ObjectModel implements IsCircle, Ability, M
 
     @Override
     public void ability() {
-        Vector epsilonPosition = game.getModelData().getModels().getFirst().getPosition();
+        Vector epsilonPosition = picker.getPlayerData().getEpsilon().getPosition().clone();
         Vector distance = Math.VectorAdd(
                 epsilonPosition,
-                Math.ScalarInVector(-1 ,position)
+                Math.ScalarInVector(-1, position)
         );
         velocity = Math.VectorWithSize(
                 distance,
                 VelocityConstants.COLLECTIVE_VELOCITY
         );
         if (Math.VectorSize(distance) <= SizeConstants.EPSILON_DIMENSION.width) {
-//            GameState.setXp(GameState.getXp() + value);
-//            GameState.setXpGained(GameState.getXpGained() + value);
+            picker.getPlayerData().setXp(picker.getPlayerData().getXp() + value);
+            picker.getPlayerData().setXpGained(picker.getPlayerData().getXpGained() + value);
             die();
             hasAbility = false;
         }
@@ -91,12 +93,30 @@ public class CollectiveModel extends ObjectModel implements IsCircle, Ability, M
 
     @Override
     public void detect() {
-        hasAbility = true;
+        boolean flag = false;
+        synchronized (pickers) {
+            for (Player picker : pickers) {
+                Vector epsilonPosition = picker.getPlayerData().getEpsilon().getPosition().clone();
+                Vector distance = Math.VectorAdd(
+                        epsilonPosition,
+                        Math.ScalarInVector(-1, position)
+                );
+                if (Math.VectorSize(distance) <= getRadios()) {
+                    flag = true;
+                    this.picker = picker;
+                    break;
+                }
+            }
+        }
+        if (flag) {
+            hasAbility = true;
+        }
     }
 
     @Override
     public void addTime(double time) {
         this.time += time;
+        System.out.println(time);
     }
 
     @Override
