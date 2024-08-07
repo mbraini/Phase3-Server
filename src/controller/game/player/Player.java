@@ -3,12 +3,15 @@ package controller.game.player;
 import constants.ControllerConstants;
 import constants.SizeConstants;
 import controller.game.*;
+import controller.game.player.udp.ClientGameInfoReceiver;
 import controller.online.OnlineData;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Helper;
 import utils.Math;
 import utils.Vector;
 
+import java.io.IOException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,14 +19,17 @@ public class Player {
 
     private Game game;
     private String username;
+    private ClientGameInfoReceiver clientGameInfoReceiver;
     private ViewRequestController viewRequestController;
     private ModelRequestController modelRequestController;
     private PlayerData playerData;
+    private Player teammate;
     private int abilityPort;
     private int effectPort;
     private int framePort;
     private int objectPort;
     private int variablesPort;
+    private boolean dead = false;
 
     public Player(Game game ,String username) {
         this.game = game;
@@ -187,4 +193,52 @@ public class Player {
     public void setVariablesPort(int variablesPort) {
         this.variablesPort = variablesPort;
     }
+
+    public Player getTeammate() {
+        return teammate;
+    }
+
+    public void setTeammate(Player teammate) {
+        this.teammate = teammate;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public ClientGameInfoReceiver getClientGameInfoReceiver() {
+        return clientGameInfoReceiver;
+    }
+
+    public void setClientGameInfoReceiver(ClientGameInfoReceiver clientGameInfoReceiver) {
+        this.clientGameInfoReceiver = clientGameInfoReceiver;
+    }
+
+    public void end() {
+        clientGameInfoReceiver.setCanReceive(false);
+        DatagramSocket datagramSocket = null;
+        try {
+            datagramSocket = new DatagramSocket(OnlineData.getAvailablePort());
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+        byte[] packetData = new byte[1];
+        DatagramPacket datagramPacket = new DatagramPacket(
+                packetData,
+                packetData.length,
+                new InetSocketAddress("127.0.0.1", clientGameInfoReceiver.getPort())
+        );
+        try {
+            for (int i = 0 ;i < 10 ;i++) {
+                datagramSocket.send(datagramPacket);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

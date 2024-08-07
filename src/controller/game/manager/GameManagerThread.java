@@ -2,6 +2,9 @@ package controller.game.manager;
 
 import constants.TimeConstants;
 import controller.game.Game;
+import controller.game.GameType;
+import controller.game.player.Player;
+import controller.online.OnlineData;
 import model.ModelData;
 import model.inGameAbilities.InGameAbility;
 import model.interfaces.Fader;
@@ -69,13 +72,44 @@ public class GameManagerThread extends Thread{
             abstractEnemies = (ArrayList<AbstractEnemy>) game.getModelData().getAbstractEnemies().clone();
         }
         interfaces();
-        checkAoeDamage();
         game.getGameState().update(models , TimeConstants.MANAGER_THREAD_REFRESH_TIME);
         killObjects();
+        checkEnd();
     }
 
-    private void checkAoeDamage() {
-
+    private void checkEnd() {
+        synchronized (game.getPlayers()) {
+            if (game.getGameType().equals(GameType.monomachia)) {
+                for (Player player : game.getPlayers()) {
+                    if (player.isDead()) {
+                        if (player.getTeammate() != null) {
+                            if (player.getTeammate().isDead()) {
+                                game.end();
+                                return;
+                            }
+                        }
+                        else {
+                            game.end();
+                        }
+                    }
+                }
+            }
+            else {
+                for (Player player : game.getPlayers()) {
+                    if (player.isDead()) {
+                        if (player.getTeammate() != null) {
+                            if (player.getTeammate().isDead()) {
+                                game.end();
+                                return;
+                            }
+                        }
+                        else {
+                            game.end();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void interfaces() {
@@ -101,13 +135,12 @@ public class GameManagerThread extends Thread{
                     if (bossDeath > 1)
                         continue;
                 }
+                if (model instanceof EpsilonModel) {
+                    ((EpsilonModel) model).getBelongingPlayer().setDead(true);
+                }
                 model.die();
             }
         }
-    }
-
-    public static Object getJsonLock() {
-        return jsonLock;
     }
 
 }

@@ -1,4 +1,4 @@
-package model.viewRequests;
+package controller.game.listeners;
 
 import constants.SizeConstants;
 import controller.game.enums.InGameAbilityType;
@@ -25,7 +25,9 @@ public class ShootRequest {
 
     public void shoot() {
         EpsilonModel epsilon = player.getPlayerData().getEpsilon();
-        if (epsilon == null || clickedPoint == null)
+        if (epsilon == null || clickedPoint == null  || player.getGame().getGameState().isPause())
+            return;
+        if (player.isDead())
             return;
         Vector direction = Math.VectorAdd(Math.ScalarInVector(-1 ,epsilon.getPosition()) ,clickedPoint);
         Vector position = Math.VectorAdd(

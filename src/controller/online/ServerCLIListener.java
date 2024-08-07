@@ -39,7 +39,7 @@ public class ServerCLIListener extends Thread {
                 ///todo
             }
             else if (command.equals("start test player")) {
-                Game game = new Game(GameType.colosseum);
+                Game game = new Game(GameType.monomachia);
                 Player player = new Player(game ,"test");
                 OnlineData.putClientPlayer("test" ,player);
                 OnlineData.putClientOnlineGame("test" ,game);

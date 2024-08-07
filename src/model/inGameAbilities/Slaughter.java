@@ -3,10 +3,8 @@ package model.inGameAbilities;
 import constants.RefreshRateConstants;
 import constants.TimeConstants;
 import controller.game.enums.InGameAbilityType;
-import controller.game.manager.GameState;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
-import model.viewRequests.ShootRequest;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

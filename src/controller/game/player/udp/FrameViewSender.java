@@ -22,6 +22,7 @@ public class FrameViewSender extends Thread{
     private ArrayList<Player> players;
     private DatagramSocket datagramSocket;
     private Gson gson;
+    private volatile boolean canSend = true;
 
     public FrameViewSender(Game game ,ArrayList<Player> players) {
         this.game = game;
@@ -36,7 +37,7 @@ public class FrameViewSender extends Thread{
 
     @Override
     public void run() {
-        while (!isInterrupted()) {
+        while (canSend) {
             try {
                 Thread.sleep(2);
             } catch (InterruptedException e) {
@@ -102,5 +103,9 @@ public class FrameViewSender extends Thread{
         synchronized (this.players) {
             this.players = players;
         }
+    }
+
+    public void setCanSend(boolean canSend) {
+        this.canSend = canSend;
     }
 }

@@ -152,6 +152,7 @@ public abstract class Spawner {
                 );
                 break;
         }
+        belongingPlayer.getPlayerData().setTotalBullets(belongingPlayer.getPlayerData().getTotalBullets() + 1);
     }
 
     public synchronized static void addProjectileWithId(Game game, ArrayList<Player> targetedPlayers ,Vector position , Vector direction , ModelType modelType, String id){

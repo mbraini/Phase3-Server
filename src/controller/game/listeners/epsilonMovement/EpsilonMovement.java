@@ -40,6 +40,8 @@ public class EpsilonMovement {
         epsilon = player.getPlayerData().getEpsilon();
         if (epsilon == null)
             return;
+        if (player.isDead())
+            return;
         for (int i = 0 ;i < pressed.size() ;i++) {
             detectKeyPressed(pressed.get(i));
         }

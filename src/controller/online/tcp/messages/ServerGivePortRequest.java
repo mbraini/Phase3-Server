@@ -19,7 +19,9 @@ public class ServerGivePortRequest {
         int port = OnlineData.getAvailablePort();
         tcpClient.getTcpMessager().sendMessage(port);
         Player player = OnlineData.getPlayer(tcpClient.getUsername());
-        new ClientGameInfoReceiver(port ,player).start();
+        ClientGameInfoReceiver receiver = new ClientGameInfoReceiver(port ,player);
+        player.setClientGameInfoReceiver(receiver);
+        receiver.start();
         OnlineData.getOnlineGame(tcpClient.getUsername()).addPlayer(OnlineData.getPlayer(tcpClient.getUsername()));
     }
 

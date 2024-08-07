@@ -25,7 +25,9 @@ public class EpsilonCirculation {
             return;
         if (player.getPlayerData().getEpsilon() == null)
             return;
-        if (player.getGame().getGameState().isInAnimation())
+        if (player.getGame().getGameState().isInAnimation() || player.getGame().getGameState().isPause())
+            return;
+        if (player.isDead())
             return;
         Vector epsilonPosition = player.getPlayerData().getEpsilon().getPosition();
         if (mousePosition.Equals(epsilonPosition))

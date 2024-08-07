@@ -23,6 +23,7 @@ public class ObjectViewSender extends Thread{
     private ArrayList<Player> players;
     private Gson gson;
     private DatagramSocket datagramSocket;
+    private volatile boolean canSend = true;
 
     public ObjectViewSender(Game game ,ArrayList<Player> players) {
         this.game = game;
@@ -37,7 +38,7 @@ public class ObjectViewSender extends Thread{
 
     @Override
     public void run() {
-        while (!isInterrupted()) {
+        while (canSend) {
             try {
                 Thread.sleep(2);
             } catch (InterruptedException e) {
@@ -130,5 +131,9 @@ public class ObjectViewSender extends Thread{
         synchronized (this.players) {
             this.players = players;
         }
+    }
+
+    public void setCanSend(boolean canSend) {
+        this.canSend = canSend;
     }
 }

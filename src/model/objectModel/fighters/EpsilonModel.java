@@ -7,6 +7,7 @@ import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.game.Controller;
 import controller.game.Game;
+import controller.game.ObjectController;
 import controller.game.enums.ModelType;
 import controller.game.interfaces.SizeChanger;
 import controller.game.manager.Spawner;
@@ -150,7 +151,8 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
 
     @Override
     public void die() {
-        Controller.endGame(false);
+        ObjectController.removeObject(this);
+        belongingPlayer.getPlayerData().setSurvivalTime(game.getGameState().getTime());
     }
 
     public void meleeAttack(EnemyModel enemyModel){

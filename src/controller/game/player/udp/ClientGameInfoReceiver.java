@@ -21,6 +21,7 @@ public class ClientGameInfoReceiver extends Thread{
     private DatagramPacket datagramPacket;
     private volatile JGameInfoSenderHelper lastClientGameInfo = new JGameInfoSenderHelper();
     private Gson gson;
+    private volatile boolean canReceive = true;
 
     public ClientGameInfoReceiver(int port ,Player player) {
         this.port = port;
@@ -38,7 +39,7 @@ public class ClientGameInfoReceiver extends Thread{
     @Override
     public void run() {
 
-        while (!isInterrupted()) {
+        while (canReceive) {
             try {
                 datagramSocket.receive(datagramPacket);
             } catch (IOException e) {
@@ -72,6 +73,14 @@ public class ClientGameInfoReceiver extends Thread{
             lastClientGameInfo = clientGameInfo;
         }
 
+    }
+
+    public void setCanReceive(boolean canReceive) {
+        this.canReceive = canReceive;
+    }
+
+    public int getPort() {
+        return port;
     }
 
 

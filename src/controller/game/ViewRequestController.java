@@ -5,15 +5,11 @@ import controller.game.enums.SkillTreeAbilityType;
 import controller.game.listeners.EpsilonCirculation;
 import controller.game.listeners.KeyListener;
 import controller.game.listeners.epsilonMovement.EpsilonMovement;
-import controller.game.manager.GameState;
 import controller.game.player.Player;
-import model.ModelData;
-import model.inGameAbilities.InGameAbility;
 import model.inGameAbilities.InGameAbilityHandler;
-import model.skillTreeAbilities.SkillTreeAbility;
 import model.skillTreeAbilities.SkillTreeAbilityHandler;
 import model.viewRequests.InGameAbilityRequests;
-import model.viewRequests.ShootRequest;
+import controller.game.listeners.ShootRequest;
 import model.viewRequests.SkillTreeAbilityRequests;
 import utils.Vector;
 

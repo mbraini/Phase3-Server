@@ -30,6 +30,8 @@ public class KeyListener {
         if (player.getGame().getGameState().isInAnimation()) {
             return;
         }
+        if (player.isDead())
+            return;
         for (Character character : typedKeys) {
             if (character == SHOP_KEY) {
                 if (player.getGame().getGameState().isPause()) {

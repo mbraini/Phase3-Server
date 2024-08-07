@@ -24,6 +24,7 @@ public class PlayerData {
     private int totalBullets;
     private int successfulBullets;
     private int pauseTimeLeft = TimeConstants.PLAYER_PAUSE_TIME;
+    private double survivalTime;
 
     public PlayerData() {
         inGameAbilities = new ArrayList<>();
@@ -133,5 +134,13 @@ public class PlayerData {
 
     public void setXpGained(int xpGained) {
         this.xpGained = xpGained;
+    }
+
+    public double getSurvivalTime() {
+        return survivalTime;
+    }
+
+    public void setSurvivalTime(double survivalTime) {
+        this.survivalTime = survivalTime;
     }
 }

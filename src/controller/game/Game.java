@@ -7,14 +7,18 @@ import controller.game.manager.GameManager;
 import controller.game.manager.GameState;
 import controller.game.player.InfoSender;
 import controller.game.player.Player;
+import controller.online.OnlineData;
+import controller.online.client.ClientState;
+import controller.online.tcp.ServerMessageType;
+import controller.online.tcp.messages.giveStats.ServerGiveStatsMessage;
 import model.ModelData;
 import model.ModelRequests;
 import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
-import model.objectModel.frameModel.FrameModel;
 import model.objectModel.frameModel.FrameModelBuilder;
 import model.threads.FrameThread;
 import model.threads.GameLoop;
 import utils.Helper;
+import utils.TCPMessager;
 import utils.Vector;
 
 import java.awt.*;
@@ -51,6 +55,9 @@ public class Game {
     private void initSpeed() {
         if (gameType.equals(GameType.colosseum))
             gameSpeed = VelocityConstants.COLESSEUM_GAME_SPEED_CONSTANT;
+        else {
+            gameSpeed = 1;
+        }
     }
 
     private void initFirstFrame() {
@@ -233,4 +240,23 @@ public class Game {
         }
     }
 
+    public void end() {
+        getGameState().setOver(true);
+
+        infoSender.end();
+        synchronized (players) {
+            for (Player player : players) {
+                TCPMessager messager = OnlineData.getTCPClient(player.getUsername()).getTcpMessager();
+                if (OnlineData.getTCPClient(player.getUsername()).getClientState().equals(ClientState.online))
+                    messager.sendMessage(ServerMessageType.endGame);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                player.end();
+                new ServerGiveStatsMessage(OnlineData.getTCPClient(player.getUsername()) ,player).sendMessage();
+            }
+        }
+    }
 }

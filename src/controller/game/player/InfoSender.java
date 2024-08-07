@@ -50,4 +50,11 @@ public class InfoSender {
         variablesSender = new VariablesSender(game ,players);
     }
 
+    public void end() {
+        abilitySender.setCanSend(false);
+        frameViewSender.setCanSend(false);
+        objectViewSender.setCanSend(false);
+        effectViewSender.setCanSend(false);
+        variablesSender.setCanSend(false);
+    }
 }
