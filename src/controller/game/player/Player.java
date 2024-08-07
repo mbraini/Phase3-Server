@@ -2,10 +2,7 @@ package controller.game.player;
 
 import constants.ControllerConstants;
 import constants.SizeConstants;
-import controller.game.Game;
-import controller.game.ModelRequestController;
-import controller.game.PlayerData;
-import controller.game.ViewRequestController;
+import controller.game.*;
 import controller.online.OnlineData;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Helper;
@@ -46,9 +43,18 @@ public class Player {
     }
 
     public void start() {
-
         playerData.setXp(OnlineData.getGameClient(username).getXp());
-
+        ArrayList<Player> targetedPlayers = new ArrayList<>();
+        synchronized (game.getPlayers()) {
+            if (game.getGameType().equals(GameType.monomachia)) {
+                for (Player player : game.getPlayers()) {
+                    if (player.getUsername().equals(username))
+                        continue;
+                    targetedPlayers.add(player);
+                }
+            }
+        }
+        playerData.getEpsilon().setTargetedPlayers(targetedPlayers);
     }
 
     private void initEpsilon() {
@@ -87,7 +93,6 @@ public class Player {
         playerData.setEpsilon(
                 new EpsilonModel(
                         game ,
-                        this,
                         this,
                         new ArrayList<>(),
                         randomPosition,

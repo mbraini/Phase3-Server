@@ -34,7 +34,7 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
         this.vulnerableToEpsilonBullet = true;
         movementManager = new MovementManager();
         type = ModelType.squarantine;
-        omega = VelocityConstants.ENEMY_ROTATION_SPEED;
+        omega = VelocityConstants.ENEMY_ROTATION_SPEED * game.getGameSpeed();
         initVertices();
     }
 

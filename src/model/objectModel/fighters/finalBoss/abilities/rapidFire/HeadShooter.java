@@ -37,12 +37,15 @@ public class HeadShooter implements ActionListener {
                     Math.VectorWithSize(direction , SizeConstants.HEAD_DIMENSION.width / 2d),
                     rapidFire.getBoss().getHead().getPosition()
             );
-//            Spawner.addProjectile(
-//                    rapidFire.getBoss().getGame(),
-//                    spawnPosition,
-//                    direction,
-//                    ModelType.bossBullet / /////todo
-//            );
+            synchronized (rapidFire.getBoss().getGame().getPlayers()) {
+                Spawner.addProjectile(
+                        rapidFire.getBoss().getGame(),
+                        rapidFire.getBoss().getGame().getPlayers(),
+                        spawnPosition,
+                        direction,
+                        ModelType.bossBullet
+                );
+            }
         }
 
         time += TimeConstants.BOSS_BULLET_DELAY_TIME;

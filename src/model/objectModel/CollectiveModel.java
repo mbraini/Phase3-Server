@@ -63,7 +63,7 @@ public class CollectiveModel extends ObjectModel implements IsCircle, Ability, M
         );
         velocity = Math.VectorWithSize(
                 distance,
-                VelocityConstants.COLLECTIVE_VELOCITY
+                VelocityConstants.COLLECTIVE_VELOCITY * game.getGameSpeed()
         );
         if (Math.VectorSize(distance) <= SizeConstants.EPSILON_DIMENSION.width) {
             picker.getPlayerData().setXp(picker.getPlayerData().getXp() + value);

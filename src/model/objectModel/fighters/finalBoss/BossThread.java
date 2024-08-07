@@ -1,6 +1,7 @@
 package model.objectModel.fighters.finalBoss;
 
 import constants.RefreshRateConstants;
+import controller.game.Game;
 import controller.game.manager.GameState;
 import model.ModelData;
 import model.animations.BossPhase2Animation;
@@ -24,12 +25,9 @@ public class BossThread extends Thread {
     private AbilityType abilityType;
     private final BossAI bossAI;
     private int ability;
+    private int turn;
 
     public BossThread(Boss boss){
-//        synchronized (boss.getGame().getModelData().getModels()) {
-//            epsilon = ModelData.getEpsilon();
-//            epsilonFrame = ModelData.getEpsilonFrame();
-//        }
         this.boss = boss;
         bossAI = new BossAI(boss ,epsilon);
         abilityCaster = new AbilityCaster(boss ,epsilonFrame ,epsilon);
@@ -62,6 +60,7 @@ public class BossThread extends Thread {
     private void updateAbilities() {
         if (boss.getHead().getHP() < 0)
             return;
+        setEpsilonAndFrame();
         synchronized (boss.getGame().getModelData().getModels()) {
             models = (ArrayList<ObjectModel>) boss.getGame().getModelData().getModels().clone();
         }
@@ -87,6 +86,20 @@ public class BossThread extends Thread {
         bossAI.dash(boss.getHead());
         bossAI.dash(boss.getLeftHand());
         bossAI.dash(boss.getRightHand());
+    }
+
+    private void setEpsilonAndFrame() {
+        Game game = boss.getGame();
+        synchronized (game.getPlayers()) {
+            if (game.getPlayers().size() >= turn)
+                turn = 0;
+            epsilon = game.getPlayers().get(turn).getPlayerData().getEpsilon();
+            epsilonFrame = game.getModelData().getFrames().getFirst();
+        }
+        turn++;
+        bossAI.setEpsilonModel(epsilon);
+        abilityCaster.setEpsilonModel(epsilon);
+        abilityCaster.setEpsilonFrame(epsilonFrame);
     }
 
     private boolean phase2() {

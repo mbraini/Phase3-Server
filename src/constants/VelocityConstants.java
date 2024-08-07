@@ -17,4 +17,5 @@ public class VelocityConstants {
     public static final double COLLECTIVE_VELOCITY = 0.6;
     public static final double ENEMY_LINEAR_SPEED = 0.2;
     public static final double ENEMY_ROTATION_SPEED = Math.PI * 2 / 1000;
+    public static final double COLESSEUM_GAME_SPEED_CONSTANT = 1.5;
 }

@@ -30,7 +30,7 @@ public class AbilityCaster {
                 new Squeeze(boss ,epsilonFrame).activate();
                 break;
             case projectile:
-                new Projectile(boss).activate();
+                new Projectile(boss ,epsilonModel).activate();
                 break;
             case vomit:
                 new Vomit(boss ,epsilonFrame).activate();
@@ -97,5 +97,21 @@ public class AbilityCaster {
 
     public void setAbilityType(AbilityType abilityType) {
         this.abilityType = abilityType;
+    }
+
+    public FrameModel getEpsilonFrame() {
+        return epsilonFrame;
+    }
+
+    public void setEpsilonFrame(FrameModel epsilonFrame) {
+        this.epsilonFrame = epsilonFrame;
+    }
+
+    public EpsilonModel getEpsilonModel() {
+        return epsilonModel;
+    }
+
+    public void setEpsilonModel(EpsilonModel epsilonModel) {
+        this.epsilonModel = epsilonModel;
     }
 }

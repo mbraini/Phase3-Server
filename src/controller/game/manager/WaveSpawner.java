@@ -214,12 +214,7 @@ public class WaveSpawner {
     private void checkColosseumNextWave() {
         if (enemyKilled >= 30 && game.getGameState().getWave() == 1) {
             game.getGameState().setWave(2);
-            canSpawn = true;
-            repeatedCount = 0;
-            miniBossSpawnedAtCount = -8;
-        }
-        if (enemyKilled >= 50 && game.getGameState().getWave() == 2) {
-            game.getGameState().setWave(3);
+
             canSpawn = false;
             repeatedCount = 0;
             miniBossSpawnedAtCount = -8;
@@ -228,9 +223,16 @@ public class WaveSpawner {
                     getChasingPlayer(),
                     getTargetedPlayers()
             );
+
 //            canSpawn = true;
-//            repeatedCount =0;
+//            repeatedCount = 0;
 //            miniBossSpawnedAtCount = -8;
+        }
+        if (enemyKilled >= 50 && game.getGameState().getWave() == 2) {
+            game.getGameState().setWave(3);
+            canSpawn = true;
+            repeatedCount =0;
+            miniBossSpawnedAtCount = -8;
         }
         if (enemyKilled >= 80 && game.getGameState().getWave() == 3) {
             game.getGameState().setWave(4);
@@ -440,13 +442,13 @@ public class WaveSpawner {
 
     private Player getChasingPlayer() {
         Player player;
+        chasingTurn++;
+        if (chasingTurn >= game.getPlayers().size()) {
+            chasingTurn = 0;
+        }
         synchronized (game.getPlayers()) {
-            if (chasingTurn >= game.getPlayers().size()) {
-                chasingTurn = 0;
-            }
             player = game.getPlayers().get(chasingTurn);
         }
-        chasingTurn++;
         return player;
     }
 

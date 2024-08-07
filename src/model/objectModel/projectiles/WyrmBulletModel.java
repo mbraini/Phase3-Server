@@ -17,7 +17,7 @@ public class WyrmBulletModel extends EnemyBulletModel implements IsCircle {
     public WyrmBulletModel(Game game, ArrayList<Player> targetedPlayers , Vector position , Vector direction , String id){
         super(game ,targetedPlayers);
         this.position = position;
-        this.velocity = Math.VectorWithSize(direction , VelocityConstants.WYRM_BULLET_VELOCITY);
+        this.velocity = Math.VectorWithSize(direction , VelocityConstants.WYRM_BULLET_VELOCITY * game.getGameSpeed());
         this.acceleration = new Vector(0 ,0);
         type = ModelType.wyrmBullet;
         damage = DamageConstants.WYRM_RANGE_DAMAGE;

@@ -18,11 +18,9 @@ public class Projectile extends Ability {
     private EpsilonModel epsilon;
     private ProjectileThread thread;
 
-    public Projectile(Boss boss){
+    public Projectile(Boss boss ,EpsilonModel epsilonModel){
         this.boss = boss;
-//        synchronized (boss.getGame().getModelData().getModels()) {
-//            this.epsilon = (EpsilonModel) ModelData.getModels().getFirst();
-//        } ///todo
+        this.epsilon = epsilonModel;
         thread = new ProjectileThread(this ,epsilon);
     }
 

@@ -91,7 +91,15 @@ public class ProjectileThread extends Thread{
                 )
         );
 
-//        Spawner.addProjectile(epsilon.getGame() ,bulletPosition ,direction , ModelType.bossBullet);///todo
+        synchronized (epsilon.getGame().getPlayers()) {
+            Spawner.addProjectile(
+                    epsilon.getGame(),
+                    epsilon.getGame().getPlayers(),
+                    bulletPosition,
+                    direction,
+                    ModelType.bossBullet
+            );
+        }
     }
 
     private void turnAround() {

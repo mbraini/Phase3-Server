@@ -2,6 +2,7 @@ package controller.game;
 
 import constants.ControllerConstants;
 import constants.SizeConstants;
+import constants.VelocityConstants;
 import controller.game.manager.GameManager;
 import controller.game.manager.GameState;
 import controller.game.player.InfoSender;
@@ -33,16 +34,23 @@ public class Game {
     private InfoSender infoSender;
     private GameController gameController;
     private PauseWatcher pauseWatcher;
+    private double gameSpeed;
     private ArrayList<ImaginaryObject> solidObjects = new ArrayList<>();
 
     public Game(GameType gameType) {
         this.gameType = gameType;
         players = new ArrayList<>();
+        initSpeed();
         initControllers();
         initDataBase();
         initInfoSender();
         initFirstFrame();
         initThreads();
+    }
+
+    private void initSpeed() {
+        if (gameType.equals(GameType.colosseum))
+            gameSpeed = VelocityConstants.COLESSEUM_GAME_SPEED_CONSTANT;
     }
 
     private void initFirstFrame() {
@@ -206,6 +214,14 @@ public class Game {
 
     public synchronized void addSolidObject(ImaginaryObject imaginaryObject) {
         solidObjects.add(imaginaryObject);
+    }
+
+    public double getGameSpeed() {
+        return gameSpeed;
+    }
+
+    public void setGameSpeed(double gameSpeed) {
+        this.gameSpeed = gameSpeed;
     }
 
     public synchronized void removeSolidObject(String id) {

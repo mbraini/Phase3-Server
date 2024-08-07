@@ -10,17 +10,20 @@ public class NecropickNavigator {
     private Vector position;
     private Vector epsilonPosition;
     private Vector velocity;
+    private NecropickModel necropickModel;
 
-    public NecropickNavigator(Vector position ,Vector epsilonPosition){
-        this.position = position;
+    public NecropickNavigator(NecropickModel necropickModel ,Vector epsilonPosition){
+        this.necropickModel = necropickModel;
+        this.position = necropickModel.getPosition();
         this.epsilonPosition = epsilonPosition;
     }
 
     public void navigate() {
         ///////////// prevents from jiggling :)
+        double velocityD = VelocityConstants.NECROPCIK_NAVIGATION_VELOCITY * necropickModel.getGame().getGameSpeed();
         if (java.lang.Math.abs(Math.VectorSize(
                 Math.VectorAdd(position ,Math.ScalarInVector(-1 ,epsilonPosition))
-        ) - SizeConstants.NECROPICK_SPAWN_RADIOS) <= VelocityConstants.NECROPCIK_NAVIGATION_VELOCITY * RefreshRateConstants.UPS){
+        ) - SizeConstants.NECROPICK_SPAWN_RADIOS) <= velocityD * RefreshRateConstants.UPS){
             velocity = new Vector();
             return;
         }
@@ -39,7 +42,7 @@ public class NecropickNavigator {
                     Math.ScalarInVector(-1 ,direction)
             );
         }
-        velocity = Math.VectorWithSize(direction , VelocityConstants.NECROPCIK_NAVIGATION_VELOCITY);
+        velocity = Math.VectorWithSize(direction , velocityD);
     }
 
     public Vector getVelocity(){

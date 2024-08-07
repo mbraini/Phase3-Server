@@ -110,7 +110,7 @@ public abstract class Spawner {
                 }
                 break;
             case cerberus:
-                game.getModelRequests().addObjectModel(new CerberusModel(game ,chasingPlayer ,targetedPlayers ,position ,id));
+                game.getModelRequests().addObjectModel(new CerberusModel(game ,targetedPlayers ,position ,id));
                  break;
         }
     }

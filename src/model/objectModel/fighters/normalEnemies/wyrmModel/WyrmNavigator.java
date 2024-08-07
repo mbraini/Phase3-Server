@@ -22,7 +22,7 @@ public class WyrmNavigator {
         wyrmModel.setVelocity(
                 Math.VectorWithSize(
                         direction,
-                        VelocityConstants.WYRM_NAVIGATION_VELOCITY
+                        VelocityConstants.WYRM_NAVIGATION_VELOCITY * wyrmModel.getGame().getGameSpeed()
                 )
         );
         double Moving = Math.VectorSize(wyrmModel.getVelocity()) * RefreshRateConstants.UPS;

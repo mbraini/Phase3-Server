@@ -125,7 +125,7 @@ public class NecropickModel extends NormalEnemyModel implements MoveAble ,Abilit
     @Override
     public void ability() {
         NecropickNavigator navigator = new NecropickNavigator(
-                position,
+                this,
                 chasingPlayer.getPlayerData().getEpsilon().getPosition().clone()
         );
         navigator.navigate();

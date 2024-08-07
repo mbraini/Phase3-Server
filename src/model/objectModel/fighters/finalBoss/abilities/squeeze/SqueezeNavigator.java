@@ -55,11 +55,11 @@ public class SqueezeNavigator {
         );
         leftHandDirection = Math.VectorWithSize(
                 leftHandDirection,
-                VelocityConstants.HAND_SQUEEZE_NAVIGAE_VELOCITY
+                VelocityConstants.HAND_SQUEEZE_NAVIGAE_VELOCITY * rightHand.getGame().getGameSpeed()
         );
         rightHandDirection = Math.VectorWithSize(
                 rightHandDirection,
-                VelocityConstants.HAND_SQUEEZE_NAVIGAE_VELOCITY
+                VelocityConstants.HAND_SQUEEZE_NAVIGAE_VELOCITY * rightHand.getGame().getGameSpeed()
         );
         leftHand.setVelocity(leftHandDirection);
         rightHand.setVelocity(rightHandDirection);
@@ -101,7 +101,7 @@ public class SqueezeNavigator {
         );
         double leftDistance = Math.VectorSize(distanceVLeft);
         double rightDistance = Math.VectorSize(distanceVRight);
-        double minDistance = VelocityConstants.HAND_SQUEEZE_NAVIGAE_VELOCITY * RefreshRateConstants.UPS;
+        double minDistance = VelocityConstants.HAND_SQUEEZE_NAVIGAE_VELOCITY * leftHand.getGame().getGameSpeed() * RefreshRateConstants.UPS;
         if (leftDistance <= minDistance && rightDistance <= minDistance)
             return true;
         return false;

@@ -32,7 +32,7 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
         this.vulnerableToEpsilonBullet = true;
         movementManager = new MovementManager();
         type = ModelType.trigorath;
-        omega = VelocityConstants.ENEMY_ROTATION_SPEED;
+        omega = VelocityConstants.ENEMY_ROTATION_SPEED * game.getGameSpeed();
         initVertices();
     }
 
@@ -78,41 +78,43 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
                 )
         );
         /////////////todo
+        double trigorathVelocity = VelocityConstants.ENEMY_LINEAR_SPEED * game.getGameSpeed();
+        double omegaValue = VelocityConstants.ENEMY_ROTATION_SPEED * game.getGameSpeed();
         if (distance >= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 160){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 1.6);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED * 1.6;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity * 1.6);
+            omega = omegaValue * 1.6;
         }
         if (distance >= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 280){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 1.4);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED * 1.4;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity * 1.4);
+            omega = omegaValue * 1.4;
         }
         else if (distance >= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 240){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 1.2);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED * 1.2;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity * 1.2);
+            omega = omegaValue * 1.2;
         }
         else if (distance >= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 200){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 1.1);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED * 1.1;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity * 1.1);
+            omega = omegaValue * 1.1;
         }
         else if (distance >= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 160){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity);
+            omega = omegaValue;
         }
         else if (distance<= SizeConstants.TRIGORATH_DIMENTION.width * 2 / 3d + SizeConstants.EPSILON_DIMENSION.width / 2d + 40){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 0.3);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED * 0.3;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity * 0.3);
+            omega = omegaValue * 0.3;
         }
         else if (distance <= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 80){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 0.5);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED * 0.5;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity * 0.5);
+            omega = omegaValue * 0.5;
         }
         else if (distance <= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 120){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 0.8);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED * 0.8;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity * 0.8);
+            omega = omegaValue * 0.8;
         }
         else if (distance <= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 160){
-            velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 0.9);
-            omega = VelocityConstants.ENEMY_ROTATION_SPEED * 0.9;
+            velocity = Math.VectorWithSize(velocity , trigorathVelocity * 0.9);
+            omega = omegaValue * 0.9;
         }
         ////////////todo
     }

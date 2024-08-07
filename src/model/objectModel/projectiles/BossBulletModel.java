@@ -17,7 +17,7 @@ public class BossBulletModel extends EnemyBulletModel implements IsCircle {
     public BossBulletModel(Game game, ArrayList<Player> targetedPlayers , Vector position , Vector direction , String id){
         super(game ,targetedPlayers);
         this.position = position;
-        this.velocity = Math.VectorWithSize(direction , VelocityConstants.OMENOCT_BULLET_VELOCITY);
+        this.velocity = Math.VectorWithSize(direction , VelocityConstants.OMENOCT_BULLET_VELOCITY * getGame().getGameSpeed());
         this.acceleration = new Vector(0 ,0);
         damage = DamageConstants.OMENOCT_BULLET_DAMAGE;
         type = ModelType.bossBullet;

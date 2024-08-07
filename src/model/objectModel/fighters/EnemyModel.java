@@ -18,9 +18,11 @@ public abstract class EnemyModel extends FighterModel {
 
     protected boolean vulnerableToEpsilonMelee;
     protected boolean vulnerableToEpsilonBullet;
+    protected Player chasingPlayer;
 
     public EnemyModel(Game game ,Player chasingPlayer ,ArrayList<Player> targetedPlayers) {
-        super(game ,chasingPlayer ,targetedPlayers);
+        super(game ,targetedPlayers);
+        this.chasingPlayer = chasingPlayer;
     }
 
     public void meleeAttack(EpsilonModel epsilon){
@@ -59,5 +61,13 @@ public abstract class EnemyModel extends FighterModel {
 
     public void setVulnerableToEpsilonBullet(boolean vulnerableToEpsilonBullet) {
         this.vulnerableToEpsilonBullet = vulnerableToEpsilonBullet;
+    }
+
+    public Player getChasingPlayer() {
+        return chasingPlayer;
+    }
+
+    public void setChasingPlayer(Player chasingPlayer) {
+        this.chasingPlayer = chasingPlayer;
     }
 }

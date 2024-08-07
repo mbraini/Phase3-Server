@@ -34,7 +34,7 @@ public class ArchmireModel extends NormalEnemyModel implements MoveAble , Abilit
         type = ModelType.archmire;
         setHovering(true);
         vulnerableToEpsilonBullet = true;
-        omega = VelocityConstants.ENEMY_ROTATION_SPEED;
+        omega = VelocityConstants.ENEMY_ROTATION_SPEED * game.getGameSpeed();
         initVertices();
         start();
     }
@@ -149,7 +149,7 @@ public class ArchmireModel extends NormalEnemyModel implements MoveAble , Abilit
             velocity = Math.VectorWithSize(Math.VectorAdd(
                     epsilonPosition,
                     Math.ScalarInVector(-1 ,position)
-            ), VelocityConstants.ARCHMIRE_VELOCITY);
+            ), VelocityConstants.ARCHMIRE_VELOCITY * game.getGameSpeed());
         }
     }
 

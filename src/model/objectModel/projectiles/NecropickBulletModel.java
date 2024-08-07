@@ -17,7 +17,7 @@ public class NecropickBulletModel extends EnemyBulletModel implements IsCircle {
     public NecropickBulletModel(Game game, ArrayList<Player> targetedPlayers , Vector position , Vector direction , String id){
         super(game ,targetedPlayers);
         this.position = position;
-        this.velocity = Math.VectorWithSize(direction , VelocityConstants.OMENOCT_BULLET_VELOCITY);
+        this.velocity = Math.VectorWithSize(direction , VelocityConstants.OMENOCT_BULLET_VELOCITY * game.getGameSpeed());
         this.acceleration = new Vector(0 ,0);
 
         setSolid(false);

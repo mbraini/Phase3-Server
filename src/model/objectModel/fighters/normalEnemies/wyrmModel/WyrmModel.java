@@ -131,7 +131,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
         Vector newPosition;
         if (origin == null)
             return;
-        double thetaD = RefreshRateConstants.UPS * VelocityConstants.WYRM_THETA_UPDATE;
+        double thetaD = RefreshRateConstants.UPS * VelocityConstants.WYRM_THETA_UPDATE * game.getGameSpeed();
         if (isPositiveDirection()) {
             newPosition = Math.RotateByTheta(getPosition(), origin, thetaD);
             setTheta(getTheta() + thetaD);

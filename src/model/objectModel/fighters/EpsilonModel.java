@@ -34,8 +34,8 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
     private int chanceOfSurvival;
     private int lifeSteal;
     private Player belongingPlayer;
-    public EpsilonModel(Game game ,Player belongingPlayer ,Player chasingPlayer ,ArrayList<Player> targetedPlayers, Vector position , String id){
-        super(game ,chasingPlayer ,targetedPlayers);
+    public EpsilonModel(Game game ,Player belongingPlayer ,ArrayList<Player> targetedPlayers, Vector position , String id){
+        super(game ,targetedPlayers);
         this.position = position;
         this.velocity = new Vector();
         this.acceleration = new Vector(0 ,0);
@@ -43,6 +43,7 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
                 SizeConstants.EPSILON_DIMENSION.width,
                 SizeConstants.EPSILON_DIMENSION.height
         );
+        this.targetedPlayers = targetedPlayers;
         movementManager = new MovementManager();
         this.belongingPlayer = belongingPlayer;
         this.id =  id;

@@ -22,8 +22,8 @@ public class CerberusModel extends FighterModel implements IsCircle {
     private Timer timer;
     private int timePassed;
     private int coolDown;
-    public CerberusModel(Game game , Player chasingPlayer , ArrayList<Player> targetedPlayers , Vector position , String id){
-        super(game ,chasingPlayer ,targetedPlayers);
+    public CerberusModel(Game game , ArrayList<Player> targetedPlayers , Vector position , String id){
+        super(game ,targetedPlayers);
         this.id = id;
         this.position = position;
         velocity = new Vector();

@@ -41,7 +41,7 @@ public class GameState {
         thirdWavePR = 0;
         forthWavePR = 0;
         fifthWavePR = 0;
-        shrinkageVelocity = VelocityConstants.FRAME_SHRINKAGE_VELOCITY;
+        shrinkageVelocity = VelocityConstants.FRAME_SHRINKAGE_VELOCITY * game.getGameSpeed();
         time = 0;
         wave = 1;
         isPause = false;

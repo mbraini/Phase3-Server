@@ -217,4 +217,12 @@ public class BossAI {
     public void setModels(ArrayList<ObjectModel> models) {
         this.models = models;
     }
+
+    public EpsilonModel getEpsilonModel() {
+        return epsilonModel;
+    }
+
+    public void setEpsilonModel(EpsilonModel epsilonModel) {
+        this.epsilonModel = epsilonModel;
+    }
 }

@@ -9,12 +9,10 @@ import java.util.ArrayList;
 public abstract class FighterModel extends ObjectModel{
     protected boolean hasMeleeAttack;
     protected int meleeAttack;
-    protected Player chasingPlayer;
     protected ArrayList<Player> targetedPlayers;
 
-    public FighterModel(Game game ,Player chasingPlayer ,ArrayList<Player> targetedPlayers) {
+    public FighterModel(Game game ,ArrayList<Player> targetedPlayers) {
         super(game);
-        this.chasingPlayer = chasingPlayer;
         this.targetedPlayers = targetedPlayers;
     }
 
@@ -33,14 +31,6 @@ public abstract class FighterModel extends ObjectModel{
 
     public void setMeleeAttack(int meleeAttack) {
         this.meleeAttack = meleeAttack;
-    }
-
-    public Player getChasingPlayer() {
-        return chasingPlayer;
-    }
-
-    public void setChasingPlayer(Player chasingPlayer) {
-        this.chasingPlayer = chasingPlayer;
     }
 
     public ArrayList<Player> getTargetedPlayers() {

@@ -45,7 +45,7 @@ public class OmenoctModel extends NormalEnemyModel implements Ability , MoveAble
         vulnerableToEpsilonMelee = true;
         hasMeleeAttack = true;
         meleeAttack = DamageConstants.OMENOCT_MELEE_ATTACK;
-        omega = VelocityConstants.ENEMY_ROTATION_SPEED;
+        omega = VelocityConstants.ENEMY_ROTATION_SPEED * game.getGameSpeed();
         navigater = new OmenoctNavigater(position ,chasingPlayer);
         try {
             Thread.sleep(100);
@@ -98,7 +98,7 @@ public class OmenoctModel extends NormalEnemyModel implements Ability , MoveAble
                         Math.ScalarInVector(-1 ,position),
                         destination
                 )
-                , VelocityConstants.OMENOCT_NAVIGATE_VELOCITY
+                , VelocityConstants.OMENOCT_NAVIGATE_VELOCITY * getGame().getGameSpeed()
         );
     }
 
@@ -108,7 +108,7 @@ public class OmenoctModel extends NormalEnemyModel implements Ability , MoveAble
         if (Math.VectorSize(Math.VectorAdd(
                 Math.ScalarInVector(-1 ,position),
                 destination
-        )) <= VelocityConstants.OMENOCT_NAVIGATE_VELOCITY * RefreshRateConstants.UPS){
+        )) <= VelocityConstants.OMENOCT_NAVIGATE_VELOCITY * getGame().getGameSpeed() * RefreshRateConstants.UPS){
             position = destination.clone();
             velocity = new Vector();
         }
