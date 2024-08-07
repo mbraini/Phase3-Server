@@ -1,5 +1,6 @@
 package model.objectModel.fighters.finalBoss.bossAI;
 
+import constants.ControllerConstants;
 import constants.DistanceConstants;
 import constants.SizeConstants;
 import constants.TimeConstants;
@@ -11,6 +12,7 @@ import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.fighters.finalBoss.bossHelper.BossHelperModel;
 import model.objectModel.fighters.finalBoss.bossHelper.HeadModel;
 import model.objectModel.projectiles.EpsilonBulletModel;
+import utils.Helper;
 import utils.Math;
 import utils.Vector;
 
@@ -200,7 +202,11 @@ public class BossAI {
                         bullet.getPosition()
                 )
         );
-        ImaginaryObject imaginaryObject = new ImaginaryObject(bullet.getGame() ,imaginaryVertices);
+        ImaginaryObject imaginaryObject = new ImaginaryObject(
+                bullet.getGame() ,
+                imaginaryVertices ,
+                Helper.RandomStringGenerator(ControllerConstants.ID_SIZE)
+        );
         if (Collision.IsColliding(imaginaryObject ,helperModel)) {
             return true;
         }

@@ -21,15 +21,20 @@ public class InfoSender {
     public InfoSender(Game game, ArrayList<Player> players) {
         this.game = game;
         this.players = (ArrayList<Player>) players.clone();
+        initSenders();
     }
 
 
     public void addPlayer(Player player) {
         players.add(player);
+        abilitySender.setPlayers((ArrayList<Player>) players.clone());
+        frameViewSender.setPlayers((ArrayList<Player>) players.clone());
+        objectViewSender.setPlayers((ArrayList<Player>) players.clone());
+        effectViewSender.setPlayers((ArrayList<Player>) players.clone());
+        variablesSender.setPlayers((ArrayList<Player>) players.clone());
     }
 
     public void start() {
-        initSenders();
         abilitySender.start();
         frameViewSender.start();
         objectViewSender.start();

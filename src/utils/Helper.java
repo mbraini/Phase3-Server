@@ -1,12 +1,12 @@
 package utils;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import constants.DistanceConstants;
 import constants.SizeConstants;
-import controller.game.player.Player;
-import model.objectModel.fighters.EpsilonModel;
+import controller.game.Game;
+import model.logics.collision.Collision;
+import model.logics.collision.CollisionHandler;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.frameModel.FrameModel;
 
 import java.awt.*;
@@ -86,7 +86,7 @@ public class Helper {
         }
     }
 
-    public static Vector createRandomPositionSeparately(FrameModel epsilonFrame, Dimension size) {
+    public static Vector createRandomPositionSeparately(Game game, FrameModel epsilonFrame, Dimension size) {
         Vector solution;
 
         double frameRightX = SizeConstants.SCREEN_SIZE.width - epsilonFrame.getPosition().getX() - epsilonFrame.getSize().width;
@@ -124,12 +124,38 @@ public class Helper {
                     (2 * epsilonFrame.getPosition().x + epsilonFrame.getSize().width) / 2d,
                     epsilonFrame.getPosition().y + epsilonFrame.getSize().height + size.height            );
         }
+        solution = checkSolids(game ,solution ,size);
         return solution;
     }
 
-    public static void resetAllJsons(String path) {
-        Helper.writeFile(path + "/models.json" ,"");
+    private static Vector checkSolids(Game game, Vector center, Dimension size) {
+        ArrayList<Vector> vertices = new ArrayList<>();
+        vertices.add(new Vector(
+                center.x - size.width / 2d,
+                center.y - size.height /2d
+        ));
+        vertices.add(new Vector(
+                center.x + size.width / 2d,
+                center.y - size.height /2d
+        ));
+        vertices.add(new Vector(
+                center.x + size.width / 2d,
+                center.y + size.height /2d
+        ));
+        vertices.add(new Vector(
+                center.x - size.width / 2d,
+                center.y + size.height /2d
+        ));
+        ImaginaryObject imaginaryObject = new ImaginaryObject(game ,vertices);
+        ArrayList<ImaginaryObject> solidObjects = (ArrayList<ImaginaryObject>) game.getSolidObjects().clone();
+        for (ImaginaryObject solidObject : solidObjects) {
+            if (Collision.IsColliding(solidObject ,imaginaryObject)) {
+                new CollisionHandler(imaginaryObject ,solidObject).handle();
+            }
+        }
+        return imaginaryObject.getPosition();
     }
+
 
     public static synchronized StringBuilder readFile(String path) {
         Scanner scanner;

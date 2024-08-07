@@ -38,35 +38,36 @@ public class VariablesSender extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
-            for (Player player : players) {
-                FrameViewSender.FrameView frameView = null;
-                if (player.getPlayerData().getEpsilonFrame() != null) {
-                    frameView = new FrameViewSender.FrameView(
-                            player.getPlayerData().getEpsilonFrame().getPosition(),
-                            player.getPlayerData().getEpsilonFrame().getSize(),
-                            player.getPlayerData().getEpsilonFrame().getId()
+            synchronized (players) {
+                for (Player player : players) {
+                    FrameViewSender.FrameView frameView = null;
+                    if (player.getPlayerData().getEpsilonFrame() != null) {
+                        frameView = new FrameViewSender.FrameView(
+                                player.getPlayerData().getEpsilonFrame().getPosition(),
+                                player.getPlayerData().getEpsilonFrame().getSize(),
+                                player.getPlayerData().getEpsilonFrame().getId()
+                        );
+                    }
+                    VariablesView variablesView = new VariablesView(
+                            (int) player.getGame().getGameState().getTime(),
+                            (int) player.getPlayerData().getEpsilon().getHP(),
+                            player.getPlayerData().getXp(),
+                            player.getGame().getGameState().getWave(),
+                            frameView
                     );
-                }
-                VariablesView variablesView = new VariablesView(
-                        (int) player.getGame().getGameState().getTime(),
-                        (int) player.getPlayerData().getEpsilon().getHP(),
-                        player.getPlayerData().getXp(),
-                        player.getGame().getGameState().getWave(),
-                        frameView
-                );
-                String JVariables = gson.toJson(variablesView);
-                byte[] packetData = JVariables.getBytes();
-                String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
-                DatagramPacket datagramPacket = new DatagramPacket(
-                        packetData,
-                        packetData.length,
-                        new InetSocketAddress(ip ,player.getVariablesPort())
-                );
-                try {
-                    datagramSocket.send(datagramPacket);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    String JVariables = gson.toJson(variablesView);
+                    byte[] packetData = JVariables.getBytes();
+                    String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
+                    DatagramPacket datagramPacket = new DatagramPacket(
+                            packetData,
+                            packetData.length,
+                            new InetSocketAddress(ip, player.getVariablesPort())
+                    );
+                    try {
+                        datagramSocket.send(datagramPacket);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
@@ -89,4 +90,13 @@ public class VariablesSender extends Thread{
         }
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        synchronized (this.players) {
+            this.players = players;
+        }
+    }
 }

@@ -1,12 +1,13 @@
-package controller.online.tcp;
+package controller.online.tcp.requests;
 
 import controller.game.Game;
 import controller.game.player.Player;
 import controller.online.OnlineData;
 import controller.online.client.TCPClient;
+import controller.online.tcp.TCPClientRequest;
 import controller.online.tcp.messages.ServerGivePortRequest;
 
-public class ClientGivePortRequest extends TCPClientRequest{
+public class ClientGivePortRequest extends TCPClientRequest {
 
     private TCPClient tcpClient;
 
@@ -24,7 +25,7 @@ public class ClientGivePortRequest extends TCPClientRequest{
         int variablesPort = Integer.valueOf(tcpClient.getTcpMessager().readMessage());
 
         Game game = OnlineData.getOnlineGame(tcpClient.getUsername());
-        Player player = game.getPlayer(tcpClient.getUsername());
+        Player player = OnlineData.getPlayer(tcpClient.getUsername());
 
         player.setAbilityPort(abilityPort);
         player.setEffectPort(effectPort);

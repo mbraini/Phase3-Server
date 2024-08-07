@@ -13,6 +13,7 @@ import model.objectModel.ObjectModel;
 import model.objectModel.PortalModel;
 import model.objectModel.fighters.EnemyModel;
 import model.objectModel.fighters.EpsilonModel;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.fighters.finalBoss.bossHelper.BossHelperModel;
 import model.objectModel.projectiles.BulletModel;
 import model.objectModel.projectiles.EnemyBulletModel;
@@ -80,7 +81,15 @@ public class CollisionHandler {
             CerberusEnemyHandler((CerberusModel)model2 ,(EnemyModel)model1);
             return;
         }
+        ///////////imaginaryHandler
+        if (model1 instanceof ImaginaryObject && model2 instanceof ImaginaryObject) {
+            imaginaryHandler();
+        }
 
+    }
+
+    private void imaginaryHandler() {
+        pullOutObject(model1 ,model2);
     }
 
     private void CerberusEnemyHandler(CerberusModel cerberusModel, EnemyModel enemyModel) {

@@ -68,56 +68,58 @@ public class AbilityViewSender extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            for (Player player : players) {
-                ArrayList<InGameAbility> inGameAbilities;
-                ArrayList<SkillTreeAbility> skillTreeAbilities;
-                synchronized (player.getPlayerData().getInGameAbilities()) {
-                    inGameAbilities = (ArrayList<InGameAbility>) player.getPlayerData().getInGameAbilities().clone();
-                    skillTreeAbilities = (ArrayList<SkillTreeAbility>) player.getPlayerData().getSkillTreeAbilities().clone();
-                }
-                ArrayList<AbilityView> abilityViews = new ArrayList<>();
-                for (SkillTreeAbility skillTreeAbility : skillTreeAbilities) {
-                    abilityViews.add(new AbilityView(
-                            skillTreeAbility.getInGameCoolDownTime(),
-                            skillTreeAbility.getCoolDownTimePassed(),
-                            skillTreeAbility.isBought() && skillTreeAbility.CanCast(),
-                            skillTreeAbility.getType()
-                    ));
-                }
-                for (InGameAbility inGameAbility : inGameAbilities) {
-                    if (inGameAbility.getType().equals(InGameAbilityType.slaughter)) {
-                        Slaughter slaughter = (Slaughter) (inGameAbility);
+            synchronized (players) {
+                for (Player player : players) {
+                    ArrayList<InGameAbility> inGameAbilities;
+                    ArrayList<SkillTreeAbility> skillTreeAbilities;
+                    synchronized (player.getPlayerData().getInGameAbilities()) {
+                        inGameAbilities = (ArrayList<InGameAbility>) player.getPlayerData().getInGameAbilities().clone();
+                        skillTreeAbilities = (ArrayList<SkillTreeAbility>) player.getPlayerData().getSkillTreeAbilities().clone();
+                    }
+                    ArrayList<AbilityView> abilityViews = new ArrayList<>();
+                    for (SkillTreeAbility skillTreeAbility : skillTreeAbilities) {
                         abilityViews.add(new AbilityView(
-                                TimeConstants.SLAUGHTER_COOLDOWN,
-                                slaughter.getTimePassed(),
-                                slaughter.isAvailable(),
-                                slaughter.getType()
+                                skillTreeAbility.getInGameCoolDownTime(),
+                                skillTreeAbility.getCoolDownTimePassed(),
+                                skillTreeAbility.isBought() && skillTreeAbility.CanCast(),
+                                skillTreeAbility.getType()
                         ));
                     }
-                    if (inGameAbility.getType().equals(InGameAbilityType.slumber)) {
-                        Slumber slumber = (Slumber) (inGameAbility);
-                        abilityViews.add(new AbilityView(
-                                TimeConstants.SLUMBER_DURATION,
-                                slumber.getTimePassed(),
-                                slumber.isAvailable(),
-                                slumber.getType()
-                        ));
+                    for (InGameAbility inGameAbility : inGameAbilities) {
+                        if (inGameAbility.getType().equals(InGameAbilityType.slaughter)) {
+                            Slaughter slaughter = (Slaughter) (inGameAbility);
+                            abilityViews.add(new AbilityView(
+                                    TimeConstants.SLAUGHTER_COOLDOWN,
+                                    slaughter.getTimePassed(),
+                                    slaughter.isAvailable(),
+                                    slaughter.getType()
+                            ));
+                        }
+                        if (inGameAbility.getType().equals(InGameAbilityType.slumber)) {
+                            Slumber slumber = (Slumber) (inGameAbility);
+                            abilityViews.add(new AbilityView(
+                                    TimeConstants.SLUMBER_DURATION,
+                                    slumber.getTimePassed(),
+                                    slumber.isAvailable(),
+                                    slumber.getType()
+                            ));
+                        }
                     }
-                }
 
-                String JAbilities = gson.toJson(abilityViews);
+                    String JAbilities = gson.toJson(abilityViews);
 
-                byte[] packetData = JAbilities.getBytes();
-                String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
-                DatagramPacket datagramPacket = new DatagramPacket(
-                        packetData,
-                        packetData.length,
-                        new InetSocketAddress(ip ,player.getAbilityPort())
-                );
-                try {
-                    datagramSocket.send(datagramPacket);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    byte[] packetData = JAbilities.getBytes();
+                    String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
+                    DatagramPacket datagramPacket = new DatagramPacket(
+                            packetData,
+                            packetData.length,
+                            new InetSocketAddress(ip, player.getAbilityPort())
+                    );
+                    try {
+                        datagramSocket.send(datagramPacket);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
@@ -146,4 +148,13 @@ public class AbilityViewSender extends Thread{
 
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        synchronized (this.players) {
+            this.players = players;
+        }
+    }
 }

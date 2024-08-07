@@ -43,48 +43,49 @@ public class ObjectViewSender extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            synchronized (players) {
+                for (Player player : players) {
+                    ArrayList<View> views = new ArrayList<>();
+                    ArrayList<ObjectModel> models;
 
-            for (Player player : players) {
-                ArrayList<View> views = new ArrayList<>();
-                ArrayList<ObjectModel> models;
+                    synchronized (player.getGame().getModelData().getModels()) {
+                        models = (ArrayList<ObjectModel>) player.getGame().getModelData().getModels().clone();
+                    }
 
-                synchronized (player.getGame().getModelData().getModels()) {
-                    models = (ArrayList<ObjectModel>) player.getGame().getModelData().getModels().clone();
-                }
-
-                for (ObjectModel model : models) {
-                    View view = new View(
-                            model.getPosition(),
-                            model.getTheta(),
-                            model.isHovering(),
-                            model.getType(),
-                            model.getId()
-                    );
-                    if (model instanceof SizeChanger) {
-                        view = new View(
+                    for (ObjectModel model : models) {
+                        View view = new View(
                                 model.getPosition(),
                                 model.getTheta(),
                                 model.isHovering(),
-                                ((SizeChanger) model).getSize(),
                                 model.getType(),
                                 model.getId()
                         );
+                        if (model instanceof SizeChanger) {
+                            view = new View(
+                                    model.getPosition(),
+                                    model.getTheta(),
+                                    model.isHovering(),
+                                    ((SizeChanger) model).getSize(),
+                                    model.getType(),
+                                    model.getId()
+                            );
+                        }
+                        views.add(view);
                     }
-                    views.add(view);
-                }
 
-                String JViews = gson.toJson(views);
-                byte[] packetData = JViews.getBytes();
-                String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
-                DatagramPacket datagramPacket = new DatagramPacket(
-                        packetData,
-                        packetData.length,
-                        new InetSocketAddress(ip ,player.getObjectPort())
-                );
-                try {
-                    datagramSocket.send(datagramPacket);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    String JViews = gson.toJson(views);
+                    byte[] packetData = JViews.getBytes();
+                    String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
+                    DatagramPacket datagramPacket = new DatagramPacket(
+                            packetData,
+                            packetData.length,
+                            new InetSocketAddress(ip, player.getObjectPort())
+                    );
+                    try {
+                        datagramSocket.send(datagramPacket);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
@@ -121,4 +122,13 @@ public class ObjectViewSender extends Thread{
 
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        synchronized (this.players) {
+            this.players = players;
+        }
+    }
 }

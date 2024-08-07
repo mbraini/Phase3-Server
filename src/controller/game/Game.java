@@ -8,6 +8,7 @@ import controller.game.player.InfoSender;
 import controller.game.player.Player;
 import model.ModelData;
 import model.ModelRequests;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.frameModel.FrameModel;
 import model.objectModel.frameModel.FrameModelBuilder;
 import model.threads.FrameThread;
@@ -32,6 +33,7 @@ public class Game {
     private InfoSender infoSender;
     private GameController gameController;
     private PauseWatcher pauseWatcher;
+    private ArrayList<ImaginaryObject> solidObjects = new ArrayList<>();
 
     public Game(GameType gameType) {
         this.gameType = gameType;
@@ -193,4 +195,26 @@ public class Game {
     public void setPauseWatcher(PauseWatcher pauseWatcher) {
         this.pauseWatcher = pauseWatcher;
     }
+
+    public ArrayList<ImaginaryObject> getSolidObjects() {
+        return solidObjects;
+    }
+
+    public void setSolidObjects(ArrayList<ImaginaryObject> solidObjects) {
+        this.solidObjects = solidObjects;
+    }
+
+    public synchronized void addSolidObject(ImaginaryObject imaginaryObject) {
+        solidObjects.add(imaginaryObject);
+    }
+
+    public synchronized void removeSolidObject(String id) {
+        for (ImaginaryObject object : solidObjects) {
+            if (object.getId().equals(id)) {
+                solidObjects.remove(object);
+                return;
+            }
+        }
+    }
+
 }

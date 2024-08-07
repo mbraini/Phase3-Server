@@ -42,37 +42,39 @@ public class FrameViewSender extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            for (Player player : players) {
-                ArrayList<FrameView> frameViews = new ArrayList<>();
-                ArrayList<FrameModel> frameModels;
+            synchronized (players) {
+                for (Player player : players) {
+                    ArrayList<FrameView> frameViews = new ArrayList<>();
+                    ArrayList<FrameModel> frameModels;
 
-                synchronized (player.getGame().getModelData().getFrames()) {
-                    frameModels = (ArrayList<FrameModel>) player.getGame().getModelData().getFrames().clone();
-                }
+                    synchronized (player.getGame().getModelData().getFrames()) {
+                        frameModels = (ArrayList<FrameModel>) player.getGame().getModelData().getFrames().clone();
+                    }
 
-                for (FrameModel frameModel : frameModels) {
-                    FrameView frameView = new FrameView(
-                            frameModel.getPosition(),
-                            new Dimension(
-                                    frameModel.getSize().width + SizeConstants.barD.width,
-                                    frameModel.getSize().height + SizeConstants.barD.height
-                            ),
-                            frameModel.getId()
+                    for (FrameModel frameModel : frameModels) {
+                        FrameView frameView = new FrameView(
+                                frameModel.getPosition(),
+                                new Dimension(
+                                        frameModel.getSize().width + SizeConstants.barD.width,
+                                        frameModel.getSize().height + SizeConstants.barD.height
+                                ),
+                                frameModel.getId()
+                        );
+                        frameViews.add(frameView);
+                    }
+                    String JFrames = gson.toJson(frameViews);
+                    byte[] packetData = JFrames.getBytes();
+                    String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
+                    DatagramPacket datagramPacket = new DatagramPacket(
+                            packetData,
+                            packetData.length,
+                            new InetSocketAddress(ip, player.getFramePort())
                     );
-                    frameViews.add(frameView);
-                }
-                String JFrames = gson.toJson(frameViews);
-                byte[] packetData = JFrames.getBytes();
-                String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
-                DatagramPacket datagramPacket = new DatagramPacket(
-                        packetData,
-                        packetData.length,
-                        new InetSocketAddress(ip ,player.getFramePort())
-                );
-                try {
-                    datagramSocket.send(datagramPacket);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    try {
+                        datagramSocket.send(datagramPacket);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
@@ -92,4 +94,13 @@ public class FrameViewSender extends Thread{
         }
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        synchronized (this.players) {
+            this.players = players;
+        }
+    }
 }

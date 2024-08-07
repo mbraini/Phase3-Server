@@ -1,6 +1,7 @@
 package controller.game.manager;
 
 import constants.ControllerConstants;
+import constants.SizeConstants;
 import constants.TimeConstants;
 import controller.game.Game;
 import controller.game.GameType;
@@ -37,9 +38,6 @@ public class WaveSpawner {
 
     private Timer spawner;
     private FrameModel epsilonFrame;
-    private int timePassed;
-    private int spawnDelay;
-    private int lastWaveKilled;
     private final ArrayList<Class<?>> enemies = new ArrayList<>(Arrays.asList(
             SquarantineModel.class,
             TrigorathModel.class,
@@ -51,6 +49,10 @@ public class WaveSpawner {
             BarricadosFirstModel.class,
             BarricadosSecondModel.class,
             Boss.class
+    ));
+    private final ArrayList<Class<?>> spaceEnemies = new ArrayList<>(Arrays.asList(
+            BarricadosFirstModel.class,
+            BarricadosSecondModel.class
     ));
     private final Random random;
     private int maximumMiniBossCount;
@@ -72,7 +74,7 @@ public class WaveSpawner {
     private int enemySpawned;
     private boolean canSpawn = true;
     private int repeatedCount;
-    private int miniBossSpawnedAtCount;
+    private int miniBossSpawnedAtCount = -6;
     private int chasingTurn;
     private Game game;
 
@@ -104,7 +106,6 @@ public class WaveSpawner {
                 updateVariables();
                 spawnEnemies();
                 repeatedCount++;
-                System.out.println(miniBossEnemyCount);
             }
 
         });
@@ -254,7 +255,7 @@ public class WaveSpawner {
         if (normalEnemyCount < maximumNormalEnemyCount && isNormalEnemyUnlocked) {
             spawnNormalEnemy();
         }
-        if (miniBossEnemyCount == 0 && isMiniBossUnlocked && repeatedCount - miniBossSpawnedAtCount > 5) {
+        if (miniBossEnemyCount < maximumMiniBossCount && isMiniBossUnlocked && repeatedCount - miniBossSpawnedAtCount > 5) {
             spawnMiniBoss();
         }
     }
@@ -297,6 +298,8 @@ public class WaveSpawner {
         for (int i = 0 ;i < miniBossEnemySpawnCount ;i++) {
             int index = random.nextInt(NORMALS_ENDING_INDEX + 1 ,MINI_ENDING_INDEX + 1);
             spawnEnemy(index);
+            enemySpawned--;
+            miniBossSpawnedAtCount = repeatedCount;
         }
     }
 
@@ -322,12 +325,17 @@ public class WaveSpawner {
         if (!canSpawn)
             return;
         enemySpawned++;
-        miniBossSpawnedAtCount = repeatedCount;
         String id = Helper.RandomStringGenerator(ControllerConstants.ID_SIZE);
-        Vector position = Helper.createRandomPosition(
-                epsilonFrame,
-                false
-        );
+        Vector position;
+        if (spaceEnemies.contains(enemies.get(index))) {
+            position = Helper.createRandomPositionSeparately(game ,epsilonFrame , SizeConstants.BARRICADOS_DIMENSION);
+        }
+        else {
+            position = Helper.createRandomPosition(
+                    epsilonFrame,
+                    false
+            );
+        }
         Player chasingPlayer = getChasingPlayer();
         ArrayList<Player> targetedPlayers = getTargetedPlayers();
         try {

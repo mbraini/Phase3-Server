@@ -42,25 +42,17 @@ public class ServerCLIListener extends Thread {
                 Game game = new Game(GameType.monomachia);
                 Player player = new Player(game ,"test");
                 OnlineData.putClientPlayer("test" ,player);
-                game.addPlayer(player);
                 OnlineData.putClientOnlineGame("test" ,game);
                 OnlineData.getTCPClient("test").getTcpMessager().sendMessage(ServerMessageType.getPorts);
-                ArrayList<Player> players = new ArrayList<>();
-                players.add(player);
             }
             else if (command.equals("start test2 player")) {
                 Player player = new Player(OnlineData.getOnlineGame("test") ,"test2");
                 OnlineData.putClientPlayer("test2" ,player);
-                OnlineData.getOnlineGame("test").addPlayer(player);
                 OnlineData.putClientOnlineGame("test2" ,OnlineData.getOnlineGame("test"));
                 OnlineData.getTCPClient("test2").getTcpMessager().sendMessage(ServerMessageType.getPorts);
-                ArrayList<Player> players = new ArrayList<>();
-                players.add(player);
             }
             else if (command.equals("start game")) {
                 Game game = OnlineData.getOnlineGame("test");
-                ArrayList<Player> players = new ArrayList<>();
-                players.add(OnlineData.getPlayer("test"));
                 OnlineData.getOnlineGame("test").start();
             }
         }

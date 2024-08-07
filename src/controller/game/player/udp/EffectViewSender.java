@@ -45,52 +45,53 @@ public class EffectViewSender extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
-            for (Player player : players) {
-                ArrayList<EffectView> effectViews = new ArrayList<>();
-                ArrayList<EffectModel> effectModels;
-                synchronized (game.getModelData().getEffectModels()) {
-                    effectModels = (ArrayList<EffectModel>) game.getModelData().getEffectModels().clone();
-                }
-                for (EffectModel effectModel : effectModels) {
-                    EffectView effectView;
-                    if (effectModel == null)
-                        continue;
-                    if (effectModel.getArea() instanceof Circle) {
-                        effectView = new EffectView(
-                                (Circle) effectModel.getArea(),
-                                effectModel.getTheta(),
-                                effectModel.getR(),
-                                effectModel.getG(),
-                                effectModel.getB(),
-                                effectModel.getEffectType(),
-                                effectModel.getId()
-                        );
-                    } else {
-                        effectView = new EffectView(
-                                (Polygon) effectModel.getArea(),
-                                effectModel.getTheta(),
-                                effectModel.getR(),
-                                effectModel.getG(),
-                                effectModel.getB(),
-                                effectModel.getEffectType(),
-                                effectModel.getId()
-                        );
+            synchronized (players) {
+                for (Player player : players) {
+                    ArrayList<EffectView> effectViews = new ArrayList<>();
+                    ArrayList<EffectModel> effectModels;
+                    synchronized (game.getModelData().getEffectModels()) {
+                        effectModels = (ArrayList<EffectModel>) game.getModelData().getEffectModels().clone();
                     }
-                    effectViews.add(effectView);
-                }
-                String JEffects = gson.toJson(effectViews);
-                byte[] packetData = JEffects.getBytes();
-                String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
-                DatagramPacket datagramPacket = new DatagramPacket(
-                        packetData,
-                        packetData.length,
-                        new InetSocketAddress(ip, player.getEffectPort())
-                );
-                try {
-                    datagramSocket.send(datagramPacket);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    for (EffectModel effectModel : effectModels) {
+                        EffectView effectView;
+                        if (effectModel == null)
+                            continue;
+                        if (effectModel.getArea() instanceof Circle) {
+                            effectView = new EffectView(
+                                    (Circle) effectModel.getArea(),
+                                    effectModel.getTheta(),
+                                    effectModel.getR(),
+                                    effectModel.getG(),
+                                    effectModel.getB(),
+                                    effectModel.getEffectType(),
+                                    effectModel.getId()
+                            );
+                        } else {
+                            effectView = new EffectView(
+                                    (Polygon) effectModel.getArea(),
+                                    effectModel.getTheta(),
+                                    effectModel.getR(),
+                                    effectModel.getG(),
+                                    effectModel.getB(),
+                                    effectModel.getEffectType(),
+                                    effectModel.getId()
+                            );
+                        }
+                        effectViews.add(effectView);
+                    }
+                    String JEffects = gson.toJson(effectViews);
+                    byte[] packetData = JEffects.getBytes();
+                    String ip = OnlineData.getTCPClient(player.getUsername()).getIp();
+                    DatagramPacket datagramPacket = new DatagramPacket(
+                            packetData,
+                            packetData.length,
+                            new InetSocketAddress(ip, player.getEffectPort())
+                    );
+                    try {
+                        datagramSocket.send(datagramPacket);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
 
@@ -130,4 +131,13 @@ public class EffectViewSender extends Thread{
 
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        synchronized (this.players) {
+            this.players = players;
+        }
+    }
 }

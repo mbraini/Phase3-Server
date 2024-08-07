@@ -20,6 +20,7 @@ public class ServerGivePortRequest {
         tcpClient.getTcpMessager().sendMessage(port);
         Player player = OnlineData.getPlayer(tcpClient.getUsername());
         new ClientGameInfoReceiver(port ,player).start();
+        OnlineData.getOnlineGame(tcpClient.getUsername()).addPlayer(OnlineData.getPlayer(tcpClient.getUsername()));
     }
 
 }

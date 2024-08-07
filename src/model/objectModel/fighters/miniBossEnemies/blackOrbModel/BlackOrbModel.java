@@ -1,5 +1,6 @@
 package model.objectModel.fighters.miniBossEnemies.blackOrbModel;
 
+import constants.SizeConstants;
 import controller.game.Game;
 import controller.game.enums.AbstractEnemyType;
 import controller.game.manager.Spawner;
@@ -8,7 +9,9 @@ import controller.online.annotations.SkippedByJson;
 import model.ModelRequests;
 import model.objectModel.effects.BlackOrbAoeEffectModel;
 import model.objectModel.fighters.AbstractEnemy;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.frameModel.FrameModel;
+import utils.Math;
 import utils.Vector;
 
 import java.util.ArrayList;
@@ -31,8 +34,29 @@ public class BlackOrbModel extends AbstractEnemy {
         orbModels = new ArrayList<>();
         blackOrbThread = new BlackOrbThread(this);
         type = AbstractEnemyType.blackOrb;
-        this.center = center;
+        this.center = new Vector(
+                SizeConstants.SCREEN_SIZE.width / 2d,
+                SizeConstants.SCREEN_SIZE.height / 2d
+        );
+        addSolidObject();
         spawn();
+    }
+
+    private void addSolidObject() {
+        ArrayList<Vector> vertices = new ArrayList<>();
+        Vector firstVertex = Math.VectorAdd(
+                center,
+                new Vector(0 ,SizeConstants.BLACK_ORB_DIAGONAL_SIZE + SizeConstants.ORB_DIMENSION.height)
+        );
+        for (int i = 0 ;i < 5 ;i++) {
+            vertices.add(firstVertex);
+            firstVertex = Math.RotateByTheta(firstVertex ,center , java.lang.Math.PI / 5);
+        }
+        game.addSolidObject(new ImaginaryObject(
+                game,
+                vertices,
+                id
+        ));
     }
 
     public ArrayList<OrbModel> getOrbModels() {
@@ -135,6 +159,7 @@ public class BlackOrbModel extends AbstractEnemy {
     public void checkDeath() {
         if (orbModels.isEmpty()) {
             game.getModelRequests().removeAbstractEnemy(id);
+            game.removeSolidObject(id);
         }
     }
 }

@@ -2,7 +2,6 @@ package controller.online.tcp;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import controller.online.OnlineData;
 import controller.online.client.TCPClient;
 import controller.online.tcp.requests.*;
 import controller.online.tcp.requests.getAllSquadRequest.ClientGetAllSquadsRequest;

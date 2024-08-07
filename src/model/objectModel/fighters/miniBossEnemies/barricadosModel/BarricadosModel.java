@@ -8,6 +8,7 @@ import controller.game.player.Player;
 import model.interfaces.Fader;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.fighters.miniBossEnemies.MiniBossModel;
 import utils.Math;
 import utils.Vector;
@@ -79,10 +80,20 @@ public abstract class BarricadosModel extends MiniBossModel implements Fader , I
                         SizeConstants.BARRICADOS_DIMENSION.height /2d
                 )
         ));
+        addSolidObject();
+    }
+
+    private void addSolidObject() {
+        game.addSolidObject(new ImaginaryObject(
+                game,
+                vertices,
+                id
+        ));
     }
 
     @Override
     public void die() {
         ObjectController.removeObject(this);
+        game.removeSolidObject(id);
     }
 }
