@@ -54,13 +54,13 @@ public class WaveSpawner {
             BarricadosFirstModel.class,
             BarricadosSecondModel.class
     ));
+    private static final int BASICS_ENDING_INDEX = 1;
+    private static final int NORMALS_ENDING_INDEX = 5;
+    private static final int MINI_ENDING_INDEX = 8;
     private final Random random;
     private int maximumMiniBossCount;
     private int maximumNormalEnemyCount;
     private int maximumBasicEnemyCount;
-    private static final int BASICS_ENDING_INDEX = 1;
-    private static final int NORMALS_ENDING_INDEX = 5;
-    private static final int MINI_ENDING_INDEX = 8;
     private boolean isBasicEnemyUnlocked = true;
     private boolean isNormalEnemyUnlocked;
     private boolean isMiniBossUnlocked;
@@ -74,7 +74,7 @@ public class WaveSpawner {
     private int enemySpawned;
     private boolean canSpawn = true;
     private int repeatedCount;
-    private int miniBossSpawnedAtCount = -6;
+    private int miniBossSpawnedAtCount = -8;
     private int chasingTurn;
     private Game game;
 
@@ -133,6 +133,128 @@ public class WaveSpawner {
 
     private void updateColosseumVariables() {
 
+        if (game.getGameState().getWave() == 1) {
+            spawner.setDelay(3000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 1;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 20;
+            maximumNormalEnemyCount = 4;
+            maximumMiniBossCount = 1;
+        }
+        if (game.getGameState().getWave() == 2) {
+            spawner.setDelay(3000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 2;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 22;
+            maximumNormalEnemyCount = 5;
+            maximumMiniBossCount = 1;
+        }
+        if (game.getGameState().getWave() == 3) {
+            spawner.setDelay(2000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 1;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 24;
+            maximumNormalEnemyCount = 6;
+            maximumMiniBossCount = 1;
+        }
+        if (game.getGameState().getWave() == 4) {
+            spawner.setDelay(2000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 1;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 26;
+            maximumNormalEnemyCount = 7;
+            maximumMiniBossCount = 1;
+        }
+        if (game.getGameState().getWave() == 5) {
+            spawner.setDelay(1000);
+
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 2;
+            miniBossEnemySpawnCount = 1;
+
+            maximumBasicEnemyCount = 30;
+            maximumNormalEnemyCount = 8;
+            maximumMiniBossCount = 1;
+        }
+        checkColosseumNextWave();
+        allowColosseumSpawnCheck();
+
+    }
+
+    private void allowColosseumSpawnCheck() {
+        if (enemySpawned >= 30 && game.getGameState().getWave() == 1) {
+            canSpawn = false;
+        }
+        if (enemySpawned >= 50 && game.getGameState().getWave() == 2) {
+            canSpawn = false;
+        }
+        if (enemySpawned >= 80 && game.getGameState().getWave() == 3) {
+            canSpawn = false;
+        }
+        if (enemySpawned >= 110 && game.getGameState().getWave() == 4) {
+            canSpawn = false;
+        }
+        if (enemySpawned >= 140 && game.getGameState().getWave() == 5) {
+            canSpawn = false;
+        }
+    }
+
+    private void checkColosseumNextWave() {
+        if (enemyKilled >= 30 && game.getGameState().getWave() == 1) {
+            game.getGameState().setWave(2);
+            canSpawn = true;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -8;
+        }
+        if (enemyKilled >= 50 && game.getGameState().getWave() == 2) {
+            game.getGameState().setWave(3);
+            canSpawn = false;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -8;
+            Spawner.spawnBoss(
+                    game,
+                    getChasingPlayer(),
+                    getTargetedPlayers()
+            );
+//            canSpawn = true;
+//            repeatedCount =0;
+//            miniBossSpawnedAtCount = -8;
+        }
+        if (enemyKilled >= 80 && game.getGameState().getWave() == 3) {
+            game.getGameState().setWave(4);
+            canSpawn = true;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -8;
+        }
+        if (enemyKilled >= 110 && game.getGameState().getWave() == 4) {
+            game.getGameState().setWave(5);
+            canSpawn = true;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -8;
+        }
+        if (enemyKilled >= 140 && game.getGameState().getWave() == 5) {
+            game.getGameState().setWave(6);
+            canSpawn = false;
+            repeatedCount = 0;
+            miniBossSpawnedAtCount = -8;
+            Spawner.spawnBoss(
+                    game,
+                    getChasingPlayer(),
+                    getTargetedPlayers()
+            );
+        }
     }
 
     private void updateMonomachiaVariables() {
@@ -219,31 +341,31 @@ public class WaveSpawner {
             game.getGameState().setWave(2);
             canSpawn = true;
             repeatedCount = 0;
-            miniBossSpawnedAtCount = -6;
+            miniBossSpawnedAtCount = -8;
         }
         if (enemyKilled >= 45 && game.getGameState().getWave() == 2) {
             game.getGameState().setWave(3);
             canSpawn = true;
             repeatedCount =0;
-            miniBossSpawnedAtCount = -6;
+            miniBossSpawnedAtCount = -8;
         }
         if (enemyKilled >= 70 && game.getGameState().getWave() == 3) {
             game.getGameState().setWave(4);
             canSpawn = true;
             repeatedCount = 0;
-            miniBossSpawnedAtCount = -6;
+            miniBossSpawnedAtCount = -8;
         }
         if (enemyKilled >= 100 && game.getGameState().getWave() == 4) {
             game.getGameState().setWave(5);
             canSpawn = true;
             repeatedCount = 0;
-            miniBossSpawnedAtCount = -6;
+            miniBossSpawnedAtCount = -8;
         }
         if (enemyKilled >= 130 && game.getGameState().getWave() == 5) {
             game.getGameState().setWave(6);
             canSpawn = true;
             repeatedCount = 0;
-            miniBossSpawnedAtCount = -6;
+            miniBossSpawnedAtCount = -8;
         }
     }
 
@@ -255,7 +377,7 @@ public class WaveSpawner {
         if (normalEnemyCount < maximumNormalEnemyCount && isNormalEnemyUnlocked) {
             spawnNormalEnemy();
         }
-        if (miniBossEnemyCount < maximumMiniBossCount && isMiniBossUnlocked && repeatedCount - miniBossSpawnedAtCount > 5) {
+        if (miniBossEnemyCount < maximumMiniBossCount && isMiniBossUnlocked && repeatedCount - miniBossSpawnedAtCount > 8) {
             spawnMiniBoss();
         }
     }
@@ -304,8 +426,15 @@ public class WaveSpawner {
     }
 
     private ArrayList<Player> getTargetedPlayers() {
+        ArrayList<Player> targetedPlayers = new ArrayList<>();
         synchronized (game.getPlayers()) {
-            return (ArrayList<Player>) game.getPlayers().clone();
+            if (game.getGameType().equals(GameType.monomachia)) {
+                targetedPlayers.add(game.getPlayers().get(chasingTurn));
+            }
+            else {
+                targetedPlayers = game.getPlayers();
+            }
+            return targetedPlayers;
         }
     }
 
@@ -344,7 +473,6 @@ public class WaveSpawner {
             );
             if (enemyModel instanceof AbstractEnemy) {
                 game.getModelRequests().addAbstractEnemy((AbstractEnemy) enemyModel);
-                System.out.println("SPAWNING : " + ((AbstractEnemy) enemyModel).getType());
             }
             else {
                 game.getModelRequests().addObjectModel((EnemyModel)enemyModel);

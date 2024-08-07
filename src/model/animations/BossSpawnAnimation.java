@@ -2,6 +2,7 @@ package model.animations;
 
 import constants.SizeConstants;
 import controller.game.manager.GameState;
+import controller.game.player.Player;
 import model.ModelData;
 import model.logics.Dash;
 import model.objectModel.fighters.finalBoss.Boss;
@@ -12,6 +13,7 @@ import utils.Vector;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class BossSpawnAnimation extends TimerAnimation {
 
@@ -51,33 +53,50 @@ public class BossSpawnAnimation extends TimerAnimation {
 
     private Vector findDirection() {
         Vector headPosition = boss.getHead().getPosition().clone();
-//        Vector framePosition = ModelData.getEpsilon().getPosition().clone();
-//        return Math.VectorAdd(
-//                Math.ScalarInVector(-1 ,headPosition),
-//                Math.VectorAdd(
-//                        framePosition,
-//                        new Vector(
-//                                0 ,
-//                                -ModelData.getEpsilonFrame().getSize().height / 2d - SizeConstants.HEAD_DIMENSION.height / 2d
-//                                - SizeConstants.barD.height - 1
-//                        )
-//                )
-//        );
-        return null;
+        FrameModel epsilonFrame;
+        synchronized (boss.getGame().getModelData().getFrames()) {
+            epsilonFrame = boss.getGame().getModelData().getFrames().getFirst();
+        }
+        return Math.VectorAdd(
+                Math.ScalarInVector(-1 ,headPosition),
+                Math.VectorAdd(
+                        epsilonFrame.getPosition(),
+                        new Vector(
+                                0 ,
+                                -epsilonFrame.getSize().height / 2d - SizeConstants.HEAD_DIMENSION.height / 2d
+                                - SizeConstants.barD.height - 1
+                        )
+                )
+        );
     }
 
     private void setUp() {
-//        FrameModel epsilonFrame = ModelData.getEpsilonFrame();
-//        epsilonFrame.transfer(
-//                new Vector(
-//                        SizeConstants.SCREEN_SIZE.width / 2d - epsilonFrame.getSize().width / 2d,
-//                        SizeConstants.SCREEN_SIZE.height / 2d - epsilonFrame.getSize().height / 2d
-//                )
-//        );
-//        ModelData.getEpsilon().setPosition(
-//                SizeConstants.SCREEN_SIZE.width / 2d,
-//                SizeConstants.SCREEN_SIZE.height / 2d
-//        );
+        FrameModel epsilonFrame;
+        synchronized (boss.getGame().getModelData().getFrames()) {
+            epsilonFrame = boss.getGame().getModelData().getFrames().getFirst();
+        }
+        epsilonFrame.transfer(
+                new Vector(
+                        SizeConstants.SCREEN_SIZE.width / 2d - epsilonFrame.getSize().width / 2d,
+                        SizeConstants.SCREEN_SIZE.height / 2d - epsilonFrame.getSize().height / 2d
+                )
+        );
+        synchronized (boss.getGame().getPlayers()) {
+            Random random = new Random();
+            Vector middle = new Vector(
+                    SizeConstants.SCREEN_SIZE.width / 2d,
+                    SizeConstants.SCREEN_SIZE.height / 2d
+            );
+            for (Player player : boss.getGame().getPlayers()) {
+                Vector randomVector = new Vector(
+                        random.nextInt(-100 ,100),
+                        random.nextInt(-100 ,100)
+                );
+                player.getPlayerData().getEpsilon().setPosition(
+                        Math.VectorAdd(middle ,randomVector)
+                );
+            }
+        }
     }
 
     @Override
