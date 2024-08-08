@@ -1,6 +1,7 @@
 package controller.online.tcp.messages.joinSquad;
 
 import com.google.gson.Gson;
+import controller.online.annotations.SkippedByJson;
 import controller.online.dataBase.OnlineData;
 import controller.online.squad.Squad;
 import controller.online.tcp.messages.ClientMessageRecponceType;
@@ -14,17 +15,17 @@ public class ClientJoinSquadRequestMessage extends YesNoMessage {
 
     private String requester;
     private Squad squad;
+    private String squadName;
+    @SkippedByJson
     protected MessageThread messageThread;
     private int port;
+    @SkippedByJson
     private Gson gson;
 
-    public ClientJoinSquadRequestMessage(String receiver, Squad squad , String requester) {
+    public ClientJoinSquadRequestMessage(String receiver, String squadName , String requester) {
         super(receiver);
-        this.squad = squad;
         this.requester = requester;
-        messageThread = new MessageThread();
-        initGson();
-        initPort();
+        this.squadName = squadName;
     }
 
     private void initPort() {
@@ -37,6 +38,10 @@ public class ClientJoinSquadRequestMessage extends YesNoMessage {
 
     @Override
     public void deliverMessage() {
+        this.squad = OnlineData.getSquad(squadName);
+        messageThread = new MessageThread();
+        initGson();
+        initPort();
         super.deliverMessage();
         messageThread.start();
         String ownerUsername = squad.getOwner();

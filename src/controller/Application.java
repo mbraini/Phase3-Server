@@ -72,9 +72,11 @@ public class Application implements Runnable{
         StringBuilder JSquads = Helper.readFile(PathConstants.DATABASE_FOLDER_PATH + "squads.json");
 
         ArrayList<TCPClient> tcpClients = gson.fromJson(JUsernames.toString() ,usernamesType);
+        HashMap<String ,TCPClient> tcpClientMap = new HashMap<>();
         ArrayList<String> usernames = new ArrayList<>();
         for (TCPClient tcpClient : tcpClients) {
             usernames.add(tcpClient.getUsername());
+            tcpClientMap.put(tcpClient.getUsername() ,tcpClient);
         }
         ArrayList<Squad> squads = gson.fromJson(JSquads.toString() ,squadType);
         HashMap<String ,Squad> clientSquadMap = new HashMap<>();
@@ -98,10 +100,13 @@ public class Application implements Runnable{
             }
         }
 
+
+
         OnlineData.setClientUsernames(usernames);
         OnlineData.setClientSquadMap(clientSquadMap);
         OnlineData.setClientGameMap(clientGameMap);
         OnlineData.setSquads(squads);
+        OnlineData.setClientTCPMap(tcpClientMap);
     }
 
 }

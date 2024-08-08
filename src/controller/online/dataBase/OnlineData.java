@@ -171,4 +171,18 @@ public class OnlineData {
     public static void setClientGameMap(HashMap<String, GameClient> clientGameMap) {
         OnlineData.clientGameMap = clientGameMap;
     }
+
+    public static ArrayList<TCPClient> getTCPClients() {
+        ArrayList<TCPClient> tcpClients = new ArrayList<>();
+        synchronized (lock) {
+            for (String username : getClientUsernames()) {
+                tcpClients.add(getTCPClient(username));
+            }
+        }
+        return tcpClients;
+    }
+
+    public static void setClientTCPMap(HashMap<String, TCPClient> clientTCPMap) {
+        OnlineData.clientTCPMap = clientTCPMap;
+    }
 }

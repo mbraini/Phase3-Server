@@ -48,17 +48,24 @@ public class ClientUpdateHasSquadRequest extends TCPClientRequest {
     private void update() {
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.updateHasSquad);
         tcpClient.getTcpMessager().sendMessage(ServerRecponceType.yes);
-        Squad squad = OnlineData.getClientSquad(tcpClient.getUsername());;
+        Squad squad = OnlineData.getClientSquad(tcpClient.getUsername());
         ArrayList<GetSquadMembersJsonHelper> members = getOnTimeMembers(squad);
         GetSquadMembersJsonHelper thisPlayer = getOnlineThisPlayer();
-
-        tcpClient.getTcpMessager().sendMessage(gson.toJson(members));
-        tcpClient.getTcpMessager().sendMessage(gson.toJson(thisPlayer));
-        tcpClient.getTcpMessager().sendMessage(squad.getName());
-        if (squad.getOwner().equals(tcpClient.getUsername()))
-            tcpClient.getTcpMessager().sendMessage(true);
-        else
+        if (squad != null) {
+            tcpClient.getTcpMessager().sendMessage(gson.toJson(members));
+            tcpClient.getTcpMessager().sendMessage(gson.toJson(thisPlayer));
+            tcpClient.getTcpMessager().sendMessage(squad.getName());
+            if (squad.getOwner().equals(tcpClient.getUsername()))
+                tcpClient.getTcpMessager().sendMessage(true);
+            else
+                tcpClient.getTcpMessager().sendMessage(false);
+        }
+        else {
+            tcpClient.getTcpMessager().sendMessage(gson.toJson(members));
+            tcpClient.getTcpMessager().sendMessage(gson.toJson(thisPlayer));
+            tcpClient.getTcpMessager().sendMessage("you have no squad");
             tcpClient.getTcpMessager().sendMessage(false);
+        }
     }
 
     private boolean updateNeeded(ArrayList<GetSquadMembersJsonHelper> members, GetSquadMembersJsonHelper thisPlayer) {
@@ -78,6 +85,8 @@ public class ClientUpdateHasSquadRequest extends TCPClientRequest {
 
     public ArrayList<GetSquadMembersJsonHelper> getOnTimeMembers(Squad squad) {
         ArrayList<GetSquadMembersJsonHelper> onTimeMembers = new ArrayList<>();
+        if (squad == null)
+            return onTimeMembers;
         for (String member : squad.getMembers()) {
             if (member.equals(this.tcpClient.getUsername()))
                 continue;

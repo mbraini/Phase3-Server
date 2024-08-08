@@ -64,21 +64,20 @@ public class ServerThread extends Thread {
 
     private void saveData() {
         ArrayList<Squad> squads;
-        ArrayList<String> usernames;
+        ArrayList<TCPClient> tcpClients;
         HashMap<String , GameClient> clientGameMap;
-        HashMap<String ,Squad> clientSquadMap;
         synchronized (OnlineData.getLock()) {
             squads = (ArrayList<Squad>) OnlineData.getSquads().clone();
-            usernames = (ArrayList<String>) OnlineData.getClientUsernames().clone();
+            tcpClients = (ArrayList<TCPClient>) OnlineData.getTCPClients().clone();
             clientGameMap = (HashMap<String, GameClient>) OnlineData.getClientGameMap().clone();
         }
         Helper.writeFile(PathConstants.DATABASE_FOLDER_PATH + "squads.json" ,gson.toJson(squads));
-
+        Helper.writeFile(PathConstants.DATABASE_FOLDER_PATH + "clients.json" ,gson.toJson(tcpClients));
         try {
-            for (String username : usernames) {
+            for (TCPClient tcpClient : tcpClients) {
                 Helper.writeFile(
-                        PathConstants.CLIENT_EARNINGS_FOLDER_PATH + "/" + username + "/earnings.json" ,
-                        gson.toJson(clientGameMap.get(username))
+                        PathConstants.CLIENT_EARNINGS_FOLDER_PATH + "/" + tcpClient.getUsername() + "/earnings.json" ,
+                        gson.toJson(clientGameMap.get(tcpClient.getUsername()))
                 );
             }
         }

@@ -2,13 +2,16 @@ package controller.online.tcp.messages.giveStats;
 
 import controller.game.player.Player;
 import controller.online.GameStats;
+import controller.online.annotations.SkippedByJson;
 import controller.online.client.ClientState;
 import controller.online.client.TCPClient;
 import controller.online.tcp.ServerMessageType;
 
 public class ServerGiveStatsMessage{
 
+    @SkippedByJson
     private TCPClient tcpClient;
+    @SkippedByJson
     private Player player;
 
     public ServerGiveStatsMessage(TCPClient tcpClient , Player player) {

@@ -3,7 +3,7 @@ package controller.online.tcp.messages;
 import controller.online.dataBase.OnlineData;
 import controller.online.tcp.ServerMessageType;
 
-public abstract class ClientMessage {
+public class ClientMessage {
 
     protected String receiver;
     protected ServerMessageType messageType;

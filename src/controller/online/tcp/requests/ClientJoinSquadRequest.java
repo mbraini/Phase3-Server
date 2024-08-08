@@ -43,7 +43,7 @@ public class ClientJoinSquadRequest extends TCPClientRequest {
         OnlineData.getTCPClient(ownerUsername).addMessage(
                 new ClientJoinSquadRequestMessage(
                         squad.getOwner(),
-                        squad,
+                        squad.getName(),
                         tcpClient.getUsername()
                 )
         );

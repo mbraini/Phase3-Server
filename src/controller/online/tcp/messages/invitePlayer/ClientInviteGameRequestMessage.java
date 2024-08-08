@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import controller.game.Game;
 import controller.game.GameType;
 import controller.game.player.Player;
+import controller.online.annotations.SkippedByJson;
 import controller.online.dataBase.OnlineData;
 import controller.online.client.ClientState;
 import controller.online.tcp.ServerMessageType;
@@ -16,7 +17,9 @@ import java.net.Socket;
 
 public class ClientInviteGameRequestMessage extends YesNoMessage {
 
+    @SkippedByJson
     protected MessageThread messageThread;
+    @SkippedByJson
     private Gson gson;
     private int port;
     private String requester;
@@ -26,9 +29,6 @@ public class ClientInviteGameRequestMessage extends YesNoMessage {
         super(receiver);
         this.requester = requester;
         this.gameType = gameType;
-        messageThread = new MessageThread();
-        initGson();
-        initPort();
     }
 
     private void initPort() {
@@ -42,6 +42,9 @@ public class ClientInviteGameRequestMessage extends YesNoMessage {
 
     @Override
     public void deliverMessage() {
+        messageThread = new MessageThread();
+        initGson();
+        initPort();
         super.deliverMessage();
         messageThread.start();
         OnlineData.getTCPClient(receiver).getTcpMessager().sendMessage(port);

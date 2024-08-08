@@ -1,12 +1,13 @@
 package controller.online.tcp.messages;
 
+import controller.online.annotations.SkippedByJson;
 import controller.online.dataBase.OnlineData;
 import controller.online.tcp.ServerMessageType;
 import utils.TCPMessager;
 
 public abstract class YesNoMessage extends ClientMessage{
 
-    protected ServerMessageType messageType;
+    @SkippedByJson
     protected TCPMessager receiverMessager;
     public YesNoMessage(String receiver) {
         super(receiver);

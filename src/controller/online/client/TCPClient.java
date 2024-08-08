@@ -12,12 +12,11 @@ public class TCPClient {
     private String username;
     private String ip;
     private ArrayList<ClientMessage> messages;
-    @SkippedByJson
     private volatile ClientState clientState;
     @SkippedByJson
-    private final TCPMessager tcpMessager;
+    private TCPMessager tcpMessager;
     @SkippedByJson
-    private final ConnectionChecker connectionChecker;
+    private ConnectionChecker connectionChecker;
     @SkippedByJson
     private TCPMessager gameConnection;
 
@@ -27,6 +26,12 @@ public class TCPClient {
         messages = new ArrayList<>();
         clientState = ClientState.online;
         username = "";
+    }
+
+    public TCPClient(String username) {
+        this.username = username;
+        this.clientState = ClientState.offline;
+        messages = new ArrayList<>();
     }
 
     public String getUsername() {

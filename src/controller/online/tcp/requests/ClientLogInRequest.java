@@ -4,27 +4,20 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import constants.PathConstants;
 import controller.online.dataBase.OnlineData;
 import controller.online.annotations.SkippedByJson;
 import controller.online.client.TCPClient;
 import controller.online.tcp.ServerRecponceType;
 import controller.online.tcp.TCPClientRequest;
-import utils.Helper;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ClientLogInRequest extends TCPClientRequest {
-    private final TCPClient TCPClient;
+    private final TCPClient tcpClient;
     private Gson gson;
 
-    public ClientLogInRequest(TCPClient TCPClient) {
-        this.TCPClient = TCPClient;
+    public ClientLogInRequest(TCPClient tcpClient) {
+        this.tcpClient = tcpClient;
         initGson();
     }
 
@@ -51,32 +44,22 @@ public class ClientLogInRequest extends TCPClientRequest {
     public void checkRequest() {
         getClientInfo();
 
-        StringBuilder JText = Helper.readFile(PathConstants.SIGNED_UP_CLIENTS_PATH);
-        Type type = new TypeToken<ArrayList<TCPClient>>(){}.getType();
-        ArrayList<TCPClient> TCPClients = gson.fromJson(JText.toString() ,type);
+        ArrayList<TCPClient> TCPClients = OnlineData.getTCPClients();
         for (TCPClient TCPClient : TCPClients) {
-            if (TCPClient.getUsername().equals(this.TCPClient.getUsername())) {
-                this.TCPClient.getTcpMessager().sendMessage(ServerRecponceType.done);
-                OnlineData.addClient(this.TCPClient);
-                OnlineData.getGameClient(this.TCPClient.getUsername()).update(this.TCPClient);
+            if (TCPClient.getUsername().equals(this.tcpClient.getUsername())) {
+                this.tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
+                OnlineData.addClient(this.tcpClient);
+                OnlineData.getGameClient(this.tcpClient.getUsername()).update(this.tcpClient);
                 return;
             }
         }
-        this.TCPClient.getTcpMessager().sendMessage(ServerRecponceType.error);
-    }
-
-    private void setUpFolder() {
-        try {
-            Files.createDirectory(Path.of(PathConstants.CLIENT_EARNINGS_FOLDER_PATH + TCPClient.getUsername()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
     }
 
     private void getClientInfo() {
-        String username = TCPClient.getTcpMessager().readMessage();
-        String ip = TCPClient.getTcpMessager().readMessage();
-        TCPClient.setUsername(username);
-        TCPClient.setIp(ip);
+        String username = tcpClient.getTcpMessager().readMessage();
+        String ip = tcpClient.getTcpMessager().readMessage();
+        tcpClient.setUsername(username);
+        tcpClient.setIp(ip);
     }
 }
