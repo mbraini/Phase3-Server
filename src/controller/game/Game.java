@@ -2,6 +2,7 @@ package controller.game;
 
 import constants.ControllerConstants;
 import constants.SizeConstants;
+import constants.TimeConstants;
 import constants.VelocityConstants;
 import controller.game.manager.GameManager;
 import controller.game.manager.GameState;
@@ -9,6 +10,7 @@ import controller.game.player.InfoSender;
 import controller.game.player.Player;
 import controller.online.OnlineData;
 import controller.online.client.ClientState;
+import controller.online.client.TCPClient;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.messages.giveStats.ServerGiveStatsMessage;
 import model.ModelData;
@@ -165,13 +167,43 @@ public class Game {
     }
 
     public void start() {
-        for (Player player : players)
-            player.start();
+        synchronized (players) {
+            for (Player player : players) {
+                player.start();
+                TCPClient tcpClient = OnlineData.getTCPClient(player.getUsername());
+                tcpClient.setClientState(ClientState.busy);
+                tcpClient.getTcpMessager().sendMessage(ServerMessageType.waitingRoom);
+            }
+        }
+        waitingRoom();
         gameLoop.start();
         frameThread.start();
         gameManager.getGameManagerThread().start();
         infoSender.start();
         gameManager.getWaveSpawner().getSpawner().start();
+    }
+
+    private void waitingRoom() {
+        for (int i = 0; i < TimeConstants.WAITING_ROOM_TIME / 1000 ;i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            synchronized (players) {
+                for (Player player : players) {
+                    TCPClient tcpClient = OnlineData.getTCPClient(player.getUsername());
+                    tcpClient.getTcpMessager().sendMessage(ServerMessageType.waitingTime);
+                    tcpClient.getTcpMessager().sendMessage(15 - i);
+                }
+            }
+        }
+        synchronized (players) {
+            for (Player player : players) {
+                TCPClient tcpClient = OnlineData.getTCPClient(player.getUsername());
+                tcpClient.getTcpMessager().sendMessage(ServerMessageType.endWaitingTime);
+            }
+        }
     }
 
     public void addPlayer(Player player) {
@@ -247,7 +279,7 @@ public class Game {
         synchronized (players) {
             for (Player player : players) {
                 TCPMessager messager = OnlineData.getTCPClient(player.getUsername()).getTcpMessager();
-                if (OnlineData.getTCPClient(player.getUsername()).getClientState().equals(ClientState.online))
+                if (OnlineData.getTCPClient(player.getUsername()).getClientState().equals(ClientState.busy))
                     messager.sendMessage(ServerMessageType.endGame);
                 try {
                     Thread.sleep(1000);

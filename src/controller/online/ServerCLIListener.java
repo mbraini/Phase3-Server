@@ -39,11 +39,7 @@ public class ServerCLIListener extends Thread {
                 ///todo
             }
             else if (command.equals("start test player")) {
-                Game game = new Game(GameType.monomachia);
-                Player player = new Player(game ,"test");
-                OnlineData.putClientPlayer("test" ,player);
-                OnlineData.putClientOnlineGame("test" ,game);
-                OnlineData.getTCPClient("test").getTcpMessager().sendMessage(ServerMessageType.getPorts);
+
             }
             else if (command.equals("start test2 player")) {
                 Player player = new Player(OnlineData.getOnlineGame("test") ,"test2");
@@ -53,7 +49,7 @@ public class ServerCLIListener extends Thread {
             }
             else if (command.equals("start game")) {
                 Game game = OnlineData.getOnlineGame("test");
-                OnlineData.getOnlineGame("test").start();
+                game.start();
             }
         }
     }

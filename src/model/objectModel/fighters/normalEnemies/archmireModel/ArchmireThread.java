@@ -76,6 +76,10 @@ public class ArchmireThread extends Thread{
             if (model instanceof ArchmireModel)
                 continue;
             if (Collision.IsColliding(model ,archmire)){
+                if (model instanceof EpsilonModel) {
+                    if (!archmire.isTargeted((EpsilonModel) model))
+                        continue;
+                }
                 model.setHP(model.getHP() - DamageConstants.ARCHMIRE_DROWN_DAMAGE_PER_SECOND);
             }
             else {

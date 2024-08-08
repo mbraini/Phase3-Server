@@ -1,6 +1,10 @@
 package controller.game;
 
 import controller.game.manager.GameState;
+import controller.game.player.Player;
+import controller.online.OnlineData;
+import controller.online.client.TCPClient;
+import controller.online.tcp.ServerMessageType;
 import model.ModelData;
 import model.objectModel.ObjectModel;
 import model.objectModel.PortalModel;
@@ -10,31 +14,10 @@ import java.util.ArrayList;
 
 public class ModelRequestController {
 
+    private Player player;
 
-
-//    public static void randomizeKeys() {
-//        KeyHelper.randomize();
-//    }
-//
-//    public static void reorderKeys() {
-//        KeyHelper.reorder();
-//    }
-
-    public static void portalWindow() {
-        Controller.pause();
-//        int totalPR = GameState.getAllPR();
-//        int PR = (int) (totalPR * GameState.getXpGained() * 10 / GameState.getHp());
-    }
-
-    public synchronized static void killEveryThing() {
-//        ArrayList<ObjectModel> models;
-//        synchronized (ModelData.getModels()) {
-//            models = (ArrayList<ObjectModel>) ModelData.getModels().clone();
-//        }
-//        for (ObjectModel model : models) {
-//            if (!(model instanceof EpsilonModel))
-//                model.die();
-//        }
+    public ModelRequestController(Player player) {
+        this.player = player;
     }
 
     public static void playSound(String path) {
@@ -52,10 +35,10 @@ public class ModelRequestController {
     }
 
     public void reorderKeys() {
-
+        OnlineData.getTCPClient(player.getUsername()).getTcpMessager().sendMessage(ServerMessageType.reorderKeys);
     }
 
     public void randomizeKeys() {
-
+        OnlineData.getTCPClient(player.getUsername()).getTcpMessager().sendMessage(ServerMessageType.randomizeKeys);
     }
 }

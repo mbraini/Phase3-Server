@@ -209,7 +209,6 @@ public abstract class Spawner {
     }
 
     public static void spawnBoss(Game game ,Player chasingPlayer ,ArrayList<Player> targetedPlayes){
-        ModelRequestController.killEveryThing();
         Timer timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

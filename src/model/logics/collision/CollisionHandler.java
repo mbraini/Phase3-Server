@@ -150,19 +150,16 @@ public class CollisionHandler {
                 object.setVelocity(0 ,0);
             }
         }
-        if (object instanceof EnemyBulletModel){
-            EnemyBulletModel enemyBulletModel = (EnemyBulletModel) object;
+        if (object instanceof BulletModel){
+            BulletModel enemyBulletModel = (BulletModel) object;
             if (enemyBulletModel.isTargeting(epsilon)) {
-            epsilon.setHP(epsilon.getHP() - enemyBulletModel.getDamage());
-            new Impact(enemyBulletModel.getGame() ,enemyBulletModel.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
-            enemyBulletModel.die();
+                epsilon.setHP(epsilon.getHP() - enemyBulletModel.getDamage());
+                new Impact(enemyBulletModel.getGame() ,enemyBulletModel.getPosition() , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
+                enemyBulletModel.die();
             }
         }
         if (object instanceof CollisionDetector){
             ((CollisionDetector) object).detect();
-        }
-        if (object instanceof PortalModel) {
-            ModelRequestController.portalWindow();
         }
     }
 

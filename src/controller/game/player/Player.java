@@ -40,7 +40,7 @@ public class Player {
     }
 
     private void initControllers() {
-        modelRequestController = new ModelRequestController();
+        modelRequestController = new ModelRequestController(this);
         viewRequestController = new ViewRequestController(this);
     }
 

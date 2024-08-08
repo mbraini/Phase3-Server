@@ -11,7 +11,7 @@ public enum ServerMessageType {
     killSquad,
     connectionCheck,
     updateHasSquad,
-    hasSquadBattle, updateBattleSquad, updateTreasury, donateXP, updateTreasuryShop, buyCall, setPorts, getPorts, gameConnection, givePorts, gamePause, gameUnpause, endGame, giveStats, hasSquadRecponce
+    hasSquadBattle, updateBattleSquad, updateTreasury, donateXP, updateTreasuryShop, buyCall, setPorts, getPorts, gameConnection, givePorts, gamePause, gameUnpause, endGame, giveStats, waitingRoom, waitingTime, endWaitingTime, reorderKeys, randomizeKeys, hasSquadRecponce
 
 
 }

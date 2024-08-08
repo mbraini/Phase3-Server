@@ -19,7 +19,6 @@ public class OnlineData {
     private volatile static HashMap<String , GameClient> clientGameMap = new HashMap<>();
     private volatile static HashMap<String , Game> clientOnlineGameMap = new HashMap<>();
     private volatile static HashMap<String , Player> clientPlayerMap = new HashMap<>();
-    private volatile static HashMap<String ,GameStats> clientStatsMap = new HashMap<>();
 
 
     public synchronized static void addClient(TCPClient tcpClient) {

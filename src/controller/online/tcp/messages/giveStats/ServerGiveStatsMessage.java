@@ -21,7 +21,7 @@ public class ServerGiveStatsMessage{
 
 
     public void sendMessage() {
-        if (!tcpClient.getClientState().equals(ClientState.online))
+        if (!tcpClient.getClientState().equals(ClientState.busy))
             return;
         StatsHelper helper = new StatsHelper();
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.giveStats);
@@ -38,6 +38,7 @@ public class ServerGiveStatsMessage{
         helper.setMostSurvivalTime(GameStats.mostSurvivalTime);
 
         tcpClient.getTcpMessager().sendMessage(helper);
+        tcpClient.setClientState(ClientState.online);
     }
 
 }

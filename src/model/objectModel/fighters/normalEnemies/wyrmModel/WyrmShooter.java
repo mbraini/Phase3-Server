@@ -16,13 +16,11 @@ public class WyrmShooter {
     }
     public void shoot() {
         Vector position = wyrmModel.getPosition();
-//        EpsilonModel epsilon = ModelData.getEpsilon();  todo
-        EpsilonModel epsilon = null; //// todo
+        EpsilonModel epsilon = wyrmModel.getChasingPlayer().getPlayerData().getEpsilon();
 
         Vector direction = Math.VectorAdd(
                 Math.ScalarInVector(-1 ,position),
-//                epsilon.getPosition()
-                new Vector() /////fix /////todo
+                epsilon.getPosition()
         );
 
         Vector bulletPosition = Math.VectorAdd(

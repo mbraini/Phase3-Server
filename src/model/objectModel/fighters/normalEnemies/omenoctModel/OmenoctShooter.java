@@ -38,13 +38,11 @@ public class OmenoctShooter implements ActionListener {
         timePassed += 1000;
         if (timePassed >= TimeConstants.OMENOCT_FIRING_TIME) {
             timePassed = 0;
-//            EpsilonModel epsilon = ModelData.getEpsilon(); ////todo
+            EpsilonModel epsilon = omenoctModel.getChasingPlayer().getPlayerData().getEpsilon();
             Vector direction = Math.VectorAdd(
                     Math.ScalarInVector(-1, position),
-                    new Vector()
-//                    epsilon.getPosition()  //// todo
+                    epsilon.getPosition()
             );
-            String id = Helper.RandomStringGenerator(ControllerConstants.ID_SIZE);
             Vector bulletPosition = Math.VectorAdd(
                     position,
                     Math.VectorWithSize(

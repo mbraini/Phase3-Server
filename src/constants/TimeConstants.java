@@ -28,4 +28,5 @@ public class TimeConstants {
     public static final int PLAYER_PAUSE_TIME = 45000;
     public static final int INITIAL_MONOMACHIA_SPAWNER_DELAY = 4000;
     public static final int INITIAL_COLOSSEUM_SPAWNER_DELAY = 3000;
+    public static final int WAITING_ROOM_TIME = 15000;
 }
