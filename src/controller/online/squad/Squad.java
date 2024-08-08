@@ -74,4 +74,5 @@ public class Squad {
     public void setTreasury(Treasury treasury) {
         this.treasury = treasury;
     }
+
 }

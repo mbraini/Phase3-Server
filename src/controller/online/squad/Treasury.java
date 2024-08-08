@@ -53,4 +53,10 @@ public class Treasury {
     public void setDonateMap(HashMap<String, Integer> donateMap) {
         this.donateMap = donateMap;
     }
+
+    public boolean hasAdonis() {
+        if (adonisCount > 0)
+            return true;
+        return false;
+    }
 }

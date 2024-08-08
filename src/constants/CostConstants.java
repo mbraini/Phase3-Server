@@ -18,4 +18,9 @@ public class CostConstants {
     public static final int CREATE_SQUAD_XP_COST = 100;
     public static final int GEFJON_XP_COST = 300;
     public static final int ADONIS_XP_COST = 400;
+    public static final int MONOMACHIA_WINNER_PRIZE = 80;
+    public static final int COLOSSEUM_WINNER_PRIZE = 30;
+    public static final int BATTLE_SQUAD_WIN_PRIZE = 500;
+    public static final int BATTLE_SQUAD_LOSE_PUNISH = 300;
+    public static final int PALIOXIS_XP_LOST = 100;
 }

@@ -1,16 +1,16 @@
 package controller.game;
 
-import constants.ControllerConstants;
-import constants.SizeConstants;
-import constants.TimeConstants;
-import constants.VelocityConstants;
+import constants.*;
 import controller.game.manager.GameManager;
 import controller.game.manager.GameState;
 import controller.game.player.InfoSender;
 import controller.game.player.Player;
+import controller.online.client.GameClient;
 import controller.online.dataBase.OnlineData;
 import controller.online.client.ClientState;
 import controller.online.client.TCPClient;
+import controller.online.squad.Squad;
+import controller.online.squad.SquadBattle;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.messages.giveStats.ServerGiveStatsMessage;
 import model.ModelData;
@@ -272,9 +272,9 @@ public class Game {
         }
     }
 
-    public void end() {
+    public void end(Player loser) {
         getGameState().setOver(true);
-
+        calculatePoints(loser);
         infoSender.end();
         synchronized (players) {
             for (Player player : players) {
@@ -290,5 +290,43 @@ public class Game {
                 new ServerGiveStatsMessage(OnlineData.getTCPClient(player.getUsername()) ,player).sendMessage();
             }
         }
+    }
+
+    private void calculatePoints(Player loser) {
+        Player loserTeammate = loser.getTeammate();
+        ArrayList<Player> winners = Helper.findWinners(loser ,loserTeammate ,players);
+
+        if (gameType.equals(GameType.monomachia)) {
+            for (Player player : winners) {
+                GameClient gameClient = OnlineData.getGameClient(player.getUsername());
+                gameClient.setXp(gameClient.getXp() + CostConstants.MONOMACHIA_WINNER_PRIZE);
+                Squad squad = OnlineData.getClientSquad(player.getUsername());
+                squad.getTreasury().setXp(squad.getTreasury().getXp() + CostConstants.MONOMACHIA_WINNER_PRIZE);
+                SquadBattle squadBattle = squad.getSquadBattle();
+                squadBattle.setXpEarned(squadBattle.getXpEarned() + CostConstants.MONOMACHIA_WINNER_PRIZE);
+            }
+            if (loser != null) {
+                SquadBattle squadBattle = OnlineData.getClientSquad(winners.getFirst().getUsername()).getSquadBattle();
+                squadBattle.setMonomachiaWins(squadBattle.getMonomachiaWins() + 1);
+            }
+        }
+        else {
+            for (Player player : winners) {
+                GameClient gameClient = OnlineData.getGameClient(player.getUsername());
+                gameClient.setXp(gameClient.getXp() + CostConstants.COLOSSEUM_WINNER_PRIZE);
+                Squad squad = OnlineData.getClientSquad(player.getUsername());
+                squad.getTreasury().setXp(squad.getTreasury().getXp() + CostConstants.COLOSSEUM_WINNER_PRIZE);
+                SquadBattle squadBattle = squad.getSquadBattle();
+                squadBattle.setXpEarned(squadBattle.getXpEarned() + CostConstants.COLOSSEUM_WINNER_PRIZE);
+            }
+        }
+
+        synchronized (players) {
+            for (Player player : players) {
+                GameClient gameClient = OnlineData.getGameClient(player.getUsername());
+                gameClient.setXp(gameClient.getXp() + player.getPlayerData().getXpGained());
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ package utils;
 import constants.DistanceConstants;
 import constants.SizeConstants;
 import controller.game.Game;
+import controller.game.player.Player;
 import model.logics.collision.Collision;
 import model.logics.collision.CollisionHandler;
 import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
@@ -189,4 +190,21 @@ public class Helper {
         return newData;
     }
 
+    public static ArrayList<Player> findWinners(Player loser, Player loserTeammate ,ArrayList<Player> players) {
+        ArrayList<Player> answer = new ArrayList<>();
+        synchronized (players) {
+            for (Player player : players) {
+                if (loser != null) {
+                    if (player.getUsername().equals(loser.getUsername()))
+                        continue;
+                }
+                if (loserTeammate != null) {
+                    if (player.getUsername().equals(loserTeammate.getUsername()))
+                        continue;
+                }
+                answer.add(player);
+            }
+        }
+        return answer;
+    }
 }

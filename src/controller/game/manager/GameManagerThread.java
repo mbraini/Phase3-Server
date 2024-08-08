@@ -77,33 +77,16 @@ public class GameManagerThread extends Thread{
 
     private void checkEnd() {
         synchronized (game.getPlayers()) {
-            if (game.getGameType().equals(GameType.monomachia)) {
-                for (Player player : game.getPlayers()) {
-                    if (player.isDead()) {
-                        if (player.getTeammate() != null) {
-                            if (player.getTeammate().isDead()) {
-                                game.end();
-                                return;
-                            }
-                        }
-                        else {
-                            game.end();
+            for (Player player : game.getPlayers()) {
+                if (player.isDead()) {
+                    if (player.getTeammate() != null) {
+                        if (player.getTeammate().isDead()) {
+                            game.end(player);
+                            return;
                         }
                     }
-                }
-            }
-            else {
-                for (Player player : game.getPlayers()) {
-                    if (player.isDead()) {
-                        if (player.getTeammate() != null) {
-                            if (player.getTeammate().isDead()) {
-                                game.end();
-                                return;
-                            }
-                        }
-                        else {
-                            game.end();
-                        }
+                    else {
+                        game.end(player);
                     }
                 }
             }
