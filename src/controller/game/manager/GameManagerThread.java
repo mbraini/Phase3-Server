@@ -4,8 +4,6 @@ import constants.TimeConstants;
 import controller.game.Game;
 import controller.game.GameType;
 import controller.game.player.Player;
-import controller.online.OnlineData;
-import model.ModelData;
 import model.inGameAbilities.InGameAbility;
 import model.interfaces.Fader;
 import model.objectModel.effects.EffectModel;

@@ -4,10 +4,8 @@ import com.google.gson.Gson;
 import controller.game.Game;
 import controller.game.enums.EffectType;
 import controller.game.player.Player;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import model.objectModel.effects.EffectModel;
-import model.objectModel.fighters.EpsilonModel;
-import utils.area.Area;
 import utils.area.Circle;
 import utils.area.Polygon;
 

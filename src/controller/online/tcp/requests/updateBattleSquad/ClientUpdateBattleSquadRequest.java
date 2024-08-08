@@ -2,7 +2,7 @@ package controller.online.tcp.requests.updateBattleSquad;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.client.ClientState;
 import controller.online.client.TCPClient;
 import controller.online.squad.Squad;

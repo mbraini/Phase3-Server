@@ -1,6 +1,6 @@
 package controller.online.tcp.messages;
 
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.tcp.ServerMessageType;
 import utils.TCPMessager;
 

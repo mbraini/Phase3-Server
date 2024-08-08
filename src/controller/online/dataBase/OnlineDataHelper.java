@@ -1,4 +1,4 @@
-package controller.online;
+package controller.online.dataBase;
 
 import controller.online.squad.Squad;
 

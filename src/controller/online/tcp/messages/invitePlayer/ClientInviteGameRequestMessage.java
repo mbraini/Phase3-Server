@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import controller.game.Game;
 import controller.game.GameType;
 import controller.game.player.Player;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.client.ClientState;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.messages.ClientMessageRecponceType;

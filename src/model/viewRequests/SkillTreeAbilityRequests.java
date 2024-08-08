@@ -1,18 +1,12 @@
 package model.viewRequests;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import constants.CostConstants;
-import controller.game.configs.Configs;
 import controller.game.enums.SkillTreeAbilityType;
-import controller.game.manager.GameState;
 import controller.game.player.Player;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.client.GameClient;
-import controller.online.client.gameClientUpdate.SkillTreeJsonHelper;
 import model.skillTreeAbilities.SkillTreeAbility;
 import model.skillTreeAbilities.SkillTreeAbilityHandler;
-import utils.Helper;
 
 public class SkillTreeAbilityRequests {
 

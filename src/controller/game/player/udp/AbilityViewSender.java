@@ -9,7 +9,7 @@ import controller.game.Game;
 import controller.game.enums.InGameAbilityType;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.player.Player;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.annotations.SkippedByJson;
 import model.inGameAbilities.InGameAbility;
 import model.inGameAbilities.Slaughter;

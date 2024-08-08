@@ -2,6 +2,7 @@ package controller.online.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controller.online.annotations.SkippedByJson;
 import controller.online.client.gameClientUpdate.SkillTreeJsonHelper;
 import utils.TCPMessager;
 
@@ -18,11 +19,11 @@ public class GameClient {
     private boolean proteus;
     private boolean empusa;
     private boolean dolus;
+    @SkippedByJson
     private Gson gson;
 
     public GameClient(String username) {
         this.username = username;
-        initGson();
     }
 
     private void initGson() {
@@ -128,6 +129,7 @@ public class GameClient {
     }
 
     public void update(TCPClient tcpClient) {
+        initGson();
         TCPMessager TCPmessager = tcpClient.getTcpMessager();
         String xpString = TCPmessager.readMessage();
         xp = Integer.valueOf(xpString);

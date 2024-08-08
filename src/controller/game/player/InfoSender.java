@@ -3,7 +3,6 @@ package controller.game.player;
 import com.google.gson.Gson;
 import controller.game.Game;
 import controller.game.player.udp.*;
-import controller.online.OnlineData;
 
 import java.util.ArrayList;
 

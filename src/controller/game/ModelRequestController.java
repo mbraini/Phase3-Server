@@ -1,16 +1,8 @@
 package controller.game;
 
-import controller.game.manager.GameState;
 import controller.game.player.Player;
-import controller.online.OnlineData;
-import controller.online.client.TCPClient;
+import controller.online.dataBase.OnlineData;
 import controller.online.tcp.ServerMessageType;
-import model.ModelData;
-import model.objectModel.ObjectModel;
-import model.objectModel.PortalModel;
-import model.objectModel.fighters.EpsilonModel;
-
-import java.util.ArrayList;
 
 public class ModelRequestController {
 

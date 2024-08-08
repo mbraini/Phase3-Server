@@ -1,13 +1,10 @@
 package controller.online.tcp.messages.giveStats;
 
-import com.google.gson.Gson;
 import controller.game.player.Player;
 import controller.online.GameStats;
-import controller.online.OnlineData;
 import controller.online.client.ClientState;
 import controller.online.client.TCPClient;
 import controller.online.tcp.ServerMessageType;
-import utils.TCPMessager;
 
 public class ServerGiveStatsMessage{
 

@@ -2,9 +2,8 @@ package model.skillTreeAbilities;
 
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.player.Player;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.client.GameClient;
-import model.ModelData;
 import model.skillTreeAbilities.Cerberus.Cerberus;
 
 import java.util.ArrayList;

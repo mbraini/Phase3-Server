@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import constants.PathConstants;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.annotations.SkippedByJson;
 import controller.online.client.TCPClient;
 import controller.online.tcp.ServerRecponceType;

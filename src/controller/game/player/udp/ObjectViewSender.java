@@ -5,7 +5,7 @@ import controller.game.Game;
 import controller.game.enums.ModelType;
 import controller.game.interfaces.SizeChanger;
 import controller.game.player.Player;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import model.objectModel.ObjectModel;
 import utils.Vector;
 

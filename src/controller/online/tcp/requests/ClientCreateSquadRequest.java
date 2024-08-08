@@ -1,7 +1,7 @@
 package controller.online.tcp.requests;
 
 import constants.CostConstants;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.client.TCPClient;
 import controller.online.squad.Squad;
 import controller.online.tcp.ServerMessageType;

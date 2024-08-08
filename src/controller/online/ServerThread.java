@@ -1,13 +1,47 @@
 package controller.online;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import constants.PathConstants;
 import constants.RefreshRateConstants;
+import controller.online.annotations.SkippedByJson;
 import controller.online.client.ClientState;
+import controller.online.client.GameClient;
 import controller.online.client.TCPClient;
+import controller.online.dataBase.OnlineData;
+import controller.online.squad.Squad;
 import controller.online.tcp.messages.ClientMessage;
+import utils.Helper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ServerThread extends Thread {
+
+    private final Gson gson;
+
+    public ServerThread() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        builder.serializeNulls();
+        builder.setExclusionStrategies(new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+                return fieldAttributes.getAnnotation(SkippedByJson.class) != null;
+            }
+
+            @Override
+            public boolean shouldSkipClass(Class<?> aClass) {
+                if (aClass.getAnnotation(SkippedByJson.class) == null)
+                    return false;
+                return true;
+            }
+        });
+        gson = builder.create();
+    }
+
 
     @Override
     public void run() {
@@ -24,13 +58,33 @@ public class ServerThread extends Thread {
     }
 
     private void updateServer() {
-        /////save info
-        //todo
-        /////
-
+        saveData();
         sendMessagesIf();
+    }
 
+    private void saveData() {
+        ArrayList<Squad> squads;
+        ArrayList<String> usernames;
+        HashMap<String , GameClient> clientGameMap;
+        HashMap<String ,Squad> clientSquadMap;
+        synchronized (OnlineData.getLock()) {
+            squads = (ArrayList<Squad>) OnlineData.getSquads().clone();
+            usernames = (ArrayList<String>) OnlineData.getClientUsernames().clone();
+            clientGameMap = (HashMap<String, GameClient>) OnlineData.getClientGameMap().clone();
+        }
+        Helper.writeFile(PathConstants.DATABASE_FOLDER_PATH + "squads.json" ,gson.toJson(squads));
 
+        try {
+            for (String username : usernames) {
+                Helper.writeFile(
+                        PathConstants.CLIENT_EARNINGS_FOLDER_PATH + "/" + username + "/earnings.json" ,
+                        gson.toJson(clientGameMap.get(username))
+                );
+            }
+        }
+        catch (Exception e) {
+
+        }
     }
 
     private void sendMessagesIf() {
@@ -40,6 +94,8 @@ public class ServerThread extends Thread {
         }
         for (String username : clientUsernames) {
             TCPClient tcpClient = OnlineData.getTCPClient(username);
+            if (tcpClient == null)
+                continue;
             if (tcpClient.getClientState().equals(ClientState.online)) {
                 if (!tcpClient.getMessages().isEmpty()) {
                     for (ClientMessage clientMessage : tcpClient.getMessages()) {

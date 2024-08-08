@@ -2,7 +2,7 @@ package controller.online.tcp.requests;
 
 import controller.game.Game;
 import controller.game.player.Player;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.client.TCPClient;
 import controller.online.tcp.TCPClientRequest;
 import controller.online.tcp.messages.ServerGivePortRequest;

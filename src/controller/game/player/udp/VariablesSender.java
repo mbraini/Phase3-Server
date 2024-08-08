@@ -3,7 +3,7 @@ package controller.game.player.udp;
 import com.google.gson.Gson;
 import controller.game.Game;
 import controller.game.player.Player;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

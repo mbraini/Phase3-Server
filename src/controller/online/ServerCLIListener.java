@@ -1,21 +1,10 @@
 package controller.online;
 
-import constants.ControllerConstants;
-import constants.SizeConstants;
 import controller.game.Game;
-import controller.game.GameType;
-import controller.game.enums.ModelType;
-import controller.game.manager.Spawner;
 import controller.game.player.Player;
+import controller.online.dataBase.OnlineData;
 import controller.online.squad.Squad;
 import controller.online.tcp.ServerMessageType;
-import model.objectModel.fighters.basicEnemies.TrigorathModel;
-import model.objectModel.fighters.miniBossEnemies.blackOrbModel.BlackOrbModel;
-import model.objectModel.fighters.normalEnemies.archmireModel.ArchmireModel;
-import model.objectModel.fighters.normalEnemies.wyrmModel.WyrmModel;
-import model.objectModel.frameModel.FrameModel;
-import utils.Helper;
-import utils.Vector;
 
 import java.util.ArrayList;
 import java.util.Scanner;

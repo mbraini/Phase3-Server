@@ -1,6 +1,6 @@
 package controller.online.tcp.messages.joinSquad;
 
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import controller.online.squad.Squad;
 import controller.online.tcp.messages.ClientMessageRecponceType;
 import controller.online.tcp.messages.OKMessage;

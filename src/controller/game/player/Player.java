@@ -4,7 +4,7 @@ import constants.ControllerConstants;
 import constants.SizeConstants;
 import controller.game.*;
 import controller.game.player.udp.ClientGameInfoReceiver;
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Helper;
 import utils.Math;

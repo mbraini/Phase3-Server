@@ -1,7 +1,7 @@
 package controller.online.squad;
 
 
-import controller.online.OnlineData;
+import controller.online.dataBase.OnlineData;
 
 import java.util.ArrayList;
 
