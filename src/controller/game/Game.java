@@ -301,7 +301,11 @@ public class Game {
     }
 
     private void calculatePoints(Player loser) {
-        Player loserTeammate = loser.getTeammate();
+        Player loserTeammate;
+        if (loser != null)
+            loserTeammate = loser.getTeammate();
+        else
+            loserTeammate = null;
         ArrayList<Player> winners = Helper.findWinners(loser ,loserTeammate ,players);
 
         if (gameType.equals(GameType.monomachia)) {

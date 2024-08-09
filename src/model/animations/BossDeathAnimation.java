@@ -36,7 +36,7 @@ public class BossDeathAnimation extends TimerAnimation {
             @Override
             public void actionPerformed(ActionEvent e) {
                 killEveryOne();
-                new EpsilonGetBigAnimation().StartAnimation();
+                boss.getGame().getGameState().setDone(true);
                 wait.stop();
             }
         });

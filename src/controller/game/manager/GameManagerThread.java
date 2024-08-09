@@ -15,6 +15,7 @@ import model.objectModel.frameModel.FrameModel;
 import model.skillTreeAbilities.SkillTreeAbility;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameManagerThread extends Thread{
     private ArrayList<ObjectModel> models;
@@ -72,7 +73,16 @@ public class GameManagerThread extends Thread{
         interfaces();
         game.getGameState().update(models , TimeConstants.MANAGER_THREAD_REFRESH_TIME);
         killObjects();
+        checkDone();
         checkEnd();
+    }
+
+    private void checkDone() {
+        if (game.getGameType().equals(GameType.monomachia)) {
+            if (time / 1000 >= 1 * 60) {
+                game.getGameState().setDone(true);
+            }
+        }
     }
 
     private void checkEnd() {
@@ -87,7 +97,34 @@ public class GameManagerThread extends Thread{
                     }
                     else {
                         game.end(player);
+                        return;
                     }
+                }
+            }
+            if (game.getGameState().isDone()) {
+                Player player1 = game.getPlayers().getFirst();
+                Player player2 = game.getPlayers().get(1);
+                if (game.getGameType().equals(GameType.monomachia)) {
+                    if (player1.getPlayerData().getEpsilon().getHP() > player2.getPlayerData().getEpsilon().getHP()) {
+                        game.end(player2);
+                        return;
+                    }
+                    if (player2.getPlayerData().getEpsilon().getHP() > player1.getPlayerData().getEpsilon().getHP()) {
+                        game.end(player1);
+                        return;
+                    }
+                    if ((new Random()).nextInt(0 ,2) == 0) {
+                        game.end(player1);
+                        return;
+                    }
+                    else {
+                        game.end(player2);
+                        return;
+                    }
+                }
+                else {
+                    game.end(null);
+                    return;
                 }
             }
         }

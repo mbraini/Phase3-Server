@@ -24,6 +24,7 @@ public class GameState {
     private volatile boolean isOver;
     private volatile boolean isDizzy;
     private volatile boolean isInAnimation;
+    private volatile boolean done;
     private Game game;
 
     public GameState(Game game){
@@ -194,5 +195,13 @@ public class GameState {
 
     public void setShrinkageVelocity(double shrinkageVelocity) {
         this.shrinkageVelocity = shrinkageVelocity;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public boolean isDone() {
+        return done;
     }
 }
