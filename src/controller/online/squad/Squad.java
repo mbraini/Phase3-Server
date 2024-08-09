@@ -11,6 +11,7 @@ public class Squad {
     private SquadBattle squadBattle;
     private Treasury treasury;
     private ArrayList<String> members;
+    private ArrayList<SquadBattleHistoryMember> squadBattleHistory = new ArrayList<>();
     private String owner;
 
     public Squad(String name) {
@@ -73,6 +74,18 @@ public class Squad {
 
     public void setTreasury(Treasury treasury) {
         this.treasury = treasury;
+    }
+
+    public void addHistory(SquadBattleHistoryMember historyMember) {
+        synchronized (squadBattleHistory) {
+            squadBattleHistory.add(historyMember);
+        }
+    }
+
+    public ArrayList<SquadBattleHistoryMember> getSquadBattleHistory() {
+        synchronized (squadBattleHistory) {
+            return squadBattleHistory;
+        }
     }
 
 }

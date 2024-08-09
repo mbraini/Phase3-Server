@@ -1,14 +1,11 @@
 package controller.online;
 
 import constants.CostConstants;
-import controller.game.Game;
-import controller.game.GameType;
-import controller.game.player.Player;
 import controller.online.client.GameClient;
 import controller.online.dataBase.OnlineData;
 import controller.online.squad.Squad;
 import controller.online.squad.SquadBattle;
-import controller.online.tcp.ServerMessageType;
+import controller.online.squad.SquadBattleHistoryMember;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,23 +29,6 @@ public class ServerCLIListener extends Thread {
             else if (command.equals("terminateSquadBattle")) {
                 defineWinners();
             }
-            else if (command.equals("start test player")) {
-                Game game = new Game(GameType.monomachia);
-                Player player = new Player(game ,"test");
-                OnlineData.putClientPlayer("test" ,player);
-                OnlineData.putClientOnlineGame("test" ,game);
-                OnlineData.getTCPClient("test").getTcpMessager().sendMessage(ServerMessageType.getPorts);
-            }
-            else if (command.equals("start test2 player")) {
-                Player player = new Player(OnlineData.getOnlineGame("test") ,"test2");
-                OnlineData.putClientPlayer("test2" ,player);
-                OnlineData.putClientOnlineGame("test2" ,OnlineData.getOnlineGame("test"));
-                OnlineData.getTCPClient("test2").getTcpMessager().sendMessage(ServerMessageType.getPorts);
-            }
-            else if (command.equals("start game")) {
-                Game game = OnlineData.getOnlineGame("test");
-                game.start();
-            }
         }
     }
 
@@ -58,10 +38,23 @@ public class ServerCLIListener extends Thread {
             if (squad.getSquadBattle().getInBattleWith() != null) {
                 Squad winner = defineWinner(squad ,OnlineData.getSquad(squad.getSquadBattle().getInBattleWith()));
                 reward(winner ,OnlineData.getSquad(winner.getSquadBattle().getInBattleWith()));
+                addHistory(winner ,OnlineData.getSquad(winner.getSquadBattle().getInBattleWith()));
                 resetSquadBattle(squad ,OnlineData.getSquad(squad.getSquadBattle().getInBattleWith()));
-                System.out.println(squad.getTreasury().getXp());
             }
         }
+    }
+
+    private void addHistory(Squad winner, Squad loser) {
+        winner.addHistory(new SquadBattleHistoryMember(
+                winner.getName(),
+                loser.getName(),
+                true
+        ));
+        loser.addHistory(new SquadBattleHistoryMember(
+                loser.getName(),
+                winner.getName(),
+                false
+        ));
     }
 
     private void resetSquadBattle(Squad squad1, Squad squad2) {
