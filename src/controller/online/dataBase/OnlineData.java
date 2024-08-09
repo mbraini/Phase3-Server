@@ -1,6 +1,6 @@
 package controller.online.dataBase;
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 import controller.online.client.GameClient;
 import controller.online.client.TCPClient;

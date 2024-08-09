@@ -2,9 +2,7 @@
 package model.threads;
 
 import constants.RefreshRateConstants;
-import controller.game.Game;
-import controller.game.manager.GameState;
-import model.ModelData;
+import controller.game.onlineGame.Game;
 import model.logics.collision.Collision;
 import model.objectModel.ObjectModel;
 import model.objectModel.fighters.EpsilonModel;

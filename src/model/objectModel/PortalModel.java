@@ -2,8 +2,8 @@ package model.objectModel;
 
 import constants.SizeConstants;
 import constants.TimeConstants;
-import controller.game.Game;
-import controller.game.ObjectController;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.ObjectController;
 import controller.game.enums.ModelType;
 import model.interfaces.Ability;
 import model.interfaces.Fader;

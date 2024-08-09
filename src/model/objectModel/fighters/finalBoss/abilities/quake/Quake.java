@@ -2,7 +2,6 @@ package model.objectModel.fighters.finalBoss.abilities.quake;
 
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
-import controller.game.ModelRequestController;
 import controller.game.player.Player;
 import model.logics.Dash;
 import model.logics.Impact;

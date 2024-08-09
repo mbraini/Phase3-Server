@@ -1,9 +1,7 @@
 package model.objectModel.fighters.finalBoss;
 
 import constants.RefreshRateConstants;
-import controller.game.Game;
-import controller.game.manager.GameState;
-import model.ModelData;
+import controller.game.onlineGame.Game;
 import model.animations.BossPhase2Animation;
 import model.objectModel.ObjectModel;
 import model.objectModel.fighters.EpsilonModel;

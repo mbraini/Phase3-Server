@@ -1,7 +1,7 @@
 package controller.online.tcp.requests;
 
-import controller.game.Game;
-import controller.game.GameType;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.GameType;
 import controller.game.player.Player;
 import controller.online.client.TCPClient;
 import controller.online.dataBase.OnlineData;

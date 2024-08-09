@@ -1,6 +1,6 @@
 package model.objectModel.fighters.finalBoss.bossAI;
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
 import model.objectModel.ObjectModel;

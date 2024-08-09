@@ -5,7 +5,7 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import constants.TimeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.InGameAbilityType;
 import controller.game.enums.SkillTreeAbilityType;
 import controller.game.player.Player;

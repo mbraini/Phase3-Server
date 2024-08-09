@@ -1,10 +1,7 @@
 package model.objectModel.fighters;
 
 
-import controller.game.Game;
-import controller.game.GameData;
-import controller.game.ObjectController;
-import controller.game.manager.GameState;
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.IsCircle;
 import model.interfaces.collisionInterfaces.IsPolygon;

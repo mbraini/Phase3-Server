@@ -1,6 +1,6 @@
 package model.objectModel.effects;
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.EffectType;
 import model.objectModel.ObjectModel;
 import utils.area.Area;

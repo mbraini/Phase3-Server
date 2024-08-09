@@ -1,4 +1,4 @@
-package controller.game;
+package controller.game.player;
 
 import controller.game.player.Player;
 import controller.online.dataBase.OnlineData;

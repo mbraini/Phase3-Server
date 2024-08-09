@@ -1,7 +1,7 @@
 package controller.game.player;
 
 import com.google.gson.Gson;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.player.udp.*;
 
 import java.util.ArrayList;

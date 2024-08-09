@@ -1,6 +1,6 @@
 package model.objectModel.fighters.miniBossEnemies.barricadosModel;
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import controller.game.player.Player;
 import utils.Vector;

@@ -1,7 +1,7 @@
 package controller.game.player.udp;
 
 import com.google.gson.Gson;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.EffectType;
 import controller.game.player.Player;
 import controller.online.dataBase.OnlineData;

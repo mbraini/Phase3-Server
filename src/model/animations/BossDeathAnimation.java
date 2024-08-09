@@ -2,12 +2,7 @@ package model.animations;
 
 import constants.ImageConstants;
 import constants.SizeConstants;
-import constants.SoundPathConstants;
-import controller.game.Controller;
-import controller.game.ModelRequestController;
-import controller.game.ObjectController;
-import controller.game.manager.GameState;
-import model.ModelRequests;
+import controller.game.onlineGame.ObjectController;
 import model.objectModel.fighters.finalBoss.Boss;
 
 import javax.swing.*;
@@ -25,7 +20,6 @@ public class BossDeathAnimation extends TimerAnimation {
 
     public BossDeathAnimation(Boss boss) {
         this.boss = boss;
-        ModelRequestController.playSound(SoundPathConstants.winSound);
         boss.getGame().getGameState().setIsInAnimation(true);
         setUpTimer();
         setUpWait();
@@ -86,19 +80,16 @@ public class BossDeathAnimation extends TimerAnimation {
         if (!boss.getRightHand().isDead()) {
             ObjectController.removeObject(boss.getRightHand());
             ObjectController.removeFrame(boss.getRightHand().getFrame());
-            Controller.addXP(100);
         }
         if (!boss.getLeftHand().isDead()) {
             ObjectController.removeObject(boss.getLeftHand());
             ObjectController.removeFrame(boss.getLeftHand().getFrame());
-            Controller.addXP(100);
         }
         ObjectController.removeObject(boss.getHead());
         ObjectController.removeFrame(boss.getHead().getFrame());
         ObjectController.removeObject(boss.getPunch());
         ObjectController.removeFrame(boss.getPunch().getFrame());
         boss.getGame().getModelRequests().removeAbstractEnemy(boss.getId());
-        Controller.addXP(300);
     }
 
     @Override

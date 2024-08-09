@@ -1,7 +1,7 @@
 package model.objectModel;
 
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import model.logics.MovementManager;
 import utils.Vector;

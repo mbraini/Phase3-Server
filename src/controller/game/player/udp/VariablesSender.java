@@ -1,7 +1,7 @@
 package controller.game.player.udp;
 
 import com.google.gson.Gson;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 import controller.online.dataBase.OnlineData;
 
@@ -54,6 +54,7 @@ public class VariablesSender extends Thread{
                             (int) player.getPlayerData().getEpsilon().getHP(),
                             player.getPlayerData().getXp(),
                             player.getGame().getGameState().getWave(),
+                            player.getPlayerData().getPauseTimeLeft(),
                             frameView
                     );
                     String JVariables = gson.toJson(variablesView);
@@ -80,13 +81,15 @@ public class VariablesSender extends Thread{
         int hp;
         int xp;
         int wave;
+        int pauseTimeLeft;
         FrameViewSender.FrameView frameView;
 
-        public VariablesView(int time, int hp, int xp, int wave , FrameViewSender.FrameView frameView) {
+        public VariablesView(int time, int hp, int xp, int wave ,int pauseTimeLeft , FrameViewSender.FrameView frameView) {
             this.time = time;
             this.hp = hp;
             this.xp = xp;
             this.wave = wave;
+            this.pauseTimeLeft = pauseTimeLeft;
             this.frameView = frameView;
         }
     }

@@ -1,6 +1,7 @@
-package controller.game;
+package controller.game.onlineGame;
 
 import constants.*;
+import controller.game.player.PauseWatcher;
 import controller.game.manager.GameManager;
 import controller.game.manager.GameState;
 import controller.game.player.InfoSender;

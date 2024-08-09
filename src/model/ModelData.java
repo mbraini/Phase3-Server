@@ -1,13 +1,10 @@
 package model;
 
-import controller.game.Game;
-import model.inGameAbilities.InGameAbility;
+import controller.game.onlineGame.Game;
 import model.objectModel.ObjectModel;
 import model.objectModel.effects.EffectModel;
 import model.objectModel.fighters.AbstractEnemy;
-import model.objectModel.fighters.EpsilonModel;
 import model.objectModel.frameModel.FrameModel;
-import model.skillTreeAbilities.SkillTreeAbility;
 
 import java.util.ArrayList;
 import java.util.HashMap;

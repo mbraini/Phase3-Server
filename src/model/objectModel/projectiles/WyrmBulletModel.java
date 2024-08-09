@@ -3,7 +3,7 @@ package model.objectModel.projectiles;
 import constants.DamageConstants;
 import constants.SizeConstants;
 import constants.VelocityConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.IsCircle;

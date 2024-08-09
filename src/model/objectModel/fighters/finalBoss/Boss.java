@@ -2,7 +2,7 @@ package model.objectModel.fighters.finalBoss;
 
 import constants.ControllerConstants;
 import constants.SizeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.manager.Spawner;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;

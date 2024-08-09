@@ -1,6 +1,6 @@
 package model.objectModel.fighters;
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.AbstractEnemyType;
 import controller.game.player.Player;
 

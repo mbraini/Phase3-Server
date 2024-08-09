@@ -2,7 +2,7 @@ package model.objectModel.fighters.finalBoss.bossHelper;
 
 import constants.ImageConstants;
 import constants.SizeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.HasVertices;

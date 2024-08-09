@@ -1,7 +1,7 @@
 package model.objectModel.fighters.normalEnemies.necropickModel;
 
 import constants.SizeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
 import controller.game.player.Player;

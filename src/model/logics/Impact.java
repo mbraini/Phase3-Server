@@ -2,8 +2,7 @@ package model.logics;
 
 
 import constants.TimeConstants;
-import controller.game.Game;
-import model.ModelData;
+import controller.game.onlineGame.Game;
 import model.interfaces.movementIntefaces.ImpactAble;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Math;

@@ -2,7 +2,7 @@ package model.objectModel.fighters;
 
 
 import constants.SizeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import model.interfaces.collisionInterfaces.IsCircle;
 import model.objectModel.ObjectModel;

@@ -3,7 +3,7 @@ package utils;
 
 import constants.DistanceConstants;
 import constants.SizeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 import model.logics.collision.Collision;
 import model.logics.collision.CollisionHandler;

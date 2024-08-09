@@ -1,4 +1,4 @@
-package controller.online.tcp;
+package controller.online.squad;
 
 public enum CallType {
 

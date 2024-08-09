@@ -1,6 +1,6 @@
 package model;
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import model.objectModel.ObjectModel;
 import model.objectModel.effects.EffectModel;
 import model.objectModel.fighters.AbstractEnemy;

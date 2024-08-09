@@ -1,11 +1,10 @@
 package model.objectModel.fighters.finalBoss.bossHelper;
 
 import constants.RefreshRateConstants;
-import controller.game.Game;
-import controller.game.ObjectController;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.ObjectController;
 import controller.game.interfaces.ImageChanger;
 import controller.game.interfaces.SizeChanger;
-import controller.game.manager.GameState;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import model.interfaces.FrameSticker;

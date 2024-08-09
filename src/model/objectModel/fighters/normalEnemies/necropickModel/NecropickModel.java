@@ -2,13 +2,11 @@ package model.objectModel.fighters.normalEnemies.necropickModel;
 
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
-import controller.game.manager.GameState;
 import controller.game.manager.Spawner;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
-import model.ModelData;
 import model.interfaces.Ability;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.movementIntefaces.MoveAble;

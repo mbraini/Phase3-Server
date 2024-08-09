@@ -1,8 +1,8 @@
 package controller.game.manager;
 
 import constants.TimeConstants;
-import controller.game.Game;
-import controller.game.GameType;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.GameType;
 import controller.game.player.Player;
 import model.inGameAbilities.InGameAbility;
 import model.interfaces.Fader;

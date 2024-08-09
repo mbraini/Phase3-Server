@@ -1,7 +1,7 @@
 package controller.game.player.udp;
 
 import com.google.gson.Gson;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import controller.game.interfaces.SizeChanger;
 import controller.game.player.Player;

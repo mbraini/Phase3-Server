@@ -1,14 +1,6 @@
 package model.animations;
 
-import constants.SizeConstants;
-import constants.SoundPathConstants;
-import controller.game.Controller;
-import controller.game.ModelRequestController;
-import controller.game.manager.GameState;
-import model.ModelData;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

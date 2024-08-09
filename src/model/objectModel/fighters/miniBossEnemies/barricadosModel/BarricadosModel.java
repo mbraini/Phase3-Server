@@ -2,8 +2,8 @@ package model.objectModel.fighters.miniBossEnemies.barricadosModel;
 
 import constants.SizeConstants;
 import constants.TimeConstants;
-import controller.game.Game;
-import controller.game.ObjectController;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.ObjectController;
 import controller.game.player.Player;
 import model.interfaces.Fader;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -14,7 +14,6 @@ import utils.Math;
 import utils.Vector;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class BarricadosModel extends MiniBossModel implements Fader , IsPolygon , HasVertices {
 

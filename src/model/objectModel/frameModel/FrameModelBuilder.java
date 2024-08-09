@@ -1,6 +1,6 @@
 package model.objectModel.frameModel;
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import utils.Vector;
 
 import java.awt.*;

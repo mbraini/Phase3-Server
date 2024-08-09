@@ -3,10 +3,7 @@ package model.threads;
 
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
-import controller.game.Game;
-import controller.game.manager.GameState;
-import model.ModelData;
-import model.ModelRequests;
+import controller.game.onlineGame.Game;
 import model.interfaces.Ability;
 import model.interfaces.FrameSticker;
 import model.interfaces.movementIntefaces.MoveAble;

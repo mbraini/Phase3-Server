@@ -1,4 +1,4 @@
-package controller.game;
+package controller.game.player;
 
 import controller.game.enums.InGameAbilityType;
 import controller.game.enums.SkillTreeAbilityType;

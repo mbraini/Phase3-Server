@@ -1,8 +1,7 @@
 package model.objectModel.fighters.basicEnemies;
 
 import constants.RefreshRateConstants;
-import controller.game.Game;
-import controller.game.manager.GameState;
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;

@@ -1,7 +1,7 @@
 package controller.online.tcp.requests;
 
 import com.google.gson.Gson;
-import controller.game.GameType;
+import controller.game.onlineGame.GameType;
 import controller.online.dataBase.OnlineData;
 import controller.online.client.TCPClient;
 import controller.online.tcp.TCPClientRequest;

@@ -1,4 +1,4 @@
-package controller.game;
+package controller.game.onlineGame;
 
 public enum GameType {
 

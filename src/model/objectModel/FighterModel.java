@@ -1,6 +1,6 @@
 package model.objectModel;
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 import model.objectModel.fighters.EpsilonModel;
 

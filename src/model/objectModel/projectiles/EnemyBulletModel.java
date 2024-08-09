@@ -1,7 +1,7 @@
 package model.objectModel.projectiles;
 
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 
 import java.util.ArrayList;

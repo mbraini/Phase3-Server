@@ -2,21 +2,17 @@ package model.logics.collision;
 
 
 import constants.DistanceConstants;
-import constants.SoundPathConstants;
-import controller.game.ModelRequestController;
-import controller.game.PlayerData;
+import controller.game.player.PlayerData;
 import model.inGameAbilities.Dismay.EpsilonProtectorModel;
 import model.interfaces.collisionInterfaces.CollisionDetector;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.logics.Impact;
 import model.objectModel.ObjectModel;
-import model.objectModel.PortalModel;
 import model.objectModel.fighters.EnemyModel;
 import model.objectModel.fighters.EpsilonModel;
 import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.fighters.finalBoss.bossHelper.BossHelperModel;
 import model.objectModel.projectiles.BulletModel;
-import model.objectModel.projectiles.EnemyBulletModel;
 import model.objectModel.projectiles.EpsilonBulletModel;
 import model.skillTreeAbilities.Cerberus.CerberusModel;
 import utils.Math;
@@ -144,7 +140,6 @@ public class CollisionHandler {
             epsilonEnemyMeleeHandler(epsilon ,(EnemyModel)object);
             pullOutObject(epsilon ,object);
             new Impact(epsilon.getGame() ,collisionPoint , DistanceConstants.REGULAR_IMPACT_RANGE).MakeImpact();
-            ModelRequestController.playSound(SoundPathConstants.impactSound);
             if (object instanceof BossHelperModel){
                 object.setAcceleration(0 ,0);
                 object.setVelocity(0 ,0);

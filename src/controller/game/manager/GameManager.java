@@ -1,7 +1,7 @@
 package controller.game.manager;
 
 
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 
 public class GameManager {
 

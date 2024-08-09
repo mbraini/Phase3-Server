@@ -1,5 +1,6 @@
-package controller.game;
+package controller.game.onlineGame;
 
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 import controller.online.dataBase.OnlineData;
 import controller.online.tcp.ServerMessageType;

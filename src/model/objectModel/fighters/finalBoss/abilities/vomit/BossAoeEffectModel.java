@@ -2,8 +2,8 @@ package model.objectModel.fighters.finalBoss.abilities.vomit;
 
 import constants.DistanceConstants;
 import constants.SizeConstants;
-import controller.game.Game;
-import controller.game.ObjectController;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.ObjectController;
 import controller.game.enums.EffectType;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;

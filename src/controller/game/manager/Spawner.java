@@ -1,19 +1,15 @@
 package controller.game.manager;
 
 import constants.SizeConstants;
-import controller.game.Game;
-import controller.game.ModelRequestController;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import constants.ControllerConstants;
 import controller.game.player.Player;
-import model.ModelRequests;
 import model.animations.BossSpawnAnimation;
 import model.inGameAbilities.Dismay.EpsilonProtectorModel;
 import model.objectModel.CollectiveModel;
-import model.objectModel.PortalModel;
 import model.objectModel.effects.ArchmireAoeEffectModel;
 import model.objectModel.effects.BlackOrbAoeEffectModel;
-import model.objectModel.fighters.EpsilonModel;
 import model.objectModel.fighters.EpsilonVertexModel;
 import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.fighters.finalBoss.abilities.vomit.BossAoeEffectModel;
@@ -21,7 +17,6 @@ import model.objectModel.fighters.finalBoss.bossHelper.HandModel;
 import model.objectModel.fighters.finalBoss.bossHelper.HeadModel;
 import model.objectModel.fighters.finalBoss.bossHelper.PunchModel;
 import model.objectModel.fighters.miniBossEnemies.barricadosModel.BarricadosFirstModel;
-import model.objectModel.fighters.miniBossEnemies.barricadosModel.BarricadosModel;
 import model.objectModel.fighters.miniBossEnemies.barricadosModel.BarricadosSecondModel;
 import model.objectModel.frameModel.FrameModel;
 import model.objectModel.fighters.basicEnemies.SquarantineModel;

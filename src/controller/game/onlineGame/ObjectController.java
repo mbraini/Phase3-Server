@@ -1,4 +1,4 @@
-package controller.game;
+package controller.game.onlineGame;
 
 import constants.SoundPathConstants;
 import model.ModelRequests;
@@ -17,7 +17,7 @@ public class ObjectController {
         effectModel.getGame().getModelRequests().removeEffectModel(effectModel.getId());
     }
 
-    public static void removeFrame(FrameModel frameModel) {
+    public synchronized static void removeFrame(FrameModel frameModel) {
         frameModel.getGame().getModelRequests().removeFrameModel(frameModel.getId());
     }
 }

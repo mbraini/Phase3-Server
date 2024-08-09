@@ -1,8 +1,7 @@
 package model.objectModel.frameModel;
 
-import controller.game.Game;
-import controller.game.ObjectController;
-import controller.game.player.Player;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.ObjectController;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
 import model.logics.MovementManager;

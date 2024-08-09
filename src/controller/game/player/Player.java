@@ -2,7 +2,8 @@ package controller.game.player;
 
 import constants.ControllerConstants;
 import constants.SizeConstants;
-import controller.game.*;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.GameType;
 import controller.game.player.udp.ClientGameInfoReceiver;
 import controller.online.dataBase.OnlineData;
 import model.objectModel.fighters.EpsilonModel;

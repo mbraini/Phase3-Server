@@ -1,8 +1,8 @@
 package model.objectModel.fighters.miniBossEnemies.blackOrbModel;
 
 import constants.SizeConstants;
-import controller.game.Game;
-import controller.game.ObjectController;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.ObjectController;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
 import controller.game.player.Player;

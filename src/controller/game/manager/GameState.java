@@ -1,8 +1,7 @@
 package controller.game.manager;
 
 import constants.VelocityConstants;
-import controller.game.Game;
-import model.ModelData;
+import controller.game.onlineGame.Game;
 import model.objectModel.ObjectModel;
 
 import java.util.ArrayList;

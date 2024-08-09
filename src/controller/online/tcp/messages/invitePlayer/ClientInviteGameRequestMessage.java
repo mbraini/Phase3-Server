@@ -1,8 +1,8 @@
 package controller.online.tcp.messages.invitePlayer;
 
 import com.google.gson.Gson;
-import controller.game.Game;
-import controller.game.GameType;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.GameType;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import controller.online.dataBase.OnlineData;

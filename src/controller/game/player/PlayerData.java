@@ -1,4 +1,4 @@
-package controller.game;
+package controller.game.player;
 
 import constants.TimeConstants;
 import controller.game.manager.GameState;

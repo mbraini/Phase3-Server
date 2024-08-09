@@ -2,7 +2,7 @@ package controller.game.player.udp;
 
 import com.google.gson.Gson;
 import constants.SizeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.player.Player;
 import controller.online.dataBase.OnlineData;
 import model.objectModel.frameModel.FrameModel;

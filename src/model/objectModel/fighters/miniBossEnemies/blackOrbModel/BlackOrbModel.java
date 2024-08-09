@@ -1,12 +1,11 @@
 package model.objectModel.fighters.miniBossEnemies.blackOrbModel;
 
 import constants.SizeConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.AbstractEnemyType;
 import controller.game.manager.Spawner;
 import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
-import model.ModelRequests;
 import model.objectModel.effects.BlackOrbAoeEffectModel;
 import model.objectModel.fighters.AbstractEnemy;
 import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;

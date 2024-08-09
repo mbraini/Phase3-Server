@@ -3,10 +3,9 @@ package model.objectModel.projectiles;
 
 import constants.SizeConstants;
 import constants.VelocityConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import controller.game.player.Player;
-import model.ModelData;
 import model.interfaces.collisionInterfaces.IsCircle;
 import utils.Math;
 import utils.Vector;

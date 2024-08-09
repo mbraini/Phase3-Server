@@ -4,7 +4,7 @@ import constants.DamageConstants;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import constants.VelocityConstants;
-import controller.game.Game;
+import controller.game.onlineGame.Game;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
 import controller.game.player.Player;

@@ -2,8 +2,8 @@ package model.objectModel;
 
 
 import constants.*;
-import controller.game.Game;
-import controller.game.ObjectController;
+import controller.game.onlineGame.Game;
+import controller.game.onlineGame.ObjectController;
 import controller.game.enums.ModelType;
 import controller.game.player.Player;
 import model.interfaces.Ability;
@@ -15,7 +15,6 @@ import utils.Math;
 import utils.Vector;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CollectiveModel extends ObjectModel implements IsCircle, Ability, MoveAble, CollisionDetector, Fader {
     int value;
