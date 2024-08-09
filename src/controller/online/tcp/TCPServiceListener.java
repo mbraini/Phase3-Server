@@ -97,6 +97,9 @@ public class TCPServiceListener {
                 case buyInGameAbility:
                     new ClientInGameAbilityBuyRequest(tcpClient).checkRequest();
                     break;
+                case spawnAlly:
+                    new ClientSpawnAllyRequest(tcpClient).checkRequest();
+                    break;
                 case inviteGame:
                     new ClientInviteGameRequest(tcpClient).checkRequest();
                     break;

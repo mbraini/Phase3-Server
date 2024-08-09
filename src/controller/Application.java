@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import constants.PathConstants;
 import controller.online.annotations.SkippedByJson;
+import controller.online.client.ClientState;
 import controller.online.client.GameClient;
 import controller.online.client.TCPClient;
 import controller.online.dataBase.OnlineData;
@@ -76,6 +77,7 @@ public class Application implements Runnable{
         ArrayList<String> usernames = new ArrayList<>();
         for (TCPClient tcpClient : tcpClients) {
             usernames.add(tcpClient.getUsername());
+            tcpClient.setClientState(ClientState.offline);
             tcpClientMap.put(tcpClient.getUsername() ,tcpClient);
         }
         ArrayList<Squad> squads = gson.fromJson(JSquads.toString() ,squadType);

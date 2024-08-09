@@ -123,6 +123,15 @@ public class ObjectViewSender extends Thread{
 
     }
 
+    private class EpsilonView {
+        private Vector position;
+        private double theta;
+        private boolean hovering;
+        private Dimension size;
+        private ModelType modelType;
+        private String id;
+    }
+
     public ArrayList<Player> getPlayers() {
         return players;
     }

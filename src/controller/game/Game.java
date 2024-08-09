@@ -207,7 +207,13 @@ public class Game {
     }
 
     public void addPlayer(Player player) {
-        players.add(player);
+        synchronized (players) {
+            players.add(player);
+            if (gameType.equals(GameType.colosseum) && players.size() == 2) {
+                players.getFirst().setTeammate(players.getLast());
+                players.getLast().setTeammate(players.getFirst());
+            }
+        }
         infoSender.addPlayer(player);
     }
 
@@ -220,9 +226,11 @@ public class Game {
     }
 
     public synchronized Player getPlayer(String username) {
-        for (Player player : players) {
-            if (player.getUsername().equals(username))
-                return player;
+        synchronized (players) {
+            for (Player player : players) {
+                if (player.getUsername().equals(username))
+                    return player;
+            }
         }
         return null;
     }

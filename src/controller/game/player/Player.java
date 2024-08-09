@@ -56,6 +56,10 @@ public class Player {
                 for (Player player : game.getPlayers()) {
                     if (player.getUsername().equals(username))
                         continue;
+                    if (teammate != null) {
+                        if (teammate.getUsername().equals(player.getUsername()))
+                            continue;
+                    }
                     targetedPlayers.add(player);
                 }
             }

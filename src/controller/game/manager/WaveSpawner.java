@@ -101,6 +101,8 @@ public class WaveSpawner {
         spawner = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (game.getGameState().isPause() || game.getGameState().isDizzy() || game.getGameState().isOver())
+                    return;
                 getEnemiesCounts();
                 enemyKilled = game.getGameState().getEnemyKilled();
                 updateVariables();
