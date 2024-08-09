@@ -10,6 +10,8 @@ public class SquadBattle {
     private int xpEarned;
     private int monomachiaWins;
     private HashMap<String ,Integer> summonMap = new HashMap<>();
+    private ArrayList<String> playedMonomachia = new ArrayList<>();
+    private ArrayList<String> playedColosseum = new ArrayList<>();
 
     public SquadBattle() {
 
@@ -63,6 +65,38 @@ public class SquadBattle {
     public void castSpawn(String username) {
         summonMap.remove(username);
         summonMap.put(username ,0);
+    }
+
+    public void addMonomachiaPlayed(String username) {
+        synchronized (playedMonomachia) {
+            playedMonomachia.add(username);
+        }
+    }
+
+    public boolean hasPlayedMonomachia(String username) {
+        synchronized (playedMonomachia) {
+            for (String player : playedMonomachia) {
+                if (player.equals(username))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public void addColosseumPlayed(String username) {
+        synchronized (playedColosseum) {
+            playedColosseum.add(username);
+        }
+    }
+
+    public boolean hasPlayedColosseum(String username) {
+        synchronized (playedColosseum) {
+            for (String player : playedColosseum) {
+                if (player.equals(username))
+                    return true;
+            }
+        }
+        return false;
     }
 
 }

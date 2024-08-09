@@ -6,6 +6,7 @@ import controller.online.dataBase.OnlineData;
 import controller.online.client.ClientState;
 import controller.online.client.TCPClient;
 import controller.online.squad.Squad;
+import controller.online.squad.SquadBattle;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.ServerRecponceType;
 import controller.online.tcp.TCPClientRequest;
@@ -111,8 +112,8 @@ public class ClientUpdateBattleSquadRequest extends TCPClientRequest {
                             member,
                             xp,
                             clientState,
-                            false,
-                            false
+                            squad.getSquadBattle().hasPlayedMonomachia(member),
+                            squad.getSquadBattle().hasPlayedColosseum(member)
                     )
             );
         }
@@ -120,12 +121,13 @@ public class ClientUpdateBattleSquadRequest extends TCPClientRequest {
     }
 
     public GetBattleSquadMemberHelper getOnlineThisPlayer() {
+        SquadBattle squadBattle = OnlineData.getClientSquad(tcpClient.getUsername()).getSquadBattle();
         return new GetBattleSquadMemberHelper(
                 tcpClient.getUsername(),
                 OnlineData.getGameClient(tcpClient.getUsername()).getXp(),
                 tcpClient.getClientState(),
-                false,
-                false
+                squadBattle.hasPlayedMonomachia(tcpClient.getUsername()),
+                squadBattle.hasPlayedColosseum(tcpClient.getUsername())
         );
     }
 

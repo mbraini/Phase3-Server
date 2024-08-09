@@ -7,6 +7,7 @@ import controller.game.player.Player;
 import controller.online.annotations.SkippedByJson;
 import controller.online.dataBase.OnlineData;
 import controller.online.client.ClientState;
+import controller.online.squad.Squad;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.messages.ClientMessageRecponceType;
 import controller.online.tcp.messages.YesNoMessage;
@@ -73,6 +74,8 @@ public class ClientInviteGameRequestMessage extends YesNoMessage {
                 OnlineData.putClientOnlineGame(requester ,game);
                 OnlineData.getTCPClient(requester).getTcpMessager().sendMessage(ServerMessageType.getPorts);
 
+                setUpSquadGames(requester ,receiver ,gameType);
+
                 Player receiverPlayer = new Player(game ,receiver);
                 OnlineData.putClientPlayer(receiver ,receiverPlayer);
                 OnlineData.putClientOnlineGame(receiver ,game);
@@ -86,6 +89,19 @@ public class ClientInviteGameRequestMessage extends YesNoMessage {
                 game.start();
             }
             else {
+            }
+        }
+
+        private void setUpSquadGames(String requester, String receiver, GameType gameType) {
+            Squad requesterSquad = OnlineData.getClientSquad(requester);
+            Squad receiverSquad = OnlineData.getClientSquad(receiver);
+            if (gameType.equals(GameType.monomachia)) {
+                requesterSquad.getSquadBattle().addMonomachiaPlayed(requester);
+                receiverSquad.getSquadBattle().addMonomachiaPlayed(receiver);
+            }
+            else {
+                requesterSquad.getSquadBattle().addColosseumPlayed(requester);
+                receiverSquad.getSquadBattle().addColosseumPlayed(receiver);
             }
         }
 
