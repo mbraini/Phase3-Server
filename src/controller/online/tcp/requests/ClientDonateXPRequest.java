@@ -29,6 +29,11 @@ public class ClientDonateXPRequest extends TCPClientRequest {
             xpDonatedBefore = 0;
         else
             xpDonatedBefore = map.get(tcpClient.getUsername());
+        if (squad.getSquadBattle().getInBattleWith() != null) {
+            tcpClient.getTcpMessager().sendMessage(ServerMessageType.donateXP);
+            tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
+            return;
+        }
         if (OnlineData.getGameClient(tcpClient.getUsername()).getXp() < donatedAmount){
             tcpClient.getTcpMessager().sendMessage(ServerMessageType.donateXP);
             tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);

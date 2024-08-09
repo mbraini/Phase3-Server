@@ -30,6 +30,11 @@ public class ClientBuyCallRequest extends TCPClientRequest {
         CallType callType = gson.fromJson(JCallType ,CallType.class);
         Squad squad = OnlineData.getClientSquad(tcpClient.getUsername());
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.buyCall);
+        if (squad.getSquadBattle().getInBattleWith() != null) {
+            tcpClient.getTcpMessager().sendMessage(callType);
+            tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
+            return;
+        }
         switch (callType) {
             case adonis :
                 checkAdonis(squad);
