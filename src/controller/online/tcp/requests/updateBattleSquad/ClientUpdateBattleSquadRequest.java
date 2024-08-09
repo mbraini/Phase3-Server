@@ -42,6 +42,8 @@ public class ClientUpdateBattleSquadRequest extends TCPClientRequest {
         GetBattleSquadMemberHelper thisPlayer = gson.fromJson(JThisPlayer ,GetBattleSquadMemberHelper.class);
 
         Squad squad = OnlineData.getClientSquad(tcpClient.getUsername());
+        if (squad == null)
+            return;
         if (squad.getSquadBattle().getInBattleWith() == null)
             return;
         if (updateNeeded(enemySquadName ,thisSquadMembers ,thisPlayer ,enemySquadMembers)) {

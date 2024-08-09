@@ -353,7 +353,7 @@ public class Game {
                 Squad squad = OnlineData.getClientSquad(player.getUsername());
                 squad.getTreasury().setXp(squad.getTreasury().getXp() + CostConstants.MONOMACHIA_WINNER_PRIZE);
                 SquadBattle squadBattle = squad.getSquadBattle();
-                squadBattle.setXpEarned(squadBattle.getXpEarned() + CostConstants.MONOMACHIA_WINNER_PRIZE);
+                squadBattle.setXpEarned(squadBattle.getXpEarned() + CostConstants.MONOMACHIA_WINNER_PRIZE + player.getPlayerData().getXpGained());
             }
             if (loser != null) {
                 SquadBattle squadBattle = OnlineData.getClientSquad(winners.getFirst().getUsername()).getSquadBattle();
@@ -367,7 +367,7 @@ public class Game {
                 Squad squad = OnlineData.getClientSquad(player.getUsername());
                 squad.getTreasury().setXp(squad.getTreasury().getXp() + CostConstants.COLOSSEUM_WINNER_PRIZE);
                 SquadBattle squadBattle = squad.getSquadBattle();
-                squadBattle.setXpEarned(squadBattle.getXpEarned() + CostConstants.COLOSSEUM_WINNER_PRIZE);
+                squadBattle.setXpEarned(squadBattle.getXpEarned() + CostConstants.COLOSSEUM_WINNER_PRIZE + player.getPlayerData().getXpGained());
             }
         }
 

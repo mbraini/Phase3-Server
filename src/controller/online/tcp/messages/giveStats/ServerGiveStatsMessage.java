@@ -27,10 +27,7 @@ public class ServerGiveStatsMessage{
     public void sendMessage() {
         ArrayList<StatsHelper> statsHelpers = new ArrayList<>();
         for (Player player : players) {
-            TCPClient tcpClient = OnlineData.getTCPClient(player.getUsername());
             GameClient gameClient = OnlineData.getGameClient(player.getUsername());
-            if (!tcpClient.getClientState().equals(ClientState.busy))
-                continue;
             StatsHelper helper = new StatsHelper();
             if (player.getPlayerData().getSurvivalTime() == 0) {
                 helper.setSurvivalTime((int) player.getGame().getGameState().getTime() / 1000);

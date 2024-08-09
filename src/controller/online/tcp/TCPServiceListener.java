@@ -43,74 +43,84 @@ public class TCPServiceListener {
             else
                 continue;
             ClientRequestType requestType = gson.fromJson(clientRequest , ClientRequestType.class);
-            switch (requestType) {
-                case signUp :
-                    new ClientSignUpRequest(tcpClient).checkRequest();
-                    break;
-                case logIn:
-                    new ClientLogInRequest(tcpClient).checkRequest();
-                    break;
-                case matchHistory:
-                    new ClientUpdateInfoRequest(tcpClient).checkRequest();
-                    break;
-                case hasSquad:
-                    new ClientHasSquadRequest(tcpClient).checkRequest();
-                    break;
-                case getAllSquads:
-                    new ClientGetAllSquadsRequest(tcpClient).checkRequest();
-                    break;
-                case createSquad:
-                    new ClientCreateSquadRequest(tcpClient).checkRequest();
-                    break;
-                case joinSquad:
-                    new ClientJoinSquadRequest(tcpClient).checkRequest();
-                    break;
-                case leaveSquad:
-                    new ClientLeaveSquadRequest(tcpClient).checkRequest();
-                    break;
-                case kickOut:
-                    new ClientKickOutSquadRequest(tcpClient).checkRequest();
-                    break;
-                case killSquad:
-                    new ClientKillSquadRequest(tcpClient).checkRequest();
-                    break;
-                case updateHasSquad:
-                    new ClientUpdateHasSquadRequest(tcpClient).checkRequest();
-                    break;
-                case hasSquadBattle:
-                    new ClientHasBattleSquadRequest(tcpClient).checkRequest();
-                    break;
-                case updateBattleSquad:
-                    new ClientUpdateBattleSquadRequest(tcpClient).checkRequest();
-                    break;
-                case updateTreasury:
-                    new ClientUpdateTreasuryRequest(tcpClient).checkRequest();
-                    break;
-                case updateTreasuryShop:
-                    new ClientUpdateTreasuryShopRequest(tcpClient).checkRequest();
-                    break;
-                case donateXP:
-                    new ClientDonateXPRequest(tcpClient).checkRequest();
-                    break;
-                case buyCall:
-                    new ClientBuyCallRequest(tcpClient).checkRequest();
-                    break;
-                case battleHistory:
-                    new ClientGetBattleHistoryRequest(tcpClient).checkRequest();
-                    break;
-                case givePorts:
-                    new ClientGivePortRequest(tcpClient).checkRequest();
-                    break;
-                case buyInGameAbility:
-                    new ClientInGameAbilityBuyRequest(tcpClient).checkRequest();
-                    break;
-                case spawnAlly:
-                    new ClientSpawnAllyRequest(tcpClient).checkRequest();
-                    break;
-                case inviteGame:
-                    new ClientInviteGameRequest(tcpClient).checkRequest();
-                    break;
-            }
+            service(requestType);
+        }
+    }
+
+    private void service(ClientRequestType requestType) {
+        switch (requestType) {
+            case signUp :
+                new ClientSignUpRequest(tcpClient).checkRequest();
+                break;
+            case logIn:
+                new ClientLogInRequest(tcpClient).checkRequest();
+                break;
+            case endOfflineGame:
+                new ClientEndingOfflineGameRequest(tcpClient).checkRequest();
+                break;
+            case startOfflineGame:
+                new ClientStartingOfflineGameRequest(tcpClient).checkRequest();
+                break;
+            case matchHistory:
+                new ClientUpdateInfoRequest(tcpClient).checkRequest();
+                break;
+            case hasSquad:
+                new ClientHasSquadRequest(tcpClient).checkRequest();
+                break;
+            case getAllSquads:
+                new ClientGetAllSquadsRequest(tcpClient).checkRequest();
+                break;
+            case createSquad:
+                new ClientCreateSquadRequest(tcpClient).checkRequest();
+                break;
+            case joinSquad:
+                new ClientJoinSquadRequest(tcpClient).checkRequest();
+                break;
+            case leaveSquad:
+                new ClientLeaveSquadRequest(tcpClient).checkRequest();
+                break;
+            case kickOut:
+                new ClientKickOutSquadRequest(tcpClient).checkRequest();
+                break;
+            case killSquad:
+                new ClientKillSquadRequest(tcpClient).checkRequest();
+                break;
+            case updateHasSquad:
+                new ClientUpdateHasSquadRequest(tcpClient).checkRequest();
+                break;
+            case hasSquadBattle:
+                new ClientHasBattleSquadRequest(tcpClient).checkRequest();
+                break;
+            case updateBattleSquad:
+                new ClientUpdateBattleSquadRequest(tcpClient).checkRequest();
+                break;
+            case updateTreasury:
+                new ClientUpdateTreasuryRequest(tcpClient).checkRequest();
+                break;
+            case updateTreasuryShop:
+                new ClientUpdateTreasuryShopRequest(tcpClient).checkRequest();
+                break;
+            case donateXP:
+                new ClientDonateXPRequest(tcpClient).checkRequest();
+                break;
+            case buyCall:
+                new ClientBuyCallRequest(tcpClient).checkRequest();
+                break;
+            case battleHistory:
+                new ClientGetBattleHistoryRequest(tcpClient).checkRequest();
+                break;
+            case givePorts:
+                new ClientGivePortRequest(tcpClient).checkRequest();
+                break;
+            case buyInGameAbility:
+                new ClientInGameAbilityBuyRequest(tcpClient).checkRequest();
+                break;
+            case spawnAlly:
+                new ClientSpawnAllyRequest(tcpClient).checkRequest();
+                break;
+            case inviteGame:
+                new ClientInviteGameRequest(tcpClient).checkRequest();
+                break;
         }
     }
 }

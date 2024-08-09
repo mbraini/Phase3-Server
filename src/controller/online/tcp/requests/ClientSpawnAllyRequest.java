@@ -2,6 +2,7 @@ package controller.online.tcp.requests;
 
 import controller.game.Game;
 import controller.game.GameType;
+import controller.game.player.Player;
 import controller.online.client.TCPClient;
 import controller.online.dataBase.OnlineData;
 import controller.online.squad.Squad;
@@ -24,10 +25,13 @@ public class ClientSpawnAllyRequest extends TCPClientRequest {
     public void checkRequest() {
         Game game = OnlineData.getOnlineGame(tcpClient.getUsername());
         Squad squad = OnlineData.getClientSquad(tcpClient.getUsername());
-        if (squad.getSquadBattle().hasSpawn(tcpClient.getUsername()) && game.getGameType().equals(GameType.monomachia)) {
-            tcpClient.getTcpMessager().sendMessage(ServerMessageType.spawnAlly);
-            tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
-            notifyAllSquadMembers();
+        Player player = OnlineData.getPlayer(tcpClient.getUsername());
+        if (player.getTeammate() == null) {
+            if (squad.getSquadBattle().hasSpawn(tcpClient.getUsername()) && game.getGameType().equals(GameType.monomachia)) {
+                tcpClient.getTcpMessager().sendMessage(ServerMessageType.spawnAlly);
+                tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
+                notifyAllSquadMembers();
+            }
         }
         else {
             tcpClient.getTcpMessager().sendMessage(ServerMessageType.spawnAlly);
