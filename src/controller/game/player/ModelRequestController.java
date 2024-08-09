@@ -12,19 +12,6 @@ public class ModelRequestController {
         this.player = player;
     }
 
-    public static void playSound(String path) {
-//        Sound sound = null;
-//        try {
-//            sound = new Sound(path);
-//        } catch (UnsupportedAudioFileException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (LineUnavailableException e) {
-//            throw new RuntimeException(e);
-//        }
-//        sound.play();
-    }
 
     public void reorderKeys() {
         OnlineData.getTCPClient(player.getUsername()).getTcpMessager().sendMessage(ServerMessageType.reorderKeys);

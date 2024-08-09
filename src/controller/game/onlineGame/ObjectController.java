@@ -11,8 +11,6 @@ public class ObjectController {
 
     public synchronized static void removeObject(ObjectModel model) {
         model.getGame().getModelRequests().removeObjectModel(model.getId());
-        if (model instanceof EnemyModel)
-            ModelRequestController.playSound(SoundPathConstants.enemyOnDeathSound);
     }
 
     public synchronized static void removeEffect(EffectModel effectModel) {
