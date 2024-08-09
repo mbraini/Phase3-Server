@@ -15,8 +15,6 @@ public class ConnectionChecker extends Thread{
     private TCPClient tcpClient;
     private final TCPMessager connectionMessager;
     private final Gson gson;
-//    private final Timer timer;
-    private volatile boolean received;
 
     public ConnectionChecker(TCPClient tcpClient) {
         this.tcpClient = tcpClient;
@@ -28,14 +26,6 @@ public class ConnectionChecker extends Thread{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        timer = new Timer(7000, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (!received) {
-//                    endWorker();
-//                }
-//            }
-//        });
         gson = new Gson();
     }
 
@@ -43,19 +33,13 @@ public class ConnectionChecker extends Thread{
     public void run() {
         try {
             while (true) {
-                received = false;
                 Thread.sleep(3000);
-//                timer.start();
-
                 connectionMessager.sendMessage(ServerMessageType.connectionCheck);
                 String JRecponce = connectionMessager.readMessage();
-
-//                timer.stop();
-                received = true;
-
                 ClientMessageRecponceType recponce = gson.fromJson(JRecponce , ClientMessageRecponceType.class);
                 if (!recponce.equals(ClientMessageRecponceType.connected)) {
                     endWorker();
+                    return;
                 }
             }
         }

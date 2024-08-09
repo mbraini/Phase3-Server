@@ -11,6 +11,7 @@ import controller.online.client.TCPClient;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.ServerRecponceType;
 import controller.online.tcp.TCPClientRequest;
+import controller.online.tcp.messages.updateXP.ClientUpdateXPMessage;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -60,7 +61,7 @@ public class ClientSignUpRequest extends TCPClientRequest {
         setUpFolder();
         OnlineData.addClient(tcpClient);
         this.tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
-        OnlineData.getGameClient(this.tcpClient.getUsername()).update(this.tcpClient);
+        new ClientUpdateXPMessage(tcpClient).sendRequest();
     }
 
     private void setUpFolder() {

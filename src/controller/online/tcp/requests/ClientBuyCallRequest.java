@@ -9,6 +9,7 @@ import controller.online.tcp.CallType;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.ServerRecponceType;
 import controller.online.tcp.TCPClientRequest;
+import controller.online.tcp.messages.updateXP.ClientUpdateXPMessage;
 
 public class ClientBuyCallRequest extends TCPClientRequest {
 
@@ -32,6 +33,7 @@ public class ClientBuyCallRequest extends TCPClientRequest {
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.buyCall);
         if (squad.getSquadBattle().getInBattleWith() != null) {
             tcpClient.getTcpMessager().sendMessage(callType);
+            tcpClient.getTcpMessager().sendMessage(0);
             tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
             return;
         }
@@ -46,7 +48,7 @@ public class ClientBuyCallRequest extends TCPClientRequest {
                 checkGefjon(squad);
                 break;
         }
-
+        new ClientUpdateXPMessage(tcpClient).sendRequest();
     }
 
     private void checkGefjon(Squad squad) {
@@ -54,9 +56,11 @@ public class ClientBuyCallRequest extends TCPClientRequest {
         if (squad.getTreasury().getXp() >= CostConstants.GEFJON_XP_COST) {
             squad.getTreasury().setXp(squad.getTreasury().getXp() - CostConstants.GEFJON_XP_COST);
             squad.getTreasury().setGefjonCount(squad.getTreasury().getGefjonCount() + 1);
+            tcpClient.getTcpMessager().sendMessage(CostConstants.GEFJON_XP_COST);
             tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
             return;
         }
+        tcpClient.getTcpMessager().sendMessage(0);
         tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
     }
 
@@ -66,9 +70,11 @@ public class ClientBuyCallRequest extends TCPClientRequest {
         if (squad.getTreasury().getXp() >= palioxisCost) {
             squad.getTreasury().setXp(squad.getTreasury().getXp() - palioxisCost);
             squad.getTreasury().setPalioxisCount(squad.getTreasury().getPalioxisCount() + 1);
+            tcpClient.getTcpMessager().sendMessage(palioxisCost);
             tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
             return;
         }
+        tcpClient.getTcpMessager().sendMessage(0);
         tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
     }
 
@@ -77,9 +83,11 @@ public class ClientBuyCallRequest extends TCPClientRequest {
         if (squad.getTreasury().getXp() >= CostConstants.ADONIS_XP_COST) {
             squad.getTreasury().setXp(squad.getTreasury().getXp() - CostConstants.ADONIS_XP_COST);
             squad.getTreasury().setAdonisCount(squad.getTreasury().getAdonisCount() + 1);
+            tcpClient.getTcpMessager().sendMessage(CostConstants.ADONIS_XP_COST);
             tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
             return;
         }
+        tcpClient.getTcpMessager().sendMessage(0);
         tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
     }
 }

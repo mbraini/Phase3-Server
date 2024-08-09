@@ -20,6 +20,6 @@ public enum ClientRequestType {
     givePorts,
     buyInGameAbility,
     hasSquad,
-    spawnAlly, battleHistory, inviteGame
+    spawnAlly, battleHistory, updateInfo, matchHistory, inviteGame
 
 }

@@ -7,6 +7,7 @@ import controller.online.tcp.requests.*;
 import controller.online.tcp.requests.getAllSquadRequest.ClientGetAllSquadsRequest;
 import controller.online.tcp.requests.updateBattleSquad.ClientUpdateBattleSquadRequest;
 import controller.online.tcp.requests.updateHasSquad.ClientUpdateHasSquadRequest;
+import controller.online.tcp.requests.updateInfo.ClientUpdateInfoRequest;
 
 public class TCPServiceListener {
     private final TCPClient tcpClient;
@@ -48,6 +49,9 @@ public class TCPServiceListener {
                     break;
                 case logIn:
                     new ClientLogInRequest(tcpClient).checkRequest();
+                    break;
+                case matchHistory:
+                    new ClientUpdateInfoRequest(tcpClient).checkRequest();
                     break;
                 case hasSquad:
                     new ClientHasSquadRequest(tcpClient).checkRequest();

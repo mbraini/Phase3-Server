@@ -78,6 +78,12 @@ public class ServerCLIListener extends Thread {
             loserHasPalioxis = true;
             loser.getTreasury().setPalioxisCount(loser.getTreasury().getPalioxisCount() - 1);
         }
+        if (winner.getTreasury().getAdonisCount() > 0) {
+            winner.getTreasury().setAdonisCount(winner.getTreasury().getAdonisCount() - 1);
+        }
+        if (loser.getTreasury().getAdonisCount() > 0) {
+            loser.getTreasury().setAdonisCount(loser.getTreasury().getAdonisCount() - 1);
+        }
         synchronized (winner.getMembers()) {
             for (String member : winner.getMembers()) {
                 GameClient gameClient = OnlineData.getGameClient(member);
@@ -128,11 +134,13 @@ public class ServerCLIListener extends Thread {
                     squads.get(i).getTreasury().hasAdonis(),
                     squads.get(i).getMembers()
             ));
+            squads.get(i).notifySquadBattle(squads.get(i + 1).getName());
             squads.get(i + 1).setSquadBattle(new SquadBattle(
                     squads.get(i).getName(),
                     squads.get(i + 1).getTreasury().hasAdonis(),
                     squads.get(i + 1).getMembers()
             ));
+            squads.get(i + 1).notifySquadBattle(squads.get(i).getName());
         }
     }
 }

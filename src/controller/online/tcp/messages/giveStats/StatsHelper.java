@@ -2,6 +2,7 @@ package controller.online.tcp.messages.giveStats;
 
 public class StatsHelper {
 
+    private String username;
     private int survivalTime;
     private int successfulBullets;
     private int totalBullets;
@@ -55,5 +56,13 @@ public class StatsHelper {
 
     public void setMostSurvivalTime(int mostSurvivalTime) {
         this.mostSurvivalTime = mostSurvivalTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

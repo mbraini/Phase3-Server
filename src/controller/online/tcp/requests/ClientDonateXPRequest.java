@@ -8,6 +8,7 @@ import controller.online.squad.Squad;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.ServerRecponceType;
 import controller.online.tcp.TCPClientRequest;
+import controller.online.tcp.messages.updateXP.ClientUpdateXPMessage;
 
 import java.util.HashMap;
 
@@ -52,5 +53,7 @@ public class ClientDonateXPRequest extends TCPClientRequest {
             tcpClient.getTcpMessager().sendMessage(ServerMessageType.donateXP);
             tcpClient.getTcpMessager().sendMessage(ServerRecponceType.error);
         }
+
+        new ClientUpdateXPMessage(tcpClient).sendRequest();
     }
 }

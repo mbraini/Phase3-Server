@@ -2,6 +2,7 @@ package controller.online.squad;
 
 
 import controller.online.dataBase.OnlineData;
+import controller.online.tcp.messages.squadBattleNotification.ClientSquadBattleNotificationMessage;
 
 import java.util.ArrayList;
 
@@ -88,4 +89,13 @@ public class Squad {
         }
     }
 
+    public void notifySquadBattle(String enemySquad) {
+        synchronized (members) {
+            for (String member : members) {
+                OnlineData.getTCPClient(member).addMessage(
+                        new ClientSquadBattleNotificationMessage(member ,enemySquad)
+                );
+            }
+        }
+    }
 }

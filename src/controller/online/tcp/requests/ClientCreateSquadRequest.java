@@ -7,6 +7,7 @@ import controller.online.squad.Squad;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.ServerRecponceType;
 import controller.online.tcp.TCPClientRequest;
+import controller.online.tcp.messages.updateXP.ClientUpdateXPMessage;
 
 import java.util.ArrayList;
 
@@ -51,5 +52,7 @@ public class ClientCreateSquadRequest extends TCPClientRequest {
 
         tcpClient.getTcpMessager().sendMessage(ServerMessageType.createSquadRecponce);
         tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
+
+        new ClientUpdateXPMessage(tcpClient).sendRequest();
     }
 }

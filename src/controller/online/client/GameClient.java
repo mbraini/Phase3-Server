@@ -6,9 +6,13 @@ import controller.online.annotations.SkippedByJson;
 import controller.online.client.gameClientUpdate.SkillTreeJsonHelper;
 import utils.TCPMessager;
 
+import java.util.ArrayList;
+
 public class GameClient {
     private String username;
     private int xp;
+    private int mostXPEarned;
+    private int mostSurvivalTime;
     private boolean ares;
     private boolean astrape;
     private boolean cerberus;
@@ -19,6 +23,7 @@ public class GameClient {
     private boolean proteus;
     private boolean empusa;
     private boolean dolus;
+    private ArrayList<LeadBoard> gameHistories = new ArrayList<>();
     @SkippedByJson
     private Gson gson;
 
@@ -128,23 +133,26 @@ public class GameClient {
         this.gson = gson;
     }
 
-    public void update(TCPClient tcpClient) {
-        initGson();
-        TCPMessager TCPmessager = tcpClient.getTcpMessager();
-        String xpString = TCPmessager.readMessage();
-        xp = Integer.valueOf(xpString);
-        String json = TCPmessager.readMessage();
-        SkillTreeJsonHelper helper = gson.fromJson(json, SkillTreeJsonHelper.class);
-        ares = helper.ares;
-        astrape = helper.astrape;
-        cerberus = helper.cerberus;
-        aceso = helper.aceso;
-        melampus = helper.melampus;
-        chiron = helper.chiron;
-        athena = helper.athena;
-        proteus = helper.proteus;
-        empusa = helper.empusa;
-        dolus = helper.dolus;
+
+    public void addGameHistory(LeadBoard leadBoard) {
+        synchronized (gameHistories) {
+            gameHistories.add(leadBoard);
+        }
     }
 
+    public int getMostXPEarned() {
+        return mostXPEarned;
+    }
+
+    public void setMostXPEarned(int mostXPEarned) {
+        this.mostXPEarned = mostXPEarned;
+    }
+
+    public int getMostSurvivalTime() {
+        return mostSurvivalTime;
+    }
+
+    public void setMostSurvivalTime(int mostSurvivalTime) {
+        this.mostSurvivalTime = mostSurvivalTime;
+    }
 }

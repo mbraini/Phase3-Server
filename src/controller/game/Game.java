@@ -6,6 +6,7 @@ import controller.game.manager.GameState;
 import controller.game.player.InfoSender;
 import controller.game.player.Player;
 import controller.online.client.GameClient;
+import controller.online.client.LeadBoard;
 import controller.online.dataBase.OnlineData;
 import controller.online.client.ClientState;
 import controller.online.client.TCPClient;
@@ -13,6 +14,7 @@ import controller.online.squad.Squad;
 import controller.online.squad.SquadBattle;
 import controller.online.tcp.ServerMessageType;
 import controller.online.tcp.messages.giveStats.ServerGiveStatsMessage;
+import controller.online.tcp.messages.updateXP.ClientUpdateXPMessage;
 import model.ModelData;
 import model.ModelRequests;
 import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
@@ -283,6 +285,8 @@ public class Game {
     public void end(Player loser) {
         getGameState().setOver(true);
         calculatePoints(loser);
+        setGameHistories();
+        updateClientXPs();
         infoSender.end();
         synchronized (players) {
             for (Player player : players) {
@@ -295,7 +299,41 @@ public class Game {
                     throw new RuntimeException(e);
                 }
                 player.end();
-                new ServerGiveStatsMessage(OnlineData.getTCPClient(player.getUsername()) ,player).sendMessage();
+            }
+            ArrayList<Player> clonePlayers = (ArrayList<Player>) players.clone();
+            for (Player player : players) {
+                new ServerGiveStatsMessage(OnlineData.getTCPClient(player.getUsername()) ,clonePlayers).sendMessage();
+            }
+            for (Player player : players) {
+                OnlineData.getTCPClient(player.getUsername()).setClientState(ClientState.online);
+            }
+        }
+    }
+
+    private void updateClientXPs() {
+        synchronized (players) {
+            for (Player player : players) {
+                TCPClient tcpClient = OnlineData.getTCPClient(player.getUsername());
+                new ClientUpdateXPMessage(tcpClient).sendRequest();
+            }
+        }
+    }
+
+    private void setGameHistories() {
+        synchronized (players) {
+            for (Player player : players) {
+                GameClient gameClient = OnlineData.getGameClient(player.getUsername());
+                gameClient.setXp(gameClient.getXp() + player.getPlayerData().getXpGained());
+                gameClient.addGameHistory(new LeadBoard(
+                        player.getPlayerData().getXpGained(),
+                        player.getPlayerData().getSurvivalTime(),
+                        player.getPlayerData().getTotalBullets(),
+                        player.getPlayerData().getSuccessfulBullets()
+                ));
+                if (gameClient.getMostXPEarned() < player.getPlayerData().getXpGained())
+                    gameClient.setMostXPEarned(player.getPlayerData().getXpGained());
+                if (gameClient.getMostSurvivalTime() < player.getPlayerData().getSurvivalTime())
+                    gameClient.setMostSurvivalTime((int) player.getPlayerData().getSurvivalTime());
             }
         }
     }
@@ -330,13 +368,6 @@ public class Game {
                 squad.getTreasury().setXp(squad.getTreasury().getXp() + CostConstants.COLOSSEUM_WINNER_PRIZE);
                 SquadBattle squadBattle = squad.getSquadBattle();
                 squadBattle.setXpEarned(squadBattle.getXpEarned() + CostConstants.COLOSSEUM_WINNER_PRIZE);
-            }
-        }
-
-        synchronized (players) {
-            for (Player player : players) {
-                GameClient gameClient = OnlineData.getGameClient(player.getUsername());
-                gameClient.setXp(gameClient.getXp() + player.getPlayerData().getXpGained());
             }
         }
 

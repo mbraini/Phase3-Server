@@ -9,6 +9,7 @@ import controller.online.annotations.SkippedByJson;
 import controller.online.client.TCPClient;
 import controller.online.tcp.ServerRecponceType;
 import controller.online.tcp.TCPClientRequest;
+import controller.online.tcp.messages.updateXP.ClientUpdateXPMessage;
 
 import java.util.ArrayList;
 
@@ -48,8 +49,8 @@ public class ClientLogInRequest extends TCPClientRequest {
         for (TCPClient TCPClient : TCPClients) {
             if (TCPClient.getUsername().equals(this.tcpClient.getUsername())) {
                 this.tcpClient.getTcpMessager().sendMessage(ServerRecponceType.done);
+                new ClientUpdateXPMessage(tcpClient).sendRequest();
                 OnlineData.addClient(this.tcpClient);
-                OnlineData.getGameClient(this.tcpClient.getUsername()).update(this.tcpClient);
                 return;
             }
         }
