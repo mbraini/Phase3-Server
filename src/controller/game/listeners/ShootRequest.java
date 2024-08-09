@@ -1,6 +1,7 @@
 package controller.game.listeners;
 
 import constants.SizeConstants;
+import constants.TimeConstants;
 import controller.game.enums.InGameAbilityType;
 import controller.game.enums.ModelType;
 import controller.game.manager.Spawner;
@@ -28,6 +29,12 @@ public class ShootRequest {
         if (epsilon == null || clickedPoint == null  || player.getGame().getGameState().isPause())
             return;
         if (player.isDead())
+            return;
+        double timePassed = player.getGame().getGameState().getTime() - player.getPlayerData().getLastTimeShot();
+        if (timePassed > TimeConstants.PLAYER_SHOT_DELAY) {
+            player.getPlayerData().setLastTimeShot(player.getGame().getGameState().getTime());
+        }
+        else
             return;
         Vector direction = Math.VectorAdd(Math.ScalarInVector(-1 ,epsilon.getPosition()) ,clickedPoint);
         Vector position = Math.VectorAdd(

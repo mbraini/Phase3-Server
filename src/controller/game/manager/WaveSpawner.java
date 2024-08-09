@@ -255,8 +255,8 @@ public class WaveSpawner {
         if (game.getGameState().getWave() == 1) {
             spawner.setDelay(4000);
 
-            basicEnemySpawnCount = 1;
-            normalEnemySpawnCount = 1;
+            basicEnemySpawnCount = 2;
+            normalEnemySpawnCount = 2;
             miniBossEnemySpawnCount = 1;
 
             maximumBasicEnemyCount = 10;
@@ -267,7 +267,7 @@ public class WaveSpawner {
             spawner.setDelay(4000);
 
             basicEnemySpawnCount = 2;
-            normalEnemySpawnCount = 1;
+            normalEnemySpawnCount = 2;
             miniBossEnemySpawnCount = 1;
 
             maximumBasicEnemyCount = 14;
@@ -278,7 +278,7 @@ public class WaveSpawner {
             spawner.setDelay(3000);
 
             basicEnemySpawnCount = 2;
-            normalEnemySpawnCount = 1;
+            normalEnemySpawnCount = 2;
             miniBossEnemySpawnCount = 1;
 
             maximumBasicEnemyCount = 18;
@@ -289,7 +289,7 @@ public class WaveSpawner {
             spawner.setDelay(3000);
 
             basicEnemySpawnCount = 2;
-            normalEnemySpawnCount = 1;
+            normalEnemySpawnCount = 2;
             miniBossEnemySpawnCount = 1;
 
             maximumBasicEnemyCount = 20;
@@ -299,7 +299,7 @@ public class WaveSpawner {
         if (game.getGameState().getWave() == 5) {
             spawner.setDelay(2000);
 
-            basicEnemySpawnCount = 2;
+            basicEnemySpawnCount = 4;
             normalEnemySpawnCount = 2;
             miniBossEnemySpawnCount = 1;
 
